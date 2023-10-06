@@ -11,8 +11,9 @@ function Calendar() {
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     
     // Get month - then shorten for the first 3 characters
-    const currentMonth = date.toLocaleString("default", {month: "long"})
-    const monthShorted = currentMonth.substring(0,3);
+    const currentMonth = date.toLocaleString("default", {month: "long"});
+    const monthShorted = currentMonth.charAt(0).toUpperCase() + currentMonth.substring(1,3);
+
 
     const daysInMonth = [];
     for (let i = firstDay.getDate(); i <= lastDay.getDate(); i++) {
@@ -41,9 +42,9 @@ function Calendar() {
                 </ul>
             </div>
 
-            <div className="calendar mx-auto d-flex justify-content-center align-items-center styl">
-                <div className=""> {/* Dette ekstra div vil indeholde kalenderindholdet */}
-                    <h2>{`${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`}</h2>
+            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
+                <div > {/* Dette ekstra div vil indeholde kalenderindholdet */}
+                    <h2>{`${currentMonth} ${date.getFullYear()}`}</h2>
 
                     <table className="table">
                         <thead>
@@ -73,9 +74,9 @@ function Calendar() {
                                             return (
                                                 <td key={dayIndex}>
                                                     {/* Display the day inside a styled Bootstrap card */}
-                                                    <div className="card p-3 mb-2 bg-primary text-white">
+                                                    <div className="card p-2 mb-2 bg-primary text-white">
                                                         <div className="card-body">
-                                                            <a href="#" className="card-title">{dayOfMonth} {monthShorted}</a>
+                                                            <a href="#" className="card-title h4 font-weight-bold text-decoration-none">{dayOfMonth + "."} {monthShorted}</a>
                                                         </div>
                                                     </div>
                                                 </td>

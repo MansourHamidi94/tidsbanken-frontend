@@ -1,59 +1,55 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap'; // Bootstrap components
-import './Login.css'; // Importing the CSS for styling
-
+import React, { useState } from "react";
+import "./Login.css"
 const Login = () => {
-            return (
-                <section className="vh-100">
-                    <div className="container py-5 h-100">
-                        <div className="row d-flex align-items-center justify-content-center h-100">
-                            <div className="col-md-8 col-lg-7 col-xl-6">
-                                <img src="tidsbanken.jpg"
-                                    className="img-fluid" alt="Phone image" />
-                            </div>
-                            <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                                <form>
-                                    {/* Email input */}
-                                    <div className="form-outline mb-4">
-                                        <input type="email" id="form1Example13" className="form-control form-control-lg" />
-                                        <label className="form-label" htmlFor="form1Example13">Username</label>
-                                    </div>
-        
-                                    {/* Password input */}
-                                    <div className="form-outline mb-4">
-                                        <input type="password" id="form1Example23" className="form-control form-control-lg" />
-                                        <label className="form-label" htmlFor="form1Example23">Password</label>
-                                    </div>
-        
-                                    <div className="d-flex justify-content-around align-items-center mb-4">
-                                        {/* Checkbox */}
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" value="" id="form1Example3" defaultChecked />
-                                            <label className="form-check-label" htmlFor="form1Example3"> Remember me </label>
-                                        </div>
-                                        <a href="#!">Forgot password?</a>
-                                    </div>
-        
-                                    {/* Submit button */}
-                                    <button type="submit" className="btn btn-primary btn-lg btn-block">Sign in</button>
-        
-                                    <div className="divider d-flex align-items-center my-4">
-                                        <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                                    </div>
-        
-                                    <a className="btn btn-primary btn-lg btn-block" style={{backgroundColor: "#3b5998"}} href="#!" role="button">
-                                        <i className="fab fa-facebook-f me-2"></i>Continue with Facebook
-                                    </a>
-                                    <a className="btn btn-primary btn-lg btn-block" style={{backgroundColor: "#55acee"}} href="#!" role="button">
-                                        <i className="fab fa-twitter me-2"></i>Continue with Twitter
-                                    </a>
-                                </form>
-                            </div>
-                        </div>
+
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    const handleLogin = () => {
+        alert("Login succesfull")
+    }
+
+
+    return (
+        <div className="container-fluid wrapper">
+
+            <div className="row g-0 wh-100 justify-content-center align-items-center">
+                <div className="col-10 d-flex justify-content-center align-items-center border rounded-2">
+                    <div className="col-5 justify-content-center">
+
+                        <img src="tidsbanken.jpg" alt="" className='img-fluid' />
                     </div>
-                </section>
-            );
-        }
-        
+
+                    <form className="col-6 py-4 px-3">
+                        <h4 className="login-title text-center py-2 mb-4">Login</h4>
+                        <div className="form-floating mb-3">
+                            <input type="email" className="form-control" id="email" placeholder='johndoe@hotmail.com' onChange={(e) => setEmail(e.target.value)} />
+                            <label htmlFor="email">Email</label>
+                        </div>
+
+                        <div className="form-floating mb-3">
+                            <input type="password" className="form-control" id="password" placeholder='password' onChange={(e) => setPassword(e.target.value)} />
+                            <label htmlFor="email">Password</label>
+                        </div>
+                        <div className="text-center">
+                            <button className="login-btn py-3 rounded-3" onClick={() => { handleLogin() }}>
+
+                                Login
+                            </button>
+
+                        </div>
+                        <div className="text-center mt-4">
+                            Not Registered ? Sign Up.
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+    )
+};
 
 export default Login;

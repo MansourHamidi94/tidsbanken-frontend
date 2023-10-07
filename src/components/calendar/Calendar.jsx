@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Calendar() {
 
-    //Dates
-    const today = new Date().getDate();
+    const [date, setDate] = useState(new Date().getFullYear());
+    const year = date.getFullYear();
+    const month = date.getMonth();
 
-    const date = new Date();
-    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    
-    // Get month - then shorten for the first 3 characters
-    const currentMonth = date.toLocaleString("default", {month: "long"});
-    const monthShorted = currentMonth.charAt(0).toUpperCase() + currentMonth.substring(1,3);
+    const handlePreviousYear = () => {
+        setDate(new Date(year - 1, month));
+    };
+
+    const handleNextYear = () => {
+        setDate(new Date(year + 1, month));
+    };
+
+    const handlePreviousMonth = () => {
+        setDate(new Date(year, month - 1));
+    };
+
+    const handleNextMonth = () => {
+        setDate(new Date(year, month + 1));
+    };
+
+    //Dates
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    const currentMonthName = date.toLocaleString("default", { month: "long" });
+    const monthShorted = currentMonthName.charAt(0).toUpperCase() + currentMonthName.substring(1, 3);
 
 
     const daysInMonth = [];
@@ -44,7 +60,25 @@ function Calendar() {
 
             <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
                 <div > {/* Dette ekstra div vil indeholde kalenderindholdet */}
-                    <h2>{`${currentMonth} ${date.getFullYear()}`}</h2>
+
+                    <div>
+                        {/* Year navigation */}
+                        <div className="d-flex align-items-center mb-3">
+                        <button onClick={handlePreviousYear} className="btn btn-primary btn-sm"> {(year - 1)}</button>
+                        <h2 className="mx-3">{year}</h2>
+                        <button onClick={handleNextYear} className="btn btn-primary btn-sm"> {(year + 1)}</button>
+                    </div>
+
+                        {/* Rest of your calendar */}
+                        {/* ... */}
+                    </div>
+
+                    <div className="d-flex align-items-center mb-3">
+                        <button onClick={handlePreviousMonth} className="btn btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
+                        <h3 className="mx-3">{currentMonthName}</h3>
+                        <button onClick={handleNextMonth} className="btn btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
+                    </div>
+
 
                     <table className="table">
                         <thead>
@@ -59,30 +93,23 @@ function Calendar() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* Loop through each week (up to 5 weeks since a month might span across 5 weeks on a calendar) */}
                             {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}> {/* Start a new row for each week */}
-
-                                    {/* Loop through each day of the week (from Sunday to Saturday) */}
+                                <tr key={weekIndex}>
                                     {[...Array(7)].map((_, dayIndex) => {
-
-                                        // Calculate the day of the month for the current cell. Adjust based on which day of the week the month starts on.
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - firstDay.getDay();
 
-                                        // Check if the calculated day is part of the current month
                                         if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
                                             return (
                                                 <td key={dayIndex}>
-                                                    {/* Display the day inside a styled Bootstrap card */}
-                                                    <div className="card p-2 mb-2 bg-primary text-white">
-                                                        <div className="card-body">
-                                                            <a href="#" className="card-title h4 font-weight-bold text-decoration-none">{dayOfMonth + "."} {monthShorted}</a>
-                                                        </div>
+                                                    <div
+                                                        className="card p-2 mb-2 bg-primary text-white d-flex align-items-center justify-content-center"
+                                                        style={{ width: '100px', height: '100px' }}
+                                                    >
+                                                        <a href="#" className="card-title h4 font-weight-bold text-decoration-none">{dayOfMonth + "."} {monthShorted}</a>
                                                     </div>
                                                 </td>
                                             );
                                         } else {
-                                            // If the day isn't part of the current month, render an empty cell
                                             return <td key={dayIndex}></td>;
                                         }
                                     })}

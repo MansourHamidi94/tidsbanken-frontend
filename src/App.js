@@ -2,7 +2,7 @@
 import './App.css';
 import ControlPanel from "./components/controlPanel/ControlPanel.jsx"
 import Login from './components/Login/Login.jsx';
-import Calendar from "./components/calendar/Calendar.jsx"
+import Calendar from "./components/calendar/Calendar"
 import SignUp from './components/SignUp/Register';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 

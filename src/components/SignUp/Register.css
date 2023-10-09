@@ -1,9 +1,12 @@
-.login-btn{
+.signup-btn{
     border: none;
     background-color: #234ca7;
     color: white;
     font-size: 1.1rem;
 }
-.login-title{
+.signup-title{
     border-bottom:  3px solid #234ca7 ;
+}
+.signup-container {
+    background-color: #234ca7
 }

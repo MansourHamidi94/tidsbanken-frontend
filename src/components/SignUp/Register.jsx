@@ -1,27 +1,32 @@
 import React, { useState } from "react";
-import "./Login.css"
-const Login = () => {
+import "/Users/mansourhamidi/Documents/Experis/tidsbanken-frontend/src/components/Login/Login.jsx"
+const SignUp = () => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [username, setUsername] =  useState();
 
-    const handleLogin = () => {
-        alert("Login succesfull")
+    const handlesignup = () => {
+        alert("Sign Up succesfull")
     }
 
 
     return (
         <div className="container-fluid wrapper">
 
-            <div className="row g-0 wh-100 justify-content-center align-items-center">
-                <div className="col-10 d-flex justify-content-center align-items-center border rounded-2">
+            <div className="row g-0 wh-100 justify-content-center align-items-center signup-container">
+                <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
                     <div className="col-5 justify-content-center">
 
                         <img src="tidsbanken.jpg" alt="" className='img-fluid' />
                     </div>
 
                     <form className="col-6 py-4 px-3">
-                        <h4 className="login-title text-center py-2 mb-4">Login</h4>
+                        <h4 className="signup-title text-center py-2 mb-4">Sign Up</h4>
+                        <div className="form-floating mb-3">
+                            <input type="text" className="form-control" id="username" placeholder='johndoe' onChange={(e) => setUsername(e.target.value)} />
+                            <label htmlFor="username">Username</label>
+                        </div>
                         <div className="form-floating mb-3">
                             <input type="email" className="form-control" id="email" placeholder='johndoe@hotmail.com' onChange={(e) => setEmail(e.target.value)} />
                             <label htmlFor="email">Email</label>
@@ -32,14 +37,14 @@ const Login = () => {
                             <label htmlFor="email">Password</label>
                         </div>
                         <div className="text-center">
-                            <button className="login-btn py-3 rounded-3" onClick={() => { handleLogin() }}>
+                            <button className="signup-btn py-3 rounded-3" onClick={() => { handlesignup() }}>
 
-                                Login
+                                Sign Up
                             </button>
 
                         </div>
                         <div className="text-center mt-4">
-                            Not Registered ? Sign Up.
+                            Already Registered ? Login.
                         </div>
 
                     </form>
@@ -52,4 +57,4 @@ const Login = () => {
     )
 };
 
-export default Login;
+export default SignUp;

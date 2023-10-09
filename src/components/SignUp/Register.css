@@ -1,8 +1,9 @@
 .signup-btn{
     border: none;
-    background-color: #234ca7;
+    background-color: hsl(221, 65%, 40%);
     color: white;
     font-size: 1.1rem;
+    width: 100%;
 }
 .signup-title{
     border-bottom:  3px solid #234ca7 ;

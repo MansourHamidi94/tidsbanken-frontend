@@ -15,14 +15,14 @@ const Login = () => {
     };
 
     return (
-        <div className="container-fluid wrapper">
-            {/* Container for the login form */}
-            <div className="row g-0 wh-100 justify-content-center align-items-center login-container">
+        <div div className = "row g-0 wh-100 justify-content-center align-items-center login-container" >
+        {/* Container for the login form */ }
+            
                 {/* Column for the login form */}
                 <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
                     {/* Column for the logo */}
                     <div className="col-5 justify-content-center">
-                        <img src="tidsbanken.jpg" alt="" className='img-fluid' />
+                        <img src="logo.jpg" alt="" className='img-fluid' />
                     </div>
                     {/* Column for the login form inputs */}
                     <form className="col-6 py-4 px-3">
@@ -62,8 +62,8 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
+            
+        </div >
     )
 };
 

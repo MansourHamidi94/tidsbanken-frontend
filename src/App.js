@@ -9,11 +9,10 @@ import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router
 function App() {
   return (
     <div className="App">
-    <Calendar/>
     
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ControlPanel />} />
+          <Route path="/ControlPanel" element={<ControlPanel />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Calendar" element={<Calendar />} />

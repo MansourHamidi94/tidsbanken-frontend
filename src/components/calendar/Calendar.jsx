@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-
+import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
+import "./Calendar.css"
 function Calendar() {
 
     //Date - useState()
@@ -43,51 +44,24 @@ function Calendar() {
     }
 
     return (
-
-        <div className="d-flex">
-            <div className="sidebar">
-
-                 {/* SIDEBAR */}
-                <ul className="nav nav-pills justify-content-center flex-column">
-                    <h1>Tidsbanken</h1>
-                    <li className="nav-item">
-                        <a className="nav-link active" href="#">Kalendar</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Profil</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Indstillinger</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Log ud</a>
-                    </li>
-                </ul>
-            </div>
+        <div className="">
+            <Navbar/>
 
             <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
-                <div > {/* DIV for calendar content */}
-
+                <div>
+                <br></br>
                     <div>
-                        {/* Year navigation */}
-                        {/* Previous - YEAR - Next*/}
-                        <div className="d-flex align-items-center mb-3">
+                        <div className="d-flex justify-content-center mb-3">
                             <button onClick={handlePreviousYear} className="btn btn-primary btn-sm"> {(year - 1)}</button>
                             <h2 className="mx-3">{year}</h2>
                             <button onClick={handleNextYear} className="btn btn-primary btn-sm"> {(year + 1)}</button>
                         </div>
-
                     </div>
-                    {/* Month navigation */}
-                    {/* Previous month - Current MONTH - Next Month*/}
-                    <div className="d-flex align-items-center mb-3">
+                    <div className="d-flex justify-content-center mb-3">
                         <button onClick={handlePreviousMonth} className="btn btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
                         <h1 className="mx-3">{currentMonthName}</h1>
                         <button onClick={handleNextMonth} className="btn btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                     </div>
-
-
-                    {/* Week Days */}
                     <table className="table">
                         <thead>
                             <tr>
@@ -100,12 +74,9 @@ function Calendar() {
                                 <th>Søn</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            {/* 5 weeks in each month - for each week do this.. Weekindex*/}
                             {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}> {/* week row*/}
-                                     {/* Week Days - for each week do this.. dayindex*/}
+                                <tr key={weekIndex}>
                                     {[...Array(7)].map((_, dayIndex) => {
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
 
@@ -127,16 +98,10 @@ function Calendar() {
                                 </tr>
                             ))}
                         </tbody>
-
                     </table>
-
                 </div>
             </div>
-
-
         </div>
-
-
     );
 }
 

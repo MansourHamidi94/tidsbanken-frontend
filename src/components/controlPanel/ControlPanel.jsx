@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import "./ControlPanel.css";
+import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
 
 function ControlPanel() {
 
@@ -25,44 +27,41 @@ function ControlPanel() {
 
     return (
         <div>
-            <div>
-                <h1>Tidsbanken</h1>
+            <Navbar/>
+
+            <div className="container mt-5">
+            <div className="text-center mb-4">
+                <h1 className="display-4">Tidsbanken</h1>
             </div>
 
-            <div className="row mb-5">
-                <div className="col-md-6">
-
-                    {/* Calendar Card */}
-                    <Link to="/calendar" className="card bg-primary text-white text-center mb-2">
+            <div className="row justify-content-center mb-5">
+                <div className="col-md-5 mb-3">
+                    <Link to="/calendar" className="card custom-card bg-light shadow-lg mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Calendar</h5>
+                            <h5 className="card-title ">Calendar</h5>
                         </div>
                     </Link>
-
-                    {/* Vacation Request Card */}
-                    <Link to="/vacation-request" className="card bg-primary text-white text-center mt-2">
+                    <Link to="/vacation-request" className="card custom-card bg-light shadow-lg">
                         <div className="card-body">
-                            <h5 className="card-title">Vacation Request</h5>
+                            <h5 className="card-title " >Vacation Request</h5>
                         </div>
                     </Link>
                 </div>
 
-                <div className="col-md-6">
-                    {/* Profile Card */}
-                    <Link to="/profile" className="card bg-primary text-white text-center mb-2">
+                <div className="col-md-5 mb-3">
+                    <Link to="/profile" className="card custom-card bg-light shadow-lg mb-3">
                         <div className="card-body">
-                            <h5 className="card-title">Profile</h5>
+                            <h5 className="card-title ">Profile</h5>
                         </div>
                     </Link>
-
-                    {/* Logout Card */}
-                    <Link to="/logout" className="card bg-danger text-white text-center mt-2">
+                    <Link to="/logout" id="logout" className="card custom-card bg-light shadow-lg">
                         <div className="card-body">
-                            <h5 className="card-title">Logout</h5>
+                            <h5 className="card-title text-danger">Logout</h5>
                         </div>
                     </Link>
                 </div>
             </div>
+        </div>
 
 
 

@@ -7,12 +7,12 @@ function Calendar() {
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
     const month = date.getMonth(); // Get Month
-    
+
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
         setDate(new Date(year - 1, month)); //Use useState() to Update "setDate"
     };
-    
+
     // (Currentyear + 1) = Next year
     const handleNextYear = () => {
         setDate(new Date(year + 1, month));
@@ -22,7 +22,7 @@ function Calendar() {
     const handlePreviousMonth = () => {
         setDate(new Date(year, month - 1));
     };
-    
+
     // (Current month + 1) = next month
     const handleNextMonth = () => {
         setDate(new Date(year, month + 1));
@@ -46,7 +46,7 @@ function Calendar() {
         <div className="d-flex">
             <div className="sidebar">
 
-                 {/* SIDEBAR */}
+                {/* SIDEBAR */}
                 <ul className="nav nav-pills justify-content-center flex-column">
                     <h1>Tidsbanken</h1>
                     <li className="nav-item">
@@ -104,7 +104,7 @@ function Calendar() {
                             {/* 5 weeks in each month - for each week do this.. Weekindex*/}
                             {[...Array(5)].map((_, weekIndex) => (
                                 <tr key={weekIndex}> {/* week row*/}
-                                     {/* Week Days - for each week do this.. dayindex*/}
+                                    {/* Week Days - for each week do this.. dayindex*/}
                                     {[...Array(7)].map((_, dayIndex) => {
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
 

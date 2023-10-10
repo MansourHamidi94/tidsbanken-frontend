@@ -52,3 +52,13 @@
     top: 10px;
     cursor: pointer;
 }
+.username {
+    margin-top: 10px; /* Adjust as needed */
+}
+
+.cancel-button {
+    position: absolute;
+    top: 515px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+}
+

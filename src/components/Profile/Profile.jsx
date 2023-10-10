@@ -8,10 +8,6 @@ function Profile() {
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
 
-
-
-
-
     const submitPasswordChange = () => {
         // Logic to handle password change
         // For example, you can validate the new password, check if the current password is correct, etc.
@@ -39,10 +35,17 @@ function Profile() {
         setDarkMode(!darkMode);
         // Additional logic to apply the theme can be added here
     };
+    const handleCancel = () => {
+        // Redirect to the main page
+        // For example, if you're using react-router:
+        // navigate('/');
+    };
+    
 
     return (
 
         <div className="container mt-5">
+
             <div className="card profile-card">
                 <div className="card-body">
                     {/* Profile Picture */}
@@ -61,6 +64,7 @@ function Profile() {
                         <input type="email" className="form-control mb-2" placeholder="E-Mail" />
                         <input type="text" className="form-control mb-2" placeholder="UserName" />
                         <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
+                    <button className="btn btn-secondary cancel-button" onClick={handleCancel}>Cancel</button>
                     </div>
                     {/* Password Change Modal */}
                     <div className={showModal ? 'modal' : 'modal display-none'}>
@@ -79,9 +83,7 @@ function Profile() {
                     <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
                 </div>
             </div>
-
             {/* Theme Section */}
-
             <label className="form-check-label" htmlFor="themeToggle">
                 Theme
             </label>

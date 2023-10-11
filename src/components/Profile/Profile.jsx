@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Profile.css'; // Assuming you have a CSS file for styling
 
 function Profile() {
@@ -7,6 +7,9 @@ function Profile() {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
+    const [theme, setTheme] = useState('light'); // default to light mode
+
+
 
     const submitPasswordChange = () => {
         // Logic to handle password change
@@ -32,9 +35,18 @@ function Profile() {
 
 
     const handleThemeToggle = () => {
-        setDarkMode(!darkMode);
-        // Additional logic to apply the theme can be added here
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
     };
+    
+    useEffect(() => {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }, [theme]);
+    
     const handleHome = () => {
         // Redirect to the main page
         // For example, if you're using react-router:
@@ -76,14 +88,14 @@ function Profile() {
                             <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
                         </div>
                     </div>
-            <div className="d-flex justify-content-between mt-3">
-                <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
-                <button className="btn btn-secondary" onClick={handleHome}>Home</button>
+                    <div className="d-flex justify-content-between mt-3">
+                        <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
+                        <button className="btn btn-secondary" onClick={handleHome}>Home</button>
 
-            </div>
+                    </div>
                 </div>
             </div>
-                
+
             {/* Theme Section */}
             <label className="form-check-label" htmlFor="themeToggle">
                 Theme

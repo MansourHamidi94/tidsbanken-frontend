@@ -72,3 +72,14 @@
     right: 10px; /* Adjust as needed */
 }
 
+/* Default light mode styles */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+}

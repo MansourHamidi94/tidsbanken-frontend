@@ -1,35 +1,34 @@
-.custom-card {
-    background-color: #4A90E2 !important;  /* Modern blue color for the card */
-    color: white !important;               /* Text color for contrast */
+.control-panel-card {
+    background-color: #4A90E2 !important;
+    color: white !important;
     border: none !important;
     border-radius: 15px !important;
     transition: transform 0.2s ease-in-out !important;
 }
-#logout{
+
+#logout-card {
     background-color: red !important;
 }
 
-.custom-card:hover {
+.control-panel-card:hover {
     transform: scale(1.05) !important;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
-.custom-card .card-body {
+.control-panel-card__body {
     padding: 40px !important;    
 }
 
-.card-title {
+.control-panel-card__title {
     font-size: 1.5em !important;
-    font-weight: 400 !important; /* Dette er standardtypografiens vægt */
+    font-weight: 400 !important;
     color: inherit !important;
-    text-transform: none !important; /* Fjerner enhver tekstomformning */
+    text-transform: none !important; 
 }
 
-
-/* Add the following to ensure text remains white even on hover or other states */
-.custom-card a,
-.custom-card a:hover,
-.custom-card a:focus {
+.control-panel-card a,
+.control-panel-card a:hover,
+.control-panel-card a:focus {
     color: white !important;
-    text-decoration: none !important;  /* Optional: To remove underline on hover */
+    text-decoration: none !important;  
 }

@@ -9,12 +9,12 @@ function Calendar() {
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
     const month = date.getMonth(); // Get Month
-    
+
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
         setDate(new Date(year - 1, month)); //Use useState() to Update "setDate"
     };
-    
+
     // (Currentyear + 1) = Next year
     const handleNextYear = () => {
         setDate(new Date(year + 1, month));
@@ -24,7 +24,7 @@ function Calendar() {
     const handlePreviousMonth = () => {
         setDate(new Date(year, month - 1));
     };
-    
+
     // (Current month + 1) = next month
     const handleNextMonth = () => {
         setDate(new Date(year, month + 1));
@@ -44,8 +44,27 @@ function Calendar() {
     }
 
     return (
-        <div className="">
-            <Navbar/>
+
+        <div className="d-flex">
+            <div className="sidebar">
+
+                {/* SIDEBAR */}
+                <ul className="nav nav-pills justify-content-center flex-column">
+                    <h1>Tidsbanken</h1>
+                    <li className="nav-item">
+                        <a className="nav-link active" href="#">Kalendar</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Profil</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Indstillinger</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Log ud</a>
+                    </li>
+                </ul>
+            </div>
 
             <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
                 <div>
@@ -76,7 +95,8 @@ function Calendar() {
                         </thead>
                         <tbody>
                             {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}>
+                                <tr key={weekIndex}> {/* week row*/}
+                                    {/* Week Days - for each week do this.. dayindex*/}
                                     {[...Array(7)].map((_, dayIndex) => {
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
 

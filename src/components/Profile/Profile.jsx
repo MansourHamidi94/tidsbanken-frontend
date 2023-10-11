@@ -35,12 +35,12 @@ function Profile() {
         setDarkMode(!darkMode);
         // Additional logic to apply the theme can be added here
     };
-    const handleCancel = () => {
+    const handleHome = () => {
         // Redirect to the main page
         // For example, if you're using react-router:
         // navigate('/');
     };
-    
+
 
     return (
 
@@ -50,11 +50,12 @@ function Profile() {
                 <div className="card-body">
                     {/* Profile Picture */}
 
-                    <div className="d-flex justify-content-center ">
+                    <div className="d-flex flex-column align-items-center">
                         <img src="logo.jpg" alt="Profile" className="profile-pic" />
-
+                        <input type="text" className="form-control mb-2 username-input" placeholder="UserName" />
                         <button className="btn btn-primary mt-2">Change Picture</button>
                     </div>
+
 
                     {/* User Details */}
                     <div className="mt-4">
@@ -62,9 +63,7 @@ function Profile() {
                         <input type="text" className="form-control mb-2" placeholder="Last Name" />
                         <input type="number" className="form-control mb-2" placeholder="Age" />
                         <input type="email" className="form-control mb-2" placeholder="E-Mail" />
-                        <input type="text" className="form-control mb-2" placeholder="UserName" />
                         <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
-                    <button className="btn btn-secondary cancel-button" onClick={handleCancel}>Cancel</button>
                     </div>
                     {/* Password Change Modal */}
                     <div className={showModal ? 'modal' : 'modal display-none'}>
@@ -77,12 +76,14 @@ function Profile() {
                             <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
                         </div>
                     </div>
+            <div className="d-flex justify-content-between mt-3">
+                <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
+                <button className="btn btn-secondary" onClick={handleHome}>Home</button>
 
-
-
-                    <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
+            </div>
                 </div>
             </div>
+                
             {/* Theme Section */}
             <label className="form-check-label" htmlFor="themeToggle">
                 Theme

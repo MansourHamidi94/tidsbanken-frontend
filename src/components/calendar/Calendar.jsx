@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
-import "./Calendar.css"
+import "./Calendar.css";
+
 function Calendar() {
 
     //Date - useState()
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
     const month = date.getMonth(); // Get Month
-    
+
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
         setDate(new Date(year - 1, month)); //Use useState() to Update "setDate"
     };
-    
+
     // (Currentyear + 1) = Next year
     const handleNextYear = () => {
         setDate(new Date(year + 1, month));
@@ -24,7 +25,7 @@ function Calendar() {
     const handlePreviousMonth = () => {
         setDate(new Date(year, month - 1));
     };
-    
+
     // (Current month + 1) = next month
     const handleNextMonth = () => {
         setDate(new Date(year, month + 1));
@@ -43,13 +44,24 @@ function Calendar() {
         daysInMonth.push(i);
     }
 
+    //Display ineligbleperiods
+    const redPeriods = [];
+    const startDate = new Date(2023, 10,7);
+    const endDate = new Date(2023, 10, 14);
+
+    for (let i = startDate.getDate(); i < endDate.getDate() +1; i++) {
+        redPeriods.push(i);
+    }
+    
+    console.log(redPeriods + " days");
+
     return (
         <div className="">
-            <Navbar/>
+            <Navbar />
 
-            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
+            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
                 <div>
-                <br></br>
+                    <br></br>
                     <div>
                         <div className="d-flex justify-content-center mb-3">
                             <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
@@ -61,6 +73,11 @@ function Calendar() {
                         <button onClick={handlePreviousMonth} className="btn btn-primary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
                         <h1 className="mx-3">{currentMonthName}</h1>
                         <button onClick={handleNextMonth} className="btn btn-primary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
+                        <div className="d-flex justify-content-center mb-3">
+                            <button onClick={handlePreviousMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
+                            <h1 className="mx-3">{currentMonthName}</h1>
+                            <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
+                        </div>
                     </div>
                     <table className="table">
                         <thead>
@@ -79,15 +96,15 @@ function Calendar() {
                                 <tr key={weekIndex}>
                                     {[...Array(7)].map((_, dayIndex) => {
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
-
+                                        const isRedPeriod  =redPeriods.includes(dayOfMonth); //Is period red?
+                                      
                                         if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
                                             return (
                                                 <td key={dayIndex}>
-                                                    <div
-                                                        className="card p-2 mb-2 bg-primary text-white d-flex align-items-center justify-content-center"
-                                                        style={{ width: '100px', height: '100px' }}
-                                                    >
-                                                        <a href="#" className="card-title h4 font-weight-bold text-decoration-none">{dayOfMonth + "."} {monthShorted}</a>
+                                                    <div className={`custom-card p-2 mb-2 d-flex 
+                                                    align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
+                                                        <a href="#" className="card-title h4 font-weight-bold">
+                                                            {dayOfMonth + "."} {monthShorted}</a>
                                                     </div>
                                                 </td>
                                             );

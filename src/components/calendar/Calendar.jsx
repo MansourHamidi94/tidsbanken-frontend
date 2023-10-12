@@ -59,9 +59,30 @@ function Calendar() {
         <div className="">
             <Navbar />
 
-            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
-                <div>
-                    <br></br>
+        <div className="d-flex">
+            <div className="sidebar">
+
+                {/* SIDEBAR */}
+                <ul className="nav nav-pills justify-content-center flex-column">
+                    <h1>Tidsbanken</h1>
+                    <li className="nav-item">
+                        <a className="nav-link active" href="#">Kalendar</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Profil</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Indstillinger</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Log ud</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
+                <div > {/* DIV for calendar content */}
+
                     <div>
                         <div className="d-flex justify-content-center mb-3">
                             <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
@@ -90,7 +111,8 @@ function Calendar() {
                         </thead>
                         <tbody>
                             {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}>
+                                <tr key={weekIndex}> {/* week row*/}
+                                    {/* Week Days - for each week do this.. dayindex*/}
                                     {[...Array(7)].map((_, dayIndex) => {
                                         const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
                                         const isRedPeriod  =redPeriods.includes(dayOfMonth); //Is period red?
@@ -114,6 +136,7 @@ function Calendar() {
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
     );

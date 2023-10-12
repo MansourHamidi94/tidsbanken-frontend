@@ -12,6 +12,7 @@ function App() {
     
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<ControlPanel />} />
           <Route path="/ControlPanel" element={<ControlPanel />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />

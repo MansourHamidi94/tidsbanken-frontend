@@ -52,15 +52,15 @@ function Calendar() {
                 <br></br>
                     <div>
                         <div className="d-flex justify-content-center mb-3">
-                            <button onClick={handlePreviousYear} className="btn btn-primary btn-sm"> {(year - 1)}</button>
+                            <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
                             <h2 className="mx-3">{year}</h2>
-                            <button onClick={handleNextYear} className="btn btn-primary btn-sm"> {(year + 1)}</button>
+                            <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center mb-3">
-                        <button onClick={handlePreviousMonth} className="btn btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
+                        <button onClick={handlePreviousMonth} className="btn btn-primary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
                         <h1 className="mx-3">{currentMonthName}</h1>
-                        <button onClick={handleNextMonth} className="btn btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
+                        <button onClick={handleNextMonth} className="btn btn-primary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                     </div>
                     <table className="table">
                         <thead>

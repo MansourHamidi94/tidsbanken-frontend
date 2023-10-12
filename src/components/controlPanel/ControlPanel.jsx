@@ -28,7 +28,6 @@ function ControlPanel() {
     return (
         <div>
             <Navbar/>
-
             <div className="container mt-5">
             <div className="text-center mb-4">
                 <h1 className="display-4">Tidsbanken</h1>

@@ -70,9 +70,6 @@ function Calendar() {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center mb-3">
-                        <button onClick={handlePreviousMonth} className="btn btn-primary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
-                        <h1 className="mx-3">{currentMonthName}</h1>
-                        <button onClick={handleNextMonth} className="btn btn-primary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                         <div className="d-flex justify-content-center mb-3">
                             <button onClick={handlePreviousMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
                             <h1 className="mx-3">{currentMonthName}</h1>

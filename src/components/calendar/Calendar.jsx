@@ -83,100 +83,72 @@ function Calendar() {
 
     return (
         <div className="">
-            <Navbar />
-            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
-                <div>
-                    <br></br>
-                    <div>
-                        <div className="d-flex justify-content-center mb-3">
-                            <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
-                            <h2 className="mx-3">{year}</h2>
-                            <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
-                        </div>
-                        <div className="d-flex justify-content-center mb-3">
-                            <div className="d-flex justify-content-center mb-3">
-                                <button onClick={handlePreviousMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
-                                <h1 className="mx-3">{currentMonthName}</h1>
-                                <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
-                            </div>
-                        </div>
-                    </div>
-                    <VacationPlanner
-                        startDate={startDate}
-                        endDate={endDate}
-                        showVacationPlanner={showVacationPlanner}
-                        setShowVacationPlanner={setShowVacationPlanner}
-                        instruction={instruction}  // Added this prop
-                        startVacationPlanning={startVacationPlanning}  // Added this prop
-                    />
-
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Man</th>
-                                <th>Tir</th>
-                                <th>Ons</th>
-                                <th>Tor</th>
-                                <th>Fre</th>
-                                <th>Lør</th>
-                                <th>Søn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}>
-                                    {[...Array(7)].map((_, dayIndex) => {
-                                        const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
-                                        const isRedPeriod = redPeriods.includes(dayOfMonth); //Is period red?
-
-                                        if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
-                                            return (
-                                                <td key={dayIndex}>
-                                                    <div className={`custom-card p-2 mb-2 d-flex 
-                                                    align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
-                                                        <a href="#" className="card-title h4 font-weight-bold" onClick={() => handleDateClick(dayOfMonth)}>
-                                                            {dayOfMonth + "."} {monthShorted}
-                                                        </a>
-
-                                                    </div>
-                                                </td>
-                                            );
-                                        } else {
-                                            return <td key={dayIndex}></td>;
-                                        }
-                                    })}
-                                </tr>
-                                </thead>
-                            <tbody>
-                                {[...Array(5)].map((_, weekIndex) => (
-                                    <tr key={weekIndex}> {/* week row*/}
-                                        {/* Week Days - for each week do this.. dayindex*/}
-                                        {[...Array(7)].map((_, dayIndex) => {
-                                            const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
-                                            const isRedPeriod = redPeriods.includes(dayOfMonth); //Is period red?
-
-                                            if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
-                                                return (
-                                                    <td key={dayIndex}>
-                                                        <div className={`custom-card p-2 mb-2 d-flex 
-                                                    align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
-                                                            <a href="#" className="card-title h4 font-weight-bold">
-                                                                {dayOfMonth + "."} {monthShorted}</a>
-                                                        </div>
-                                                    </td>
-                                                );
-                                            } else {
-                                                return <td key={dayIndex}></td>;
-                                            }
-                                        })}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+        <Navbar />
+        <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
+            <div>
+                <div className="d-flex justify-content-center mb-3">
+                    <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
+                    <h2 className="mx-3">{year}</h2>
+                    <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
+                </div>
+                <div className="d-flex justify-content-center mb-3">
+                    <div className="d-flex justify-content-center mb-3">
+                        <button onClick={handlePreviousMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
+                        <h1 className="mx-3">{currentMonthName}</h1>
+                        <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                     </div>
                 </div>
+                
+                <VacationPlanner
+                    startDate={startDate}
+                    endDate={endDate}
+                    showVacationPlanner={showVacationPlanner}
+                    setShowVacationPlanner={setShowVacationPlanner}
+                    instruction={instruction}
+                    startVacationPlanning={startVacationPlanning}
+                />
+
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Man</th>
+                            <th>Tir</th>
+                            <th>Ons</th>
+                            <th>Tor</th>
+                            <th>Fre</th>
+                            <th>Lør</th>
+                            <th>Søn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {[...Array(5)].map((_, weekIndex) => (
+                            <tr key={weekIndex}>
+                                {[...Array(7)].map((_, dayIndex) => {
+                                    const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
+                                    const isRedPeriod = redPeriods.includes(dayOfMonth);
+
+                                    if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
+                                        return (
+                                            <td key={dayIndex}>
+                                                <div className={`custom-card p-2 mb-2 d-flex 
+                                                align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
+                                                    <a href="#" className="card-title h4 font-weight-bold" onClick={() => handleDateClick(dayOfMonth)}>
+                                                        {dayOfMonth + "."} {monthShorted}
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        );
+                                    } else {
+                                        return <td key={dayIndex}></td>;
+                                    }
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
     );
 }
 

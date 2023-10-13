@@ -3,8 +3,8 @@
     background-color: #4A90E2 !important;  /* Modern blue color for the card */
     color: white !important; 
     border: none;
-    border-radius: 15px;
-    padding: 10px 20px;  /* Adjusted padding for navbar */
+    border-radius: 15px !important;
+    padding: 10px 10px;  /* Adjusted padding for navbar */
     transition: transform 0.2s ease-in-out;
 
     &:hover {

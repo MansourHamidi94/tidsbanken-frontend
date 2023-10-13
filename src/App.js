@@ -4,8 +4,8 @@ import Login from '/Users/mansourhamidi/Documents/Experis/tidsbanken-frontend/sr
 import Calendar from "./components/calendar/Calendar.jsx"
 import SignUp from './components/SignUp/Register';
 import Profile from '/Users/mansourhamidi/Documents/Experis/tidsbanken-frontend/src/components/Profile/Profile.jsx'
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import ControlPanel from '/Users/mansourhamidi/Documents/Experis/tidsbanken-frontend/src/components/controlPanel/ControlPanel.jsx'
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
 
 function App() {
   return (

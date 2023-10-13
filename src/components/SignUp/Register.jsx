@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Register.css"; // Import the Register component's CSS styling.
+import "./Register.css"; 
 
 const SignUp = () => {
     // State variables to store user input for email, password, and username.
@@ -11,7 +11,6 @@ const SignUp = () => {
     // Function to handle the sign-up button click event.
     const handleSignUp = () => {
         alert("Sign Up successful");
-        // In a real application, you would typically use email, password, and username
         // to create a new user account or send registration data to a server.
         // This function is a placeholder for handling the sign-up process.
     }

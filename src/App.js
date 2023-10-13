@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import ControlPanel from "./components/controlPanel/ControlPanel.jsx"
-import Login from './components/Login/Login.jsx';
+import Login from './components/login/Login.jsx';
 import Calendar from "./components/calendar/Calendar"
 import SignUp from './components/SignUp/Register';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router
 function App() {
   return (
     <div className="App">
-    
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<ControlPanel />} />

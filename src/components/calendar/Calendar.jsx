@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
 import "./Calendar.css";
+import VacationPlanner from "../vacation/VacationPlanner.jsx";
+
 
 function Calendar() {
 
@@ -10,6 +12,12 @@ function Calendar() {
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
     const month = date.getMonth(); // Get Month
+
+    //InEligblePeriods
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [showVacationPlanner, setShowVacationPlanner] = useState(false);
+    const [instruction, setInstruction] = useState("");  // can be "start" or "end"
 
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
@@ -46,30 +54,44 @@ function Calendar() {
 
     //Display ineligbleperiods
     const redPeriods = [];
-    const startDate = new Date(2023, 10, 7);
-    const endDate = new Date(2023, 10, 14);
-
-    for (let i = startDate.getDate(); i < endDate.getDate() + 1; i++) {
-        redPeriods.push(i);
+    if (startDate && endDate) {
+        for (let i = startDate.getDate(); i < endDate.getDate() + 1; i++) {
+            redPeriods.push(i);
+        }
     }
+
+    // Modified handleDateClick to capture dates based on the instruction
+    const handleDateClick = (dayOfMonth) => {
+        if (instruction === "start") {
+            setStartDate(new Date(year, month, dayOfMonth));
+            setInstruction("end");
+        } else if (instruction === "end") {
+            setEndDate(new Date(year, month, dayOfMonth));
+            setInstruction("");
+            setShowVacationPlanner(false);  // close vacation planner once end date is selected
+        }
+    };
+
+    // Start the vacation planning process
+    const startVacationPlanning = () => {
+        setShowVacationPlanner(true);
+        setInstruction("start");
+    };
+
 
     console.log(redPeriods + " days");
 
     return (
         <div className="">
             <Navbar />
-
-            <div className="d-flex">
-
-                <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center styl">
-                    <div > {/* DIV for calendar content */}
-
-                        <div>
-                            <div className="d-flex justify-content-center mb-3">
-                                <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
-                                <h2 className="mx-3">{year}</h2>
-                                <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
-                            </div>
+            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
+                <div>
+                    <br></br>
+                    <div>
+                        <div className="d-flex justify-content-center mb-3">
+                            <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
+                            <h2 className="mx-3">{year}</h2>
+                            <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
                         </div>
                         <div className="d-flex justify-content-center mb-3">
                             <div className="d-flex justify-content-center mb-3">
@@ -78,18 +100,53 @@ function Calendar() {
                                 <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                             </div>
                         </div>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Man</th>
-                                    <th>Tir</th>
-                                    <th>Ons</th>
-                                    <th>Tor</th>
-                                    <th>Fre</th>
-                                    <th>Lør</th>
-                                    <th>Søn</th>
+                    </div>
+                    <VacationPlanner
+                        startDate={startDate}
+                        endDate={endDate}
+                        showVacationPlanner={showVacationPlanner}
+                        setShowVacationPlanner={setShowVacationPlanner}
+                        instruction={instruction}  // Added this prop
+                        startVacationPlanning={startVacationPlanning}  // Added this prop
+                    />
+
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Man</th>
+                                <th>Tir</th>
+                                <th>Ons</th>
+                                <th>Tor</th>
+                                <th>Fre</th>
+                                <th>Lør</th>
+                                <th>Søn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {[...Array(5)].map((_, weekIndex) => (
+                                <tr key={weekIndex}>
+                                    {[...Array(7)].map((_, dayIndex) => {
+                                        const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
+                                        const isRedPeriod = redPeriods.includes(dayOfMonth); //Is period red?
+
+                                        if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
+                                            return (
+                                                <td key={dayIndex}>
+                                                    <div className={`custom-card p-2 mb-2 d-flex 
+                                                    align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
+                                                        <a href="#" className="card-title h4 font-weight-bold" onClick={() => handleDateClick(dayOfMonth)}>
+                                                            {dayOfMonth + "."} {monthShorted}
+                                                        </a>
+
+                                                    </div>
+                                                </td>
+                                            );
+                                        } else {
+                                            return <td key={dayIndex}></td>;
+                                        }
+                                    })}
                                 </tr>
-                            </thead>
+                                </thead>
                             <tbody>
                                 {[...Array(5)].map((_, weekIndex) => (
                                     <tr key={weekIndex}> {/* week row*/}

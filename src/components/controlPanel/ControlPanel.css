@@ -1,18 +1,23 @@
+
+
 .control-panel-card {
-    background-color: #4A90E2 !important;
+    background-color: rgba(74, 144, 226, 0.8) !important; /* Add transparency for the glass effect */
     color: white !important;
     border: none !important;
     border-radius: 15px !important;
     transition: transform 0.2s ease-in-out !important;
+    backdrop-filter: blur(10px); /* This will give the glass effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Slightly toned down for a softer appearance */
 }
 
 #logout-card {
-    background-color: red !important;
+    background-color: rgba(255, 0, 0, 0.8) !important; /* Added transparency to the red background */
+    backdrop-filter: blur(10px); /* Glass effect for logout card */
 }
 
 .control-panel-card:hover {
     transform: scale(1.05) !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; /* Slightly increased the shadow for contrast on hover */
 }
 
 .control-panel-card__body {

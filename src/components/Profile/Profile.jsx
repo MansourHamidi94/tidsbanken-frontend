@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './Profile.css'; // Assuming you have a CSS file for styling
+import { useNavigate } from 'react-router-dom';
+import './Profile.css'; 
 
 function Profile() {
     const [darkMode, setDarkMode] = useState(false);
@@ -8,13 +9,17 @@ function Profile() {
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
     const [theme, setTheme] = useState('light'); // default to light mode
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [age, setAge] = useState("");
+    const [email, setEmail] = useState("");
+
+
 
 
 
     const submitPasswordChange = () => {
         // Logic to handle password change
-        // For example, you can validate the new password, check if the current password is correct, etc.
-        // After validation and processing, you can send a request to the backend to update the password.
 
         // For now, let's just print the passwords to the console:
         console.log("Current Password: ", currentPassword);
@@ -33,12 +38,44 @@ function Profile() {
         setShowModal(false);
     };
 
+    const handleSubmitChanges = async () => {
+        // Construct the user data
+        const userData = {
+            firstName,
+            lastName,
+            age,
+            email
+        };
+
+        // Make an API call to save the changes
+        try {
+            const response = await fetch('/api/updateUserProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (response.ok) {
+                // Handle successful response
+                console.log("Profile updated successfully!");
+            } else {
+                // Handle errors
+                console.error("Error updating profile:", response.statusText);
+            }
+        } catch (error) {
+            console.error("There was an error updating the profile:", error);
+        }
+    };
+
+
 
     const handleThemeToggle = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
     };
-    
+
     useEffect(() => {
         if (theme === 'dark') {
             document.body.classList.add('dark-mode');
@@ -46,12 +83,14 @@ function Profile() {
             document.body.classList.remove('dark-mode');
         }
     }, [theme]);
-    
+
+    const navigate = useNavigate();
+
     const handleHome = () => {
-        // Redirect to the main page
-        // For example, if you're using react-router:
-        // navigate('/');
+        // Redirect to the main page (control panel)
+        navigate('/controlpanel'); 
     };
+
 
 
     return (
@@ -60,21 +99,49 @@ function Profile() {
 
             <div className="card profile-card">
                 <div className="card-body">
+
                     {/* Profile Picture */}
 
-                    <div className="d-flex flex-column align-items-center">
+                    {/*<div className="d-flex flex-column align-items-center">*
                         <img src="logo.jpg" alt="Profile" className="profile-pic" />
                         <input type="text" className="form-control mb-2 username-input" placeholder="UserName" />
                         <button className="btn btn-primary mt-2">Change Picture</button>
-                    </div>
+                    </div>*/}
 
 
                     {/* User Details */}
                     <div className="mt-4">
-                        <input type="text" className="form-control mb-2" placeholder="First Name" />
-                        <input type="text" className="form-control mb-2" placeholder="Last Name" />
-                        <input type="number" className="form-control mb-2" placeholder="Age" />
-                        <input type="email" className="form-control mb-2" placeholder="E-Mail" />
+                        <div className="mt-4">
+                            <input
+                                type="text"
+                                className="form-control mb-2"
+                                placeholder="First Name"
+                                value={firstName}
+                                onChange={e => setFirstName(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                className="form-control mb-2"
+                                placeholder="Last Name"
+                                value={lastName}
+                                onChange={e => setLastName(e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                className="form-control mb-2"
+                                placeholder="Age"
+                                value={age}
+                                onChange={e => setAge(e.target.value)}
+                            />
+                            <input
+                                type="email"
+                                className="form-control mb-2"
+                                placeholder="E-Mail"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+
                         <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
                     </div>
                     {/* Password Change Modal */}
@@ -85,30 +152,16 @@ function Profile() {
                             <input type="password" className="form-control mb-2" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
                             <input type="password" className="form-control mb-2" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                             <input type="password" className="form-control mb-2" placeholder="Repeat New Password" value={repeatNewPassword} onChange={(e) => setRepeatNewPassword(e.target.value)} />
-                            <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between mt-3">
-                        <button className="btn btn-primary" onClick={submitPasswordChange}>Submit</button>
+                        <button className="btn btn-success mt-2" onClick={handleSubmitChanges}>Submit</button>
                         <button className="btn btn-secondary" onClick={handleHome}>Home</button>
 
                     </div>
                 </div>
             </div>
-
-            {/* Theme Section */}
-            <label className="form-check-label" htmlFor="themeToggle">
-                Theme
-            </label>
-            <div className="form-check form-switch">
-                <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="themeToggle"
-                    onChange={handleThemeToggle}
-                />
-            </div>
-
+            
         </div>
     );
 }

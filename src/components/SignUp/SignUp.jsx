@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Register.css"; 
+import "./SignUp.css"; 
 
 const SignUp = () => {
     // State variables to store user input for email, password, and username.

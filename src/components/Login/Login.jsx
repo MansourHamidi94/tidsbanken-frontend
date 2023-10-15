@@ -10,14 +10,13 @@ const Login = () => {
     // Function to handle the login button click event.
     const handleLogin = () => {
         alert("Login successful");
-        // In a real application, you would typically use email and password for user authentication.
         // This function is a placeholder for handling the login process.
     };
 
     return (
         <div>
+            <div className = "row g-0 wh-100 justify-content-center align-items-center login-container"> 
 
-        <div className = "row g-0 wh-100 justify-content-center align-items-center login-container"> 
         {/* Container for the login form */ }
             
                 {/* Column for the login form */}
@@ -29,7 +28,7 @@ const Login = () => {
                     {/* Column for the login form inputs */}
                     <form className="col-6 py-4 px-3">
                         {/* Login title */}
-                        <h4 className="login-title text-center py-2 mb-4">Login</h4>
+                        <h4 className="login-title text-center py-2 mb-4">TidsBanken</h4>
                         {/* Email input */}
                         <div className="form-floating mb-3">
                             <input

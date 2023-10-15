@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './Profile.css'; 
 
 function Profile() {
-    const [darkMode, setDarkMode] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -21,7 +20,6 @@ function Profile() {
     const submitPasswordChange = () => {
         // Logic to handle password change
 
-        // For now, let's just print the passwords to the console:
         console.log("Current Password: ", currentPassword);
         console.log("New Password: ", newPassword);
         console.log("Repeat New Password: ", repeatNewPassword);
@@ -49,7 +47,7 @@ function Profile() {
 
         // Make an API call to save the changes
         try {
-            const response = await fetch('/api/updateUserProfile', {
+            const response = await fetch('', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

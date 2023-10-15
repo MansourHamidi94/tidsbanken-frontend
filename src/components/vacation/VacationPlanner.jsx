@@ -13,7 +13,7 @@ import { setStartDate, setEndDate, createVacationRequest } from '../../redux/Sli
 3. Pick end date
 4. Display the vacant period in calendar
 */
-function VacationPlanner({
+function VacationPlanner({ //Props
     showVacationPlanner,
     setShowVacationPlanner,
     instruction,
@@ -27,6 +27,44 @@ function VacationPlanner({
     const handleEndDateChange = (date) => {
         setEndDate(date);
     };
+
+
+     // This function sends the POST request to the server.
+     const sendVacationRequest = () => {
+        console.log("API Called!");
+        const url = "https://localhost:7172/api/v1/VacationRequests";
+        const requestPayload = {
+            startDate: "2023-10-15T16:27:15.324Z",
+            endDate: "2023-10-15T16:27:15.324Z",
+            status: "Pending",
+            userId: 6,
+            requestDate: "2023-10-15T16:27:15.324Z",
+            approverId: 0,
+            approvalDate: "2023-10-15T16:27:15.324Z"
+        };
+    
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestPayload)
+        })
+        .then(response => {
+            if (response.ok) { // Check status code
+                return response.json();
+            } else {
+                throw new Error(`Request failed with status: ${response.status}`);
+            }
+        })
+        .then(data => {
+            console.log('Success: GOOD!', data);
+        })
+        .catch((error) => {
+            console.error('Error: NOT GOOD', error);
+        });
+    };
+    
 
     const handleDateClick = (dayOfMonth) => {
         const selectedDate = new Date(reduxStartDate.getFullYear(), reduxStartDate.getMonth(), dayOfMonth);
@@ -51,6 +89,7 @@ function VacationPlanner({
 
     return (
         <div>
+            <button className="vacation-btn" onClick={sendVacationRequest}>🚧Send API Vacation Request</button>
             <button className="vacation-btn" onClick={startVacationPlanning}> 📅 Vacation Request</button>
             {showVacationPlanner && (
                 <Popup

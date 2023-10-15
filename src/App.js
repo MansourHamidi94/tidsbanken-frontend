@@ -6,10 +6,14 @@ import Login from './components/login/Login.jsx';
 import SignUp from './components/SignUp/Register';
 import Profile from './components/Profile/Profile.jsx';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
+import {store} from "./redux/Store"
+import { Provider } from 'react-redux';
 
 function App() {
   return (
     <div className="App">
+      <Provider store={store}>
+
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<ControlPanel />} />
@@ -21,6 +25,7 @@ function App() {
           <Route path='/calendar' element={<Calendar/>}/>
         </Routes>
       </BrowserRouter>
+      </Provider>
     </div>
   );
 }

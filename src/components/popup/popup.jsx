@@ -19,7 +19,7 @@ function Popup({ onClose, title, content }) {
     return (
         <div className="popup-overlay" style={{ backgroundColor: `rgba(0,0,0,${opacity * 0.5})` }}>
         <div className="popup-content " style={{ opacity: opacity, transition: 'opacity 1s' }}>
-            <button className="popup-close-btn" onClick={onClose}>X</button>
+            <button className="popup-close-btn" onClick={onClose}>Close</button>
             <h2>{title}</h2>
             <p>{content}</p>
         </div>

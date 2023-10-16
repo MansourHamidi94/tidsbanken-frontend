@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./ControlPanel.css";
-import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
+import Navbar from "../navbar/Navbar.jsx";  
 
 function ControlPanel() {
 

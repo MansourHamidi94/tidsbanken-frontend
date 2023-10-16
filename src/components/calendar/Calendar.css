@@ -1,16 +1,16 @@
 .custom-card {
-    background-color: #007bff; /* primary color */
+    background-color: #007bff; 
     color: white;
-    width: 120px;   /* Adjust width */
-    height: 120px;  /* Adjust height to make it square */
+    width: 120px;   
+    height: 120px;  
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0px;  /* Remove rounded corners to make it square */
+    border-radius: 0px;  
 }
 
 .card-title {
-    font-size: 24px;  /* Increase font size */
+    font-size: 24px;  
     font-weight: bold;
     text-decoration: none;
 }
@@ -28,7 +28,6 @@
     padding: 40px !important;    
 }
 
-/* Add the following to ensure text remains white even on hover or other states */
 .custom-card a,
 .custom-card a:hover,
 .custom-card a:focus {
@@ -42,18 +41,18 @@
 
 
 .custom-button {
-    background-color: #007bff; /* primary color */
+    background-color: #007bff;
     font-weight: bold;
     color: white;
-    width: 5rem;   /* Adjust width */
-    height: 40px;  /* Adjust height based on button size */
+    width: 5rem; 
+    height: 40px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;  /* Remove rounded corners to make it square */
-    border:black; /* remove the border that comes with the btn class */
+    border-radius: 5px; 
+    border:black; 
 
-    transition: transform 0.2s ease-in-out;  /* Transition for hover effect */
+    transition: transform 0.2s ease-in-out; 
 }
 
 .custom-button:hover {

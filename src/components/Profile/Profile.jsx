@@ -7,7 +7,7 @@ import './Profile.css';
 // Component Function
 
 function Profile() {
-        // States
+    // States
     const [showModal, setShowModal] = useState(false);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -23,42 +23,42 @@ function Profile() {
     // Helper Functions
     function changePassword(currentPassword, newPassword, repeatNewPassword) {
         const apiUrl = 'https://test-api-updateprofile.free.beeceptor.com';
-      
-        fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            currentPassword: currentPassword,
-            newPassword: newPassword,
-            repeatNewPassword: repeatNewPassword
-          })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.message === "Password changed successfully") {
-            alert(data.message);
-          } else {
-            alert("Error changing password. Please try again.");
-          }
-        })
-        .catch(error => {
-          console.error("There was an error changing the password:", error);
-        });
-      }
-      
 
-      const submitPasswordChange = (event) => {
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                repeatNewPassword: repeatNewPassword
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Password changed successfully") {
+                    alert(data.message);
+                } else {
+                    alert("Error changing password. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error("There was an error changing the password:", error);
+            });
+    }
+
+
+    const submitPasswordChange = (event) => {
         event.preventDefault();
-      
+
         //const currentPassword = event.target.currentPassword.value;
         //const newPassword = event.target.newPassword.value;
         //const repeatNewPassword = event.target.repeatNewPassword.value;
-      
+
         changePassword(currentPassword, newPassword, repeatNewPassword);
-      }
-      
+    }
+
 
     // Event Handlers
     const handleOpenModal = () => {
@@ -122,7 +122,7 @@ function Profile() {
 
     const handleHome = () => {
         // Redirect to the main page (control panel)
-        navigate('/controlpanel'); 
+        navigate('/controlpanel');
     };
 
 
@@ -130,10 +130,15 @@ function Profile() {
     // Render Component
     return (
 
-        <div className="container mt-5">
+        <div className="container mt-5 profile-container">
 
             <div className="card profile-card">
                 <div className="card-body">
+
+                <div className="d-flex flex-column align-items-center justify-content-center" style={{}}> {/* Added style to take half of the viewport height */}
+                <img src="logo4.png" alt="" className='img-fluid' />
+            </div>
+
 
                     {/* Profile Picture */}
 
@@ -197,7 +202,7 @@ function Profile() {
                     </div>
                 </div>
             </div>
-            
+
         </div>
     );
 }

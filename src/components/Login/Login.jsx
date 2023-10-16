@@ -17,7 +17,7 @@ const Login = () => {
         
             <div className="wh-100 justify-content-center align-items-center login-container">
                 {/* Column for the login form */}
-                <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
+                <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white login-form-container">
                     {/* Column for the logo */}
                     <div className="col-5 justify-content-center">
                         <img src="logo4.png" alt="" className='img-fluid' />

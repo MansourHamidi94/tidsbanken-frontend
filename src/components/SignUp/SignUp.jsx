@@ -18,7 +18,7 @@ const SignUp = () => {
     return (
         <div className="row g-0 wh-100 justify-content-center align-items-center signup-container">
             {/* Container for the sign-up form */}
-            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
+            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white login-form-container">
                 {/* Column for the logo (visible only on medium and larger screens) */}
                 <div className="d-none d-md-block col-5 justify-content-center">
                     <img src="logo4.png" alt="" className='img-fluid' />

@@ -15,7 +15,9 @@ const Login = () => {
     };
 
     return (
-        <div div className = "row g-0 wh-100 justify-content-center align-items-center login-container" >
+        <div>
+
+        <div className = "row g-0 wh-100 justify-content-center align-items-center login-container"> 
         {/* Container for the login form */ }
             
                 {/* Column for the login form */}
@@ -47,7 +49,7 @@ const Login = () => {
                                 id="password"
                                 placeholder='password'
                                 onChange={(e) => setPassword(e.target.value)}
-                            />
+                                />
                             <label htmlFor="email">Password</label>
                         </div>
                         {/* Login button */}
@@ -64,6 +66,7 @@ const Login = () => {
                 </div>
             
         </div >
+                                </div>
     )
 };
 

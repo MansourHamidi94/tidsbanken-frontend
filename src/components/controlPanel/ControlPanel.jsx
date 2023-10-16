@@ -3,9 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./ControlPanel.css";
 import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
+import { useEffect } from "react";
+
 
 function ControlPanel() {
-
+    
     //Date - useState()
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
@@ -27,6 +29,7 @@ function ControlPanel() {
 
     return (
         <div>
+
             <Navbar/>
 
             <div className="container mt-5">

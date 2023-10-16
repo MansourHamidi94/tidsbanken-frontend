@@ -1,8 +1,13 @@
+// Profile Component
+// This component provides user profile functionalities including updating user details and changing password.
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Profile.css'; 
+import './Profile.css';
+
+// Component Function
 
 function Profile() {
+        // States
     const [showModal, setShowModal] = useState(false);
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -15,19 +20,47 @@ function Profile() {
 
 
 
+    // Helper Functions
+    function changePassword(currentPassword, newPassword, repeatNewPassword) {
+        const apiUrl = 'https://test-api-updateprofile.free.beeceptor.com';
+      
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            repeatNewPassword: repeatNewPassword
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message === "Password changed successfully") {
+            alert(data.message);
+          } else {
+            alert("Error changing password. Please try again.");
+          }
+        })
+        .catch(error => {
+          console.error("There was an error changing the password:", error);
+        });
+      }
+      
 
+      const submitPasswordChange = (event) => {
+        event.preventDefault();
+      
+        //const currentPassword = event.target.currentPassword.value;
+        //const newPassword = event.target.newPassword.value;
+        //const repeatNewPassword = event.target.repeatNewPassword.value;
+      
+        changePassword(currentPassword, newPassword, repeatNewPassword);
+      }
+      
 
-    const submitPasswordChange = () => {
-        // Logic to handle password change
-
-        console.log("Current Password: ", currentPassword);
-        console.log("New Password: ", newPassword);
-        console.log("Repeat New Password: ", repeatNewPassword);
-
-        // After processing, close the modal:
-        handleCloseModal();
-    };
-
+    // Event Handlers
     const handleOpenModal = () => {
         setShowModal(true);
     };
@@ -36,6 +69,7 @@ function Profile() {
         setShowModal(false);
     };
 
+    // Function to handle submission of profile changes
     const handleSubmitChanges = async () => {
         // Construct the user data
         const userData = {
@@ -69,6 +103,7 @@ function Profile() {
 
 
 
+    // Function to toggle theme between light and dark
     const handleThemeToggle = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
@@ -82,6 +117,7 @@ function Profile() {
         }
     }, [theme]);
 
+    // Navigation handler
     const navigate = useNavigate();
 
     const handleHome = () => {
@@ -91,6 +127,7 @@ function Profile() {
 
 
 
+    // Render Component
     return (
 
         <div className="container mt-5">
@@ -150,6 +187,7 @@ function Profile() {
                             <input type="password" className="form-control mb-2" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
                             <input type="password" className="form-control mb-2" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                             <input type="password" className="form-control mb-2" placeholder="Repeat New Password" value={repeatNewPassword} onChange={(e) => setRepeatNewPassword(e.target.value)} />
+                            <button className="btn btn-success mt-2" onClick={submitPasswordChange}>Submit</button>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between mt-3">

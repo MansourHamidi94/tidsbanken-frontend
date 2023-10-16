@@ -1,12 +1,16 @@
 .login-btn{
     border: none;
-    background-color: #234ca7;
+    background-color: #444444;
     color: white;
     font-size: 1.1rem;
 }
 .login-title{
-    border-bottom:  3px solid #234ca7 ;
+    border-bottom:  3px solid #444444 ;
 }
 .login-container {
-    background-color: #234ca7
+    height: 100vh; /* This will ensure the container takes the full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF1E3;
 }

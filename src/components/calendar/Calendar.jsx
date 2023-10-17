@@ -82,7 +82,7 @@ function Calendar() {
     console.log(redPeriods + " days");
 
     return (
-        <div className="">
+        <div className="body-container">
         <Navbar />
         <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
             <div>

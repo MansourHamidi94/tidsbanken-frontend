@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Register.css"; 
+import "../SignUp/SignUp.css"; 
 
 const SignUp = () => {
     // State variables to store user input for email, password, and username.
@@ -18,10 +18,10 @@ const SignUp = () => {
     return (
         <div className="row g-0 wh-100 justify-content-center align-items-center signup-container">
             {/* Container for the sign-up form */}
-            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
+            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white login-form-container">
                 {/* Column for the logo (visible only on medium and larger screens) */}
                 <div className="d-none d-md-block col-5 justify-content-center">
-                    <img src="logo.jpg" alt="" className='img-fluid' />
+                    <img src="logo4.png" alt="" className='img-fluid' />
                 </div>
                 {/* Column for the sign-up form inputs */}
                 <form className="col-12 col-md-6 py-4 px-3">

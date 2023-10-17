@@ -5,11 +5,12 @@ import "./Navbar.css";
 function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container d-flex justify-content-center align-items-center">
+            <div className="container d-flex justify-content-center align-items-center navbar-inner-container">
                 <Link className="navbar-brand custom-card" to="/ControlPanel">Home Page</Link>
             </div>
         </nav>
     );
 }
+
 
 export default Navbar;

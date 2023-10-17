@@ -12,3 +12,20 @@
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 }
+.navbar {
+    background-color: #FFF1E3; /* Replace #desiredColor with your desired color value */
+}
+.navbar-inner-container {
+    background-color: #FFF1E3; /* Replace #desiredColor with your desired color value */
+    
+}
+.navbar, .navbar-inner-container {
+    width: 100vw;
+    height: 100%;
+    margin: 20;
+    padding: 0;
+}
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+    background-color: #FFF1E3 !important;
+
+}

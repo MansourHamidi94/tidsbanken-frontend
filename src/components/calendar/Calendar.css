@@ -1,5 +1,5 @@
 .custom-card {
-    background-color: #007bff; /* primary color */
+    background-color: #444444 !important; /* primary color */
     color: white;
     width: 120px;   /* Adjust width */
     height: 120px;  /* Adjust height to make it square */
@@ -42,7 +42,7 @@
 
 
 .custom-button {
-    background-color: #007bff; /* primary color */
+    background-color: #444444; /* primary color */
     font-weight: bold;
     color: white;
     width: 5rem;   /* Adjust width */
@@ -64,4 +64,9 @@
 .red-period{
     background-color: red !important;
     color: white;
+}
+
+.container-for-site {
+    background-color: #FFF1E3; /* Replace #desiredColor with your desired color value */
+    min-height: 100vh; /* This ensures that the background color covers the full viewport height */
 }

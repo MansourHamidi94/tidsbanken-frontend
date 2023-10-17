@@ -130,14 +130,14 @@ function Profile() {
     // Render Component
     return (
 
-        <div className="container mt-5 profile-container">
 
-            <div className="card profile-card">
+            <div className="profile-container">
+        <div className="card profile-card">
                 <div className="card-body">
 
-                <div className="d-flex flex-column align-items-center justify-content-center" style={{}}> {/* Added style to take half of the viewport height */}
-                <img src="logo4.png" alt="" className='img-fluid' />
-            </div>
+                    <div className="d-flex flex-column align-items-center justify-content-center" style={{}}> {/* Added style to take half of the viewport height */}
+                        <img src="logo4.png" alt="" className='img-fluid' />
+                    </div>
 
 
                     {/* Profile Picture */}

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
+import Navbar from "../navbar/Navbar.jsx"; 
 import "./Calendar.css";
 import VacationPlanner from "../vacation/VacationPlanner.jsx";
 import { useDispatch, useSelector } from 'react-redux';
-import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/VacationRequestSlice.js';
+import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/VacationRequestSlice';
 
 function Calendar() {
 
@@ -25,22 +25,22 @@ function Calendar() {
 
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
-        setDate(new Date(year - 1, month)); // -O- Use useState() to Update "setDate"
+        setDate(new Date(year - 1, month));
     };
 
     // (Currentyear + 1) = Next year
     const handleNextYear = () => {
-        setDate(new Date(year + 1, month)); // -O-
+        setDate(new Date(year + 1, month)); 
     };
 
     // (Current month - 1) = previous month
     const handlePreviousMonth = () => {
-        setDate(new Date(year, month - 1)); // -O-
+        setDate(new Date(year, month - 1)); 
     };
 
     // (Current month + 1) = next month
     const handleNextMonth = () => {
-        setDate(new Date(year, month + 1)); // -O-
+        setDate(new Date(year, month + 1)); 
     };
 
     //Dates
@@ -79,9 +79,11 @@ function Calendar() {
           // Make the API call to create a vacation request
           dispatch(
             createVacationRequest({
-              startDate: reduxStartDate,
-              endDate: selectedDate,
-              // Add other relevant data properties
+                vacationType: "vacation",
+                startDate: reduxStartDate, 
+                endDate: selectedDate,
+                userId: 1, // Assuming static user ID for now. Update this accordingly if dynamic.
+                requestDate: new Date().toISOString()  // Set the current date & time for requestDate
             })
           );
     

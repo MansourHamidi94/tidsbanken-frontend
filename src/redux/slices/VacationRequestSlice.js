@@ -1,8 +1,5 @@
-// vacationRequestSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-
-//POST Vacation Request Start date & end date
 export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',
   async (requestData, { rejectWithValue }) => {
@@ -19,23 +16,23 @@ export const createVacationRequest = createAsyncThunk(
 
       if (!response.ok) {
         const data = await response.json();
-        return rejectWithValue(data); // Handle error cases
+        return rejectWithValue(data);
       }
 
       const data = await response.json();
-      return data; // Return the created vacation request data
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-//Slice for vacation request
 const vacationRequestSlice = createSlice({
     name: 'vacationRequest',
     initialState: {
       startDate: null,
       endDate: null,
+      requestStatus: null,
     },
     reducers: {
       setStartDate: (state, action) => {
@@ -47,14 +44,13 @@ const vacationRequestSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder.addCase(createVacationRequest.fulfilled, (state, action) => {
-        console.log("Succes POST");
+        state.requestStatus = "Success";
       });
       builder.addCase(createVacationRequest.rejected, (state, action) => {
-        console.log("Fail POST");
+        state.requestStatus = "Failed";
       });
     },
-  });
-  
+});
 
 export const { setStartDate, setEndDate } = vacationRequestSlice.actions;
 export default vacationRequestSlice.reducer;

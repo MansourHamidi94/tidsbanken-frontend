@@ -1,12 +1,13 @@
 .custom-card {
     background-color: #444444 !important; /* primary color */
-    color: white;
+    color: rgb(255, 255, 255);
     width: 120px;   /* Adjust width */
     height: 120px;  /* Adjust height to make it square */
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 0px;  /* Remove rounded corners to make it square */
+    outline-style: solid !important;
 }
 
 .card-title {
@@ -67,6 +68,28 @@
 }
 
 .container-for-site {
-    background-color: #FFF1E3; /* Replace #desiredColor with your desired color value */
-    min-height: 100vh; /* This ensures that the background color covers the full viewport height */
+    background-color: #FFF1E3; 
+    min-height: 100vh; 
+}
+
+.table{
+    background-color: #FFF1E3 !important;
+    margin-top: 10px;
+}
+.tbody{
+    background-color: #FFF1E3 !important;
+}
+
+.body-container{
+    background-color: #FFF1E3 !important;
+}
+
+#year-section{
+    margin-top: 20px;
+}
+#year-section{
+    color: aliceblue m !important;
+}
+.thead{
+    background-color: black !important;
 }

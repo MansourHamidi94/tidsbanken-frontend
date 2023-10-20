@@ -1,0 +1,47 @@
+.container-for-site {
+    padding: 2rem;
+}
+
+h2.text-center {
+    border-bottom: 2px solid #444444;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+h3 {
+    margin-top: 2rem;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-button {
+    margin-left: 1rem;
+}
+
+#delete{
+    background-color: rgba(255, 0, 0, 0.8) !important; /* Added transparency to the red background */
+    backdrop-filter: blur(10px); /* Glass effect for logout card */
+}
+#decline{
+    background-color: rgba(255, 119, 0, 0.8) !important; /* Added transparency to the red background */
+    backdrop-filter: blur(10px); /* Glass effect for logout card */
+}
+#accept{
+    background-color: rgba(0, 255, 30, 0.8) !important; /* Added transparency to the red background */
+    backdrop-filter: blur(10px); /* Glass effect for logout card */
+}
+#add-user{
+    padding: 10%;
+    width: 25%;
+}
+
+button.custom-button {
+    cursor: pointer;
+}

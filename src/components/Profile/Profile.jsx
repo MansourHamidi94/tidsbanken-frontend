@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
-
+import Navbar from '../navbar/Navbar';
 // Component Function
 
 function Profile() {
@@ -132,7 +132,9 @@ function Profile() {
 
 
             <div className="profile-container">
+
         <div className="card profile-card">
+                           <Navbar/>
                 <div className="card-body">
 
                     <div className="d-flex flex-column align-items-center justify-content-center" style={{}}> {/* Added style to take half of the viewport height */}

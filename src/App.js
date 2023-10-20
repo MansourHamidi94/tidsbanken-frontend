@@ -4,8 +4,10 @@ import Calendar from "./components/calendar/Calendar.jsx";
 import ControlPanel from "./components/controlPanel/ControlPanel.jsx";
 import SignUp from './components/SignUp/SignUp';
 import Profile from './components/Profile/Profile.jsx';
+import Admin from "./components/admin/Admin";
 import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/Calendar" element={<Calendar />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/vacation-request' element={<VacationRequest/>}/>
+          <Route path="/Admin" element={<Admin/>} />
+
 
 
         </Routes>

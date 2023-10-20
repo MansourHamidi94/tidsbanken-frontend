@@ -1,12 +1,11 @@
-// import logo from './logo.svg';
-import './App.css';
-import Calendar from "./components/calendar/Calendar.jsx"
-import ControlPanel from "./components/controlPanel/ControlPanel.jsx"
-import Login from './components/login/Login';
+// import './App.css';
+import Login from './components/login/Login.jsx';
+import Calendar from "./components/calendar/Calendar.jsx";
+import ControlPanel from "./components/controlPanel/ControlPanel.jsx";
 import SignUp from './components/SignUp/SignUp';
 import Profile from './components/Profile/Profile.jsx';
 import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 
 function App() {
   return (

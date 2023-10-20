@@ -5,6 +5,8 @@ import Login from './components/Login/Login.jsx';
 import Calendar from "./components/calendar/Calendar"
 import SignUp from './components/SignUp/Signup';
 import Profile from './components/profile/Profile';
+import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
+
 import { Provider } from 'react-redux';
 import store from './redux/store'; 
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
@@ -21,6 +23,7 @@ function App() {
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Calendar" element={<Calendar />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path='/vacation-request' element={<VacationRequest/>}/>
           </Routes>
         </BrowserRouter>
       </Provider>

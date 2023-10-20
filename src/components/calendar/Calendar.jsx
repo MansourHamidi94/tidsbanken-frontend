@@ -21,7 +21,7 @@ function Calendar() {
 
     //InEligblePeriods
     const [showVacationPlanner, setShowVacationPlanner] = useState(false);
-    const [instruction, setInstruction] = useState("");  // can be "start" or "end"
+    const [instruction, setInstruction] = useState("");  
 
     // (Currentyear -1) = previous year
     const handlePreviousYear = () => {
@@ -82,8 +82,8 @@ function Calendar() {
                 vacationType: "vacation",
                 startDate: reduxStartDate, 
                 endDate: selectedDate,
-                userId: 1, // Assuming static user ID for now. Update this accordingly if dynamic.
-                requestDate: new Date().toISOString()  // Set the current date & time for requestDate
+                userId: 1, 
+                requestDate: new Date().toISOString()  
             })
           );
     

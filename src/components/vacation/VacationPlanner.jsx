@@ -18,7 +18,7 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
    
     return (
         <div>
-            <button className="vacation-btn" onClick={startVacationPlanning}> 📅 Vacation Request</button>
+            
             {popupMessage && (
     <Popup
         onClose={() => setPopupMessage("")}
@@ -37,7 +37,7 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
                             onChange={e => setSelectedReason(e.target.value)}
                             value={selectedReason}
                         >
-                            <option value="Default">📋 Select Reason ▼</option>
+                            <option value="Default">📋 Select Reason </option>
                             <option value="Vacation">Vacation</option>
                             <option value="Holiday">Holiday</option>
                             <option value="SickLeave">Sick Leave</option>

@@ -1,18 +1,35 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+let API_URL = 'https://localhost:7172/api/v1/VacationRequests/1/Comments';
+
+
 export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
-  async (requestId) => {
-    const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/1/Comments`);
-    const data = await response.json();
-    return { requestId, comments: data };
+  async (requestId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_URL}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return { requestId, comments: data };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
   async ({ requestId, comment }, thunkAPI) => {
-      const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/1/Comments`, {
+      const response = await fetch(`${API_URL}`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -35,7 +52,6 @@ export const commentsSlice = createSlice({
   name: 'comments',
   initialState: {
     commentsByRequestId: {},  
-    status: 'pending',          
     error: null              
   },
   reducers: {

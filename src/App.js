@@ -9,7 +9,7 @@ import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
 
 import { Provider } from 'react-redux';
 import store from './redux/store'; 
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (

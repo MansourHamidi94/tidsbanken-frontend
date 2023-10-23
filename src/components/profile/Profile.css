@@ -3,6 +3,7 @@
     margin: 0 auto;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #FFF1E3;
   }
   
   .profile-pic {
@@ -72,14 +73,24 @@
     right: 10px; /* Adjust as needed */
 }
 
+
+
+/* Logo Image Styles */
+.img-fluid {
+    max-width: 60%;
+    height: auto;
+}
+
 /* Default light mode styles */
-body {
-    background-color: #ffffff;
+.body {
+        background-color: #FFF1E3;
+    background-color: #FFF1E3;
     color: #000000;
 }
 
-/* Dark mode styles */
-body.dark-mode {
-    background-color: #333333;
-    color: #ffffff;
+/* Profile Container Styles */
+.profile-container {
+    background-color: #FFF1E3;
+    width: 100vw;
+    height: 100vw;
 }

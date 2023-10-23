@@ -1,13 +1,17 @@
 .signup-btn{
     border: none;
-    background-color: hsl(221, 65%, 40%);
+    background-color:#444444;
     color: white;
     font-size: 1.1rem;
     width: 100%;
 }
 .signup-title{
-    border-bottom: 3px solid #234ca7;
+    border-bottom:  3px solid #444444;
 }
 .signup-container {
-    background-color: #234ca7;
+    background-color: #FFF1E3;
+    height: 100vh; /* This will ensure the container takes the full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

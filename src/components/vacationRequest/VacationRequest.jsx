@@ -40,7 +40,6 @@ function VacationRequest({ requestId }) {
 
     return (
       <div className="container vacation-request">
-        <Navbar />
         <div className="row">
           {vacationRequests.map((request) => (
             <div className="col-md-6 mb-4" key={request.id}>

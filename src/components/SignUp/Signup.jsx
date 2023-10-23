@@ -45,9 +45,9 @@ const SignUp = () => {
 
     return (
         <div className="row g-0 wh-100 justify-content-center align-items-center signup-container">
-            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2 bg-white">
+            <div className="col-10 d-flex justify-content-center align-items-center border rounded-2">
                 <div className="d-none d-md-block col-5 justify-content-center">
-                    <img src="logo.jpg" alt="" className='img-fluid' />
+                    <img src="logo4.png" alt="" className='img-fluid' />
                 </div>
                 <form className="col-12 col-md-6 py-4 px-3" onSubmit={handleSignUp}>
                     <h4 className="signup-title text-center py-2 mb-4">Sign Up</h4>

@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Admin.css";
 import Navbar from "../navbar/Navbar";
 
+//Redux imports
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllVacationRequests } from '../../redux/slices/VacationRequestSlice'; // adjust the import path as needed
+
+
+
 function Admin() {
+
+    //Redux - dispatch actions
+    const dispatch = useDispatch();
+    //Use useSelector to get data from the Redux store
+    const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
+
+    useEffect(() => {
+        dispatch(fetchAllVacationRequests());
+      }, [dispatch]);
 
     //Manage vacation Request
     const [requests, setRequests] = useState([
@@ -113,7 +128,7 @@ function Admin() {
                 <div className="col-md-6">
                     <h3>Requests from users</h3>
                     <div className="card-container">
-                        {requests.map(request => (
+                        {vacationRequests.map(request => (
                             <div key={request.id} className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{request.name}</h5>

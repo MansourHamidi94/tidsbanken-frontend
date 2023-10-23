@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 let API_URL = 'https://localhost:7172/api/v1/VacationRequests';
 
-
 //GET
 //dispatch(fetchVacationRequestById(requestId));
 export const fetchVacationRequestById = createAsyncThunk(
@@ -28,6 +27,31 @@ export const fetchVacationRequestById = createAsyncThunk(
   }
 );
 
+//GET
+// Get all VacationRequests
+export const fetchAllVacationRequests = createAsyncThunk(
+  'vacationRequest/fetchAllVacationRequests',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${API_URL}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 
 
@@ -148,6 +172,12 @@ const vacationRequestSlice = createSlice({
       })
       .addCase(createVacationRequest.rejected, (state, action) => {
         state.requestStatus = "Failed";
+      })
+      .addCase(fetchAllVacationRequests.fulfilled, (state, action) => {
+        state.vacationRequests = action.payload;
+      })
+      .addCase(fetchAllVacationRequests.rejected, (state, action) => {
+        console.error('Failed to fetch all vacation requests:', action.error.message);
       });
     },
 });

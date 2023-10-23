@@ -5,6 +5,7 @@ import Login from './components/Login/Login.jsx';
 import Calendar from "./components/calendar/Calendar"
 import SignUp from './components/SignUp/Signup';
 import Profile from './components/profile/Profile';
+import Admin from "./components/admin/Admin";
 import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
 
 import { Provider } from 'react-redux';
@@ -24,6 +25,8 @@ function App() {
             <Route path="/Calendar" element={<Calendar />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path='/vacation-request' element={<VacationRequest/>}/>
+            <Route path="/Admin" element={<Admin/>} />
+
           </Routes>
         </BrowserRouter>
       </Provider>

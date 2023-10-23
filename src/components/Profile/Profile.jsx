@@ -17,6 +17,7 @@ function Profile() {
     const [lastName, setLastName] = useState("");
     const [age, setAge] = useState("");
     const [email, setEmail] = useState("");
+    
 
 
 
@@ -124,6 +125,19 @@ function Profile() {
         // Redirect to the main page (control panel)
         navigate('/controlpanel');
     };
+    // Editing in Profile Section
+    const [isEditing, setIsEditing] = useState({ field: "", status: false });
+
+    const handleEdit = (field) => {
+        setIsEditing({ field: field, status: true });
+    };
+    
+    const handleBlur = () => {
+        setIsEditing({ field: "", status: false });
+    };
+    
+
+
 
 
 
@@ -131,59 +145,52 @@ function Profile() {
     return (
 
 
-            <div className="profile-container">
-        <div className="card profile-card">
-                <div className="card-body">
+        <div className="profile-container">
+    <div className="card profile-card">
+        <div className="card-body">
+            <div className="d-flex flex-column align-items-center justify-content-center">
+                <img src="logo4.png" alt="" className='img-fluid' />
+            </div>
 
-                    <div className="d-flex flex-column align-items-center justify-content-center" style={{}}> {/* Added style to take half of the viewport height */}
-                        <img src="logo4.png" alt="" className='img-fluid' />
-                    </div>
+            {/* User Details */}
+            <div className="mt-4">
+                <div className="mt-4">
+                    <input
+                        type="text"
+                        className="form-control mb-2"
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={e => setFirstName(e.target.value)}
+                    />
+                    
+                    <input
+                        type="text"
+                        className="form-control mb-2"
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={e => setLastName(e.target.value)}
+                    />
+                    
+                    <input
+                        type="number"
+                        className="form-control mb-2"
+                        placeholder="Age"
+                        value={age}
+                        onChange={e => setAge(e.target.value)}
+                    />
+                    
+                    <input
+                        type="email"
+                        className="form-control mb-2"
+                        placeholder="E-Mail"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                </div>
 
-
-                    {/* Profile Picture */}
-
-                    {/*<div className="d-flex flex-column align-items-center">*
-                        <img src="logo.jpg" alt="Profile" className="profile-pic" />
-                        <input type="text" className="form-control mb-2 username-input" placeholder="UserName" />
-                        <button className="btn btn-primary mt-2">Change Picture</button>
-                    </div>*/}
-
-
-                    {/* User Details */}
-                    <div className="mt-4">
-                        <div className="mt-4">
-                            <input
-                                type="text"
-                                className="form-control mb-2"
-                                placeholder="First Name"
-                                value={firstName}
-                                onChange={e => setFirstName(e.target.value)}
-                            />
-                            <input
-                                type="text"
-                                className="form-control mb-2"
-                                placeholder="Last Name"
-                                value={lastName}
-                                onChange={e => setLastName(e.target.value)}
-                            />
-                            <input
-                                type="number"
-                                className="form-control mb-2"
-                                placeholder="Age"
-                                value={age}
-                                onChange={e => setAge(e.target.value)}
-                            />
-                            <input
-                                type="email"
-                                className="form-control mb-2"
-                                placeholder="E-Mail"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                        </div>
-
-                        <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
-                    </div>
+                <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
+            </div>
+    
                     {/* Password Change Modal */}
                     <div className={showModal ? 'modal' : 'modal display-none'}>
                         <div className="modal-content">

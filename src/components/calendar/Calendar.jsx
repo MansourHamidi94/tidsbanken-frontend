@@ -102,7 +102,6 @@ function Calendar() {
             <Navbar />
             <div className="calendar-container">
                 <div className="calendar-header">
-                    {/* ... (existing header code) */}
                 </div>
                 
                 <div className="calendar-header">
@@ -115,7 +114,7 @@ function Calendar() {
                     &nbsp;
                     &nbsp;
                     <VacationPlanner
-                        startDate={state[0].startDate}
+                    startDate={state[0].startDate}
                         endDate={state[0].endDate}
                         showVacationPlanner={showVacationPlanner}
                         setShowVacationPlanner={setShowVacationPlanner}

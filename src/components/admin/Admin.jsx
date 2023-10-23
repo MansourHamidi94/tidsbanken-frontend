@@ -1,78 +1,157 @@
 import React, { useState } from "react";
-import "./Admin.css"
+import "./Admin.css";
 import Navbar from "../navbar/Navbar";
 
 function Admin() {
+
+    //Manage vacation Request
     const [requests, setRequests] = useState([
-        // Eksempel data
-        { id: 1, name: "John", startDate: "2023-10-20", endDate: "2023-10-25", status: "Pending", comment: "" },
-        { id: 2, name: "Jane", startDate: "2023-11-01", endDate: "2023-11-10", status: "Pending", comment: "" }
+        { id: 1, name: "John", startDate: "2023-10-20", endDate: "2023-10-25", status: "Pending", comment: "I need a break." },
+        { id: 2, name: "Jane", startDate: "2023-11-01", endDate: "2023-11-10", status: "Pending", comment: "Going on a holiday!" }
     ]);
 
+    //Manage user information
     const [users, setUsers] = useState([
-        // Eksempel data
-        { id: 1, name: "John" },
-        { id: 2, name: "Jane" }
+        { id: 1, name: "John", rolename: "Empo" },
+        { id: 2, name: "Jane", rolename: "Designer" }
     ]);
 
-    const handleAccept = (id) => {
-        const updatedRequests = requests.map(request => {
-            if (request.id === id) {
-                request.status = "Accepted";
+    //State to manage the name of the 
+    const [newUserName, setNewUserName] = useState("");
+    const [declineComment, setDeclineComment] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    //Function - Admin accepting a vacation request
+    const handleAccept = async (id) => {
+        try {
+            setLoading(true);
+            // API call to update the request
+            const updatedRequests = requests.map(request => {
+                if (request.id === id) {
+                    request.status = "Accepted";
+                }
+                return request;
+            });
+            setRequests(updatedRequests);
+            setMessage("Request accepted successfully");
+        } catch (error) {
+            console.error("Error accepting request", error);
+            setMessage("Error accepting request");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    //Function - Admin declining a vacation request
+    const handleDecline = async (id) => {
+        try {
+            setLoading(true);
+            // API call to update the request
+            const updatedRequests = requests.map(request => {
+                if (request.id === id) {
+                    request.status = "Declined";
+                    request.comment = declineComment;
+                }
+                return request;
+            });
+            setRequests(updatedRequests);
+            setMessage("Request declined successfully");
+            setDeclineComment("");
+        } catch (error) {
+            console.error("Error declining request", error);
+            setMessage("Error declining request");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    //Function to add new user
+    const handleAddUser = async () => {
+        try {
+            setLoading(true);
+            // Here you would make an API call to add the user
+            setUsers([...users, { id: Date.now(), name: newUserName, rolename: "New Role" }]);
+            setMessage("User added successfully");
+            setNewUserName("");
+        } catch (error) {
+            console.error("Error adding user", error);
+            setMessage("Error adding user");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    //Function to handle deleting a user
+    const handleDeleteUser = async (id) => {
+        try {
+            const confirmation = window.confirm("Are you sure you want to delete this user?");
+            if (confirmation) {
+                setLoading(true);
+                // Here you would make an API call to delete the user
+                const updatedUsers = users.filter(user => user.id !== id);
+                setUsers(updatedUsers);
+                setMessage("User deleted successfully");
             }
-            return request;
-        });
-        setRequests(updatedRequests);
+        } catch (error) {
+            console.error("Error deleting user", error);
+            setMessage("Error deleting user");
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDecline = (id, comment) => {
-        const updatedRequests = requests.map(request => {
-            if (request.id === id) {
-                request.status = "Declined";
-                request.comment = comment;
-            }
-            return request;
-        });
-        setRequests(updatedRequests);
-    };
-
-    const handleAddUser = (name) => {
-        setUsers([...users, { id: Date.now(), name }]);
-    };
-
-    const handleDeleteUser = (id) => {
-        const updatedUsers = users.filter(user => user.id !== id);
-        setUsers(updatedUsers);
-    };
-
+    //Rendering the Admin component
     return (
         <div className="container-for-site">
-           <Navbar/>
+            <Navbar />
             <h2 className="text-center mb-4">Admin Panel</h2>
-            
+            {loading && <p>Loading...</p>}
+            {message && <p>{message}</p>}
             <div className="row justify-content-center mb-5">
                 <div className="col-md-6">
-                    <h3>Ferieanmodninger</h3>
-                    <ul className="list-group mb-4">
+                    <h3>Requests from users</h3>
+                    <div className="card-container">
                         {requests.map(request => (
-                            <li key={request.id} className="list-group-item">
-                                {request.name} fra {request.startDate} til {request.endDate}
-                                <button className="custom-button ml-2" id="accept" onClick={() => handleAccept(request.id)}>Accepter</button>
-                                <button className="custom-button ml-2" id="decline" onClick={() => handleDecline(request.id, "Din kommentar her")}>Afvis</button>
-                            </li>
+                            <div key={request.id} className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{request.name}</h5>
+                                    <p className="card-text">From {request.startDate} to {request.endDate}</p>
+                                    <p className="card-text"><strong>Comment:</strong> {request.comment}</p>
+                                    <textarea
+                                        className="form-control mb-2"
+                                        placeholder="Type your comment here..."
+                                        value={declineComment}
+                                        onChange={(e) => setDeclineComment(e.target.value)}
+                                    />
+                                </div>
+                                <div className="card-footer">
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
+                                </div>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
 
-                    <h3>Brugere</h3>
+                    <h3>Users</h3>
                     <ul className="list-group">
                         {users.map(user => (
                             <li key={user.id} className="list-group-item">
-                                {user.name}
-                                <button className="custom-button ml-2" id="delete" onClick={() => handleDeleteUser(user.id)}>Slet</button>
+                                {user.name} - {user.rolename}
+                                <button className="custom-button ml-2" id="delete" onClick={() => handleDeleteUser(user.id)}>Delete</button>
                             </li>
                         ))}
                     </ul>
-                    <button className="custom-button mt-3" id="add-user" onClick={() => handleAddUser("Ny bruger navn her")}>+ Add User</button>
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Enter user name"
+                            value={newUserName}
+                            onChange={e => setNewUserName(e.target.value)}
+                        />
+                        <button className="custom-button ml-2" id="add-user" onClick={handleAddUser}>+ Add User</button>
+                    </div>
                 </div>
             </div>
         </div>

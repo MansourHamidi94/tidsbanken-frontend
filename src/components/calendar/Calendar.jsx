@@ -102,6 +102,7 @@ function Calendar() {
     return (
         <div className="">
             <Navbar />
+<<<<<<< Updated upstream
             <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
                 <div>
                     <div className="d-flex justify-content-center mb-3">
@@ -116,6 +117,25 @@ function Calendar() {
                             <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
                         </div>
                     </div>
+=======
+            <div className="calendar-container">
+                <div className="calendar-header">
+                </div>
+                
+                <div className="calendar-header">
+                    <DateRangePicker
+                    className="myCustomDatePicker"
+                    style={{maxWidth: "800px"}}
+                    ranges={state}
+                    onChange={item => setState([item.selection])}
+             
+                    />
+
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+>>>>>>> Stashed changes
 
                     <VacationPlanner
                         showVacationPlanner={showVacationPlanner}
@@ -124,6 +144,7 @@ function Calendar() {
                         startVacationPlanning={startVacationPlanning}
                     />
 
+<<<<<<< Updated upstream
                     <table className="table">
                         <thead>
                             <tr>
@@ -162,6 +183,8 @@ function Calendar() {
                             ))}
                         </tbody>
                     </table>
+=======
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>

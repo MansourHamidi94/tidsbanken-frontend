@@ -64,4 +64,86 @@
 .red-period{
     background-color: red !important;
     color: white;
+<<<<<<< Updated upstream
+=======
+}
+
+.container-for-site {
+    background-color: #FFF1E3;
+    min-height: 100vh;
+}
+
+.table {
+    background-color: #FFF1E3 !important;
+    margin-top: 10px;
+}
+
+.tbody {
+    background-color: #FFF1E3 !important;
+}
+
+.body-container {
+    background-color: #FFF1E3 !important;
+    
+}
+
+#year-section {
+    margin-top: 20px;
+    color: aliceblue !important;
+}
+
+.thead {
+    background-color: black !important;
+}
+
+
+/* New Styles for the Mockup */
+.calendar-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    padding: 110px;
+    background-color: #FFF1E3;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin-left: -10px; /* Adjust this value as needed */
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: #444444;
+}
+
+.calendar-nav-btn:focus {
+    outline: none;
+}
+
+.calendar-year {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.calendar-months {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Container for the entire date range picker */
+
+.rdrCalendarWrapper, .rdrCalendarWrapper * {
+    font-size: 1.1em; /* Adjust as needed */
+>>>>>>> Stashed changes
 }

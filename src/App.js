@@ -5,6 +5,11 @@ import ControlPanel from "./components/controlPanel/ControlPanel.jsx"
 import Login from './components/login/Login.jsx';
 import SignUp from './components/SignUp/Register';
 import Profile from './components/Profile/Profile.jsx';
+<<<<<<< Updated upstream
+=======
+import Admin from "./components/admin/Admin";
+import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
+>>>>>>> Stashed changes
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
 import {store} from "./redux/Store"
 import { Provider } from 'react-redux';

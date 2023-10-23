@@ -1,34 +1,64 @@
-import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import Popup from "../popup/popup";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./VacationPlanner.css";
+import Popup from "../popup/popup";
 
-function VacationPlanner({ 
-    showVacationPlanner,
-    setShowVacationPlanner,
-    instruction,
-    startVacationPlanning
-}) {
-    const reduxStartDate = useSelector(state => new Date(state.vacationRequest.startDate));
-    const reduxEndDate = useSelector(state => new Date(state.vacationRequest.endDate));
+// Vacation planner
+/*
+1. Create request
+2. pick start date
+3. Pick end date
+4. Display the vacant period in calendar
+*/
+function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacationPlanner, instruction, startVacationPlanning }) {
+   
+    const [selectedReason, setSelectedReason] = React.useState(null);
+    const [popupMessage, setPopupMessage] = useState("");
 
+   
     return (
         <div>
-            <button className="vacation-btn" onClick={startVacationPlanning}>📅 Vacation Request</button>
             
-            {showVacationPlanner && (
-                <Popup
-                    onClose={() => setShowVacationPlanner(false)}
-                    title="Click on calendar"
-                    content={instruction === "start" ? "Pick a start date" : "Pick an end date"}
-                />
+            {popupMessage && (
+    <Popup
+        onClose={() => setPopupMessage("")}
+        title="Vacation Request"
+        content={popupMessage}
+    />
+)}
+            {startDate && <div className="date-display">Start Date: {startDate.toLocaleDateString()}</div>}
+            {endDate && (
+                <>
+                    <div className="date-display">End Date: {endDate.toLocaleDateString()}</div>
+                   
+                    <div id="reason">
+                        <select 
+                            id="reason" 
+                            onChange={e => setSelectedReason(e.target.value)}
+                            value={selectedReason}
+                        >
+                            <option value="Default">📋 Select Reason </option>
+                            <option value="Vacation">Vacation</option>
+                            <option value="Holiday">Holiday</option>
+                            <option value="SickLeave">Sick Leave</option>
+                            <option value="Bereavement">Bereavement</option>
+                            <option value="ParentalLeave">Parental Leave</option>
+                            <option value="MilitaryLeave">Military Leave</option>
+                            <option value="CompensatoryTime">Compensatory Time</option>
+                        </select>
+                    </div>
+                    <button className="vacation-btn" 
+                    onClick={() => setPopupMessage(`Vacation SE sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`)}
+
+                    id="send-button">🚀 Send request</button>
+                </>
             )}
-            
-            {reduxStartDate && <div className="date-display">Start Date: {reduxStartDate.toLocaleDateString()}</div>}
-            
-            {reduxEndDate && <div className="date-display">End Date: {reduxEndDate.toLocaleDateString()}</div>}
+           
+
         </div>
     );
 }
+
+
 
 export default VacationPlanner;

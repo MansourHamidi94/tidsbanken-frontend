@@ -1,14 +1,15 @@
 .vacation-btn {
-    background-color: rgb(74, 144, 226, 0.9) !important;
-    backdrop-filter: blur(10px); 
+    background-color: #444444 !important;
+    backdrop-filter: blur(10px); /* This will give the glass effect */
     color: white !important;
     border: none !important;
     border-radius: 10px !important;
-    padding: 10px 15px; 
+    padding: 10px 15px; /* Padding adjusted for this button */
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
     font-size: 1.5rem;
-    
+    outline-style: solid;
+    outline-color:#444444;
 }
 
 .vacation-btn:hover {
@@ -18,10 +19,55 @@
 
 .date-display {
     margin-top: 20px;
-    font-size: 1em;
-    color: #333;
+    font-size: 1.2em;
+    color: #333333;
     background-color: rgba(235, 235, 235, 0.95); 
     padding: 10px 15px;
     border-radius: 10px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); /* Blur content behind */
+}
+
+#reason{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position:relative;
+}
+
+#reason select {
+    appearance: none;
+    background-color: rgba(255, 178, 145, 0.9);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    outline-style: solid;
+    outline-color:#444444;
+
+}
+
+#reason select:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+#reason::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+#send-button{
+    background-color: rgb(0, 226, 0) !important;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    outline-style: solid;
 }

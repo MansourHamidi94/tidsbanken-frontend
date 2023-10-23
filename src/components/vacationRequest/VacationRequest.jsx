@@ -5,6 +5,8 @@ import { fetchCommentsByRequestId, addCommentToApi, selectCommentsByRequestId } 
 import Navbar from '../navbar/Navbar';
 import CommentsModal from "../CommentsModal/CommentsModal";
 
+
+//  format  date 
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -25,9 +27,10 @@ function VacationRequest({ requestId }) {
       dispatch(fetchCommentsByRequestId(requestId));
     }, [dispatch, requestId]);
 
+
+    //handle the addition of a comment.
     const handleAddComment = (commentText) => {
       dispatch(addCommentToApi({ requestId, text: commentText, author: 'CurrentUserName' })); 
-      //replace 'CurrentUserName' with the loggedin user's ID.
     };
 
     const openModalWithComments = () => {

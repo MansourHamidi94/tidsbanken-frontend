@@ -10,7 +10,7 @@ import Popup from "../popup/popup";
 3. Pick end date
 4. Display the vacant period in calendar
 */
-function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacationPlanner, instruction, startVacationPlanning }) {
+function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacationPlanner, instruction }) {
    
     const [selectedReason, setSelectedReason] = React.useState(null);
     const [popupMessage, setPopupMessage] = useState("");
@@ -18,14 +18,6 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
    
     return (
         <div>
-            
-            {popupMessage && (
-    <Popup
-        onClose={() => setPopupMessage("")}
-        title="Vacation Request"
-        content={popupMessage}
-    />
-)}
             {startDate && <div className="date-display">Start Date: {startDate.toLocaleDateString()}</div>}
             {endDate && (
                 <>
@@ -37,7 +29,7 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
                             onChange={e => setSelectedReason(e.target.value)}
                             value={selectedReason}
                         >
-                            <option value="Default">📋 Select Reason </option>
+                            <option value="Default">📋 Select Reason ▼</option>
                             <option value="Vacation">Vacation</option>
                             <option value="Holiday">Holiday</option>
                             <option value="SickLeave">Sick Leave</option>

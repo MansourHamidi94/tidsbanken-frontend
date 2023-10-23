@@ -1,5 +1,5 @@
 .vacation-btn {
-    background-color: #444444 !important;
+    background-color: rgb(74, 144, 226, 0.9) !important;
     backdrop-filter: blur(10px); /* This will give the glass effect */
     color: white !important;
     border: none !important;
@@ -43,11 +43,10 @@
     font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    width: 100%;
+    width: 25%;
     backdrop-filter: blur(10px);
     outline-style: solid;
     outline-color:#444444;
-
 }
 
 #reason select:hover {

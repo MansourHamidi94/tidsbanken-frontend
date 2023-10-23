@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import ControlPanel from "./components/controlPanel/ControlPanel.jsx"
-import Login from './components/Login/Login.jsx';
+import Login from './components/login/Login.jsx';
 import Calendar from "./components/calendar/Calendar"
 import SignUp from './components/SignUp/Signup';
 import Profile from './components/profile/Profile';

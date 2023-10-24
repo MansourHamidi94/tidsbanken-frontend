@@ -4,7 +4,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import Navbar from "../navbar/Navbar.jsx";  // Tilføj denne linje øverst
+import Navbar from "../navbar/Navbar.jsx"; 
 import "./Calendar.css";
 import VacationPlanner from "../vacation/VacationPlanner.jsx";
 

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/userSlice';
 import vacationRequestReducer from './slices/VacationRequestSlice';
-import commentsReducer from './slices/commentSlice';
+import commentsReducer from './slices/userSlice';
 
 
 const store = configureStore({

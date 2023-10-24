@@ -17,7 +17,7 @@
 
 .control-panel-card:hover {
     transform: scale(1.05) !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; /* Slightly increased the shadow for contrast on hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; 
 }
 
 .control-panel-card__body {
@@ -44,9 +44,9 @@
     background-color: #FFF1E3;
 }
 .img-fluid {
-    width: 150px;  /* Adjust width as per your requirement */
-    height: 150px; /* Adjust height as per your requirement */
+    width: 150px;  
+    height: 150px; 
     display: block;
-    margin: 0 auto; /* Center the image horizontally */
-    /* For vertical alignment, consider using flexbox or grid on the parent container */
+    margin: 0 auto; 
+    
 }

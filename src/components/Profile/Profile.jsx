@@ -17,7 +17,7 @@ function Profile() {
     const [lastName, setLastName] = useState("");
     const [age, setAge] = useState("");
     const [email, setEmail] = useState("");
-    
+
 
 
 
@@ -103,21 +103,6 @@ function Profile() {
     };
 
 
-
-    // Function to toggle theme between light and dark
-    const handleThemeToggle = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
-        setTheme(newTheme);
-    };
-
-    useEffect(() => {
-        if (theme === 'dark') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    }, [theme]);
-
     // Navigation handler
     const navigate = useNavigate();
 
@@ -140,75 +125,83 @@ function Profile() {
 
 
         <div className="profile-container">
-        <div className="card profile-card">
-            <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-center">
-                    <img src="logo4.png" alt="" className='img-fluid' />
-                </div>
-
-                {/* User Details */}
-                <div className="mt-4">
-                    <div className="mt-4">
-                        {isEditingFirstName ? (
-                            <input
-                                type="text"
-                                className="form-control mb-2"
-                                value={firstName}
-                                onChange={e => setFirstName(e.target.value)}
-                                onBlur={() => setIsEditingFirstName(false)}
-                            />
-                        ) : (
-                            <div className="form-control mb-2 label-display" onClick={() => setIsEditingFirstName(true)}>
-                                First Name: {firstName}
-                            </div>
-                        )}
-
-                        {isEditingLastName ? (
-                            <input
-                                type="text"
-                                className="form-control mb-2"
-                                value={lastName}
-                                onChange={e => setLastName(e.target.value)}
-                                onBlur={() => setIsEditingLastName(false)}
-                            />
-                        ) : (
-                            <div className="form-control mb-2 label-display" onClick={() => setIsEditingLastName(true)}>
-                                Last Name: {lastName}
-                            </div>
-                        )}
-
-                        {isEditingAge ? (
-                            <input
-                                type="number"
-                                className="form-control mb-2"
-                                value={age}
-                                onChange={e => setAge(e.target.value)}
-                                onBlur={() => setIsEditingAge(false)}
-                            />
-                        ) : (
-                            <div className="form-control mb-2 label-display" onClick={() => setIsEditingAge(true)}>
-                                Age: {age}
-                            </div>
-                        )}
-
-                        {isEditingEmail ? (
-                            <input
-                                type="email"
-                                className="form-control mb-2"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                onBlur={() => setIsEditingEmail(false)}
-                            />
-                        ) : (
-                            <div className="form-control mb-2 label-display" onClick={() => setIsEditingEmail(true)}>
-                                E-Mail: {email}
-                            </div>
-                        )}
+            <div className="card profile-card">
+                <div className="card-body">
+                    <div className="d-flex flex-column align-items-center justify-content-center">
+                        <img src="logo4.png" alt="" className='img-fluid' />
                     </div>
 
-                    <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
-                </div>
-    
+                    {/* User Details */}
+                    <div className="mt-4">
+                        <div className="mt-4">
+                            {isEditingFirstName ? (
+                                <input
+                                    type="text"
+                                    className="form-control mb-2"
+                                    value={firstName}
+                                    onChange={e => setFirstName(e.target.value)}
+                                    onBlur={() => setIsEditingFirstName(false)}
+                                />
+                            ) : (
+                                <div className="form-control mb-2 label-display" onClick={() => setIsEditingFirstName(true)}>
+                                    First Name: {firstName}
+                                </div>
+                            )}
+
+                            {isEditingLastName ? (
+                                <input
+                                    type="text"
+                                    className="form-control mb-2"
+                                    value={lastName}
+                                    onChange={e => setLastName(e.target.value)}
+                                    onBlur={() => setIsEditingLastName(false)}
+                                />
+                            ) : (
+                                <div className="form-control mb-2 label-display" onClick={() => setIsEditingLastName(true)}>
+                                    Last Name: {lastName}
+                                </div>
+                            )}
+
+                            {isEditingAge ? (
+                                <input
+                                    type="number"
+                                    className="form-control mb-2"
+                                    value={age}
+                                    onChange={e => setAge(e.target.value)}
+                                    onBlur={() => setIsEditingAge(false)}
+                                />
+                            ) : (
+                                <div className="form-control mb-2 label-display" onClick={() => setIsEditingAge(true)}>
+                                    Age: {age}
+                                </div>
+                            )}
+
+                            {isEditingEmail ? (
+                                <input
+                                    type="email"
+                                    className="form-control mb-2"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    onBlur={() => setIsEditingEmail(false)}
+                                />
+                            ) : (
+                                <div className="form-control mb-2 label-display" onClick={() => setIsEditingEmail(true)}>
+                                    E-Mail: {email}
+                                </div>
+                            )}
+                        </div>
+
+                        <button className="btn btn-secondary mt-2" onClick={() => {
+                            setIsEditingFirstName(true);
+                            setIsEditingLastName(true);
+                            setIsEditingAge(true);
+                            setIsEditingEmail(true);
+                        }}>Edit</button>
+
+                        <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
+                    </div>
+
+
                     {/* Password Change Modal */}
                     <div className={showModal ? 'modal' : 'modal display-none'}>
                         <div className="modal-content">
@@ -223,13 +216,11 @@ function Profile() {
                     <div className="d-flex justify-content-between mt-3">
                         <button className="btn btn-success mt-2" onClick={handleSubmitChanges}>Submit</button>
                         <button className="btn btn-secondary" onClick={handleHome}>Home</button>
-
                     </div>
                 </div>
             </div>
-
         </div>
-    );
+    )
 }
 
 export default Profile;

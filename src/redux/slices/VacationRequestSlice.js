@@ -31,9 +31,10 @@ export const fetchVacationRequestById = createAsyncThunk(
 // Get all VacationRequests
 export const fetchAllVacationRequests = createAsyncThunk(
   'vacationRequest/fetchAllVacationRequests',
-  async (_, { rejectWithValue }) => {
+  async (status, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}`, {
+      const url = status ? `${API_URL}?status=${status}` : `${API_URL}`;
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -52,6 +53,7 @@ export const fetchAllVacationRequests = createAsyncThunk(
     }
   }
 );
+
 
 
 

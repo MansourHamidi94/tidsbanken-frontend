@@ -4,20 +4,30 @@ import Navbar from "../navbar/Navbar";
 
 //Redux imports
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllVacationRequests } from '../../redux/slices/VacationRequestSlice'; // adjust the import path as needed
+import { fetchAllVacationRequests } from '../../redux/slices/VacationRequestSlice';
 
 
 
 function Admin() {
 
     //Redux - dispatch actions
+    // Redux - dispatch actions
     const dispatch = useDispatch();
-    //Use useSelector to get data from the Redux store
+
+    // Brug useSelector for at hente data fra Redux store
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
 
+    // Filtrer for at finde alle afventende ferieanmodninger
+    const pendingVacationRequests = vacationRequests.filter(request => request.status === "Pending");
+
+      // Styret state for at afgøre, hvilken liste der skal vises
+  const [showPendingOnly, setShowPendingOnly] = useState(false);
+
+
     useEffect(() => {
-        dispatch(fetchAllVacationRequests());
-      }, [dispatch]);
+        dispatch(fetchAllVacationRequests()); // Henter alle requests
+        dispatch(fetchAllVacationRequests('pending')); // Henter kun "pending" requests
+    }, [dispatch]);
 
     //Manage vacation Request
     const [requests, setRequests] = useState([
@@ -86,7 +96,7 @@ function Admin() {
     const handleAddUser = async () => {
         try {
             setLoading(true);
-            // Here you would make an API call to add the user
+            // Make an API call to add the user
             setUsers([...users, { id: Date.now(), name: newUserName, rolename: "New Role" }]);
             setMessage("User added successfully");
             setNewUserName("");
@@ -126,7 +136,8 @@ function Admin() {
             {message && <p>{message}</p>}
             <div className="row justify-content-center mb-5">
                 <div className="col-md-6">
-                    <h3>Requests from users</h3>
+                    <h3>Vacation Requests</h3>
+                    
                     <div className="card-container">
                         {vacationRequests.map(request => (
                             <div key={request.id} className="card">
@@ -148,6 +159,31 @@ function Admin() {
                             </div>
                         ))}
                     </div>
+
+                    <h3>Vacation Requests History</h3>
+
+                    <div className="card-container">
+                        {vacationRequests.map(request => (
+                            <div key={request.id} className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{request.name}</h5>
+                                    <p className="card-text">From {request.startDate} to {request.endDate}</p>
+                                    <p className="card-text"><strong>Comment:</strong> {request.comment}</p>
+                                    <textarea
+                                        className="form-control mb-2"
+                                        placeholder="Type your comment here..."
+                                        value={declineComment}
+                                        onChange={(e) => setDeclineComment(e.target.value)}
+                                    />
+                                </div>
+                                <div className="card-footer">
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
 
                     <h3>Users</h3>
                     <ul className="list-group">

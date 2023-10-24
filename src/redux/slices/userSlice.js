@@ -1,26 +1,48 @@
-    import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-    const API_URL = 'https://localhost:7172/api/User';
+const API_URL = 'https://localhost:7172/api/User';
 
-    export const signupUser = createAsyncThunk(
+
+//GET
+//Fetch all users
+export const fetchAllUsers = createAsyncThunk(
+    "user/fetchAllUsers",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch('https://localhost:7172/api/v1/Users', {
+                method: "GET",
+                headers: { "accept": "application/json" }
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Failed to fetch users');
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+
+
+export const signupUser = createAsyncThunk(
     "user/signupUser",
     async (userData, { rejectWithValue }) => {
         try {
-        const response = await fetch(`${API_URL}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userData),
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.message || 'Signup failed');
-        return data;
+            const response = await fetch(`${API_URL}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData),
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Signup failed');
+            return data;
         } catch (error) {
-        return rejectWithValue(error.message);
+            return rejectWithValue(error.message);
         }
     }
-    );
+);
 
-    export const userSlice = createSlice({
+export const userSlice = createSlice({
     name: "user",
     initialState: {
         profile: null,
@@ -29,23 +51,23 @@
     },
     reducers: {
         logoutUser: (state) => {
-        state.profile = null;
-        state.isAuthenticated = false;
-        state.error = null;
+            state.profile = null;
+            state.isAuthenticated = false;
+            state.error = null;
         },
     },
     extraReducers: (builder) => {
         builder
-        .addCase(signupUser.fulfilled, (state, action) => {
-            state.profile = action.payload;
-            state.isAuthenticated = true;
-            state.error = null;
-        })
-        .addCase(signupUser.rejected, (state, action) => {
-            state.error = action.payload;
-        });
+            .addCase(signupUser.fulfilled, (state, action) => {
+                state.profile = action.payload;
+                state.isAuthenticated = true;
+                state.error = null;
+            })
+            .addCase(signupUser.rejected, (state, action) => {
+                state.error = action.payload;
+            });
     },
-    });
+});
 
-    export const { logoutUser } = userSlice.actions;
-    export default userSlice.reducer;
+export const { logoutUser } = userSlice.actions;
+export default userSlice.reducer;

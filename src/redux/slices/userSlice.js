@@ -1,6 +1,6 @@
     import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-    const API_URL = 'https://localhost:7172/api/User';
+    const API_URL = 'https://localhost:7172/api/v1/Users';
 
     export const signupUser = createAsyncThunk(
     "user/signupUser",
@@ -19,6 +19,24 @@
         }
     }
     );
+
+    export const getUserById = createAsyncThunk(
+        "user/getUserById",
+        async (userId, { rejectWithValue }) => {
+            try {
+                const response = await fetch(`${API_URL}/1`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || 'Failed to fetch user');
+                return data;
+            } catch (error) {
+                return rejectWithValue(error.message);
+            }
+        }
+    );
+    
 
     export const userSlice = createSlice({
     name: "user",
@@ -43,9 +61,19 @@
         })
         .addCase(signupUser.rejected, (state, action) => {
             state.error = action.payload;
+
+            
+        })
+        
+        .addCase(getUserById.fulfilled, (state, action) => {
+            state.profile = action.payload;
+            state.error = null;
+        })
+        .addCase(getUserById.rejected, (state, action) => {
+            state.error = action.payload;
         });
-    },
-    });
+    
+   } });
 
     export const { logoutUser } = userSlice.actions;
     export default userSlice.reducer;

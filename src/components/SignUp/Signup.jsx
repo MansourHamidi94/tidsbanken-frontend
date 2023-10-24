@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../../redux/slices/userSlice"; 
 import "./Signup.css"; 
 
+
+
+
 const SignUp = () => {
     const [formData, setFormData] = useState({
         username: "",
@@ -12,6 +15,8 @@ const SignUp = () => {
         firstName: "",
         lastName: ""
     });
+
+    
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

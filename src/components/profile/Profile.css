@@ -94,3 +94,10 @@
     width: 100vw;
     height: 100vw;
 }
+
+.label-display {
+    cursor: pointer;
+    border: none;
+    background-color: #FFF1E3;
+    color: #444444;
+}

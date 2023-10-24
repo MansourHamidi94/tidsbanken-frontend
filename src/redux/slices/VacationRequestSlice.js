@@ -138,7 +138,7 @@ const vacationRequestSlice = createSlice({
     
 
       builder.addCase(fetchVacationRequestById.fulfilled, (state, action) => {
-        state.vacationRequests = [action.payload];  // Store the single fetched vacation request in an array
+        state.vacationRequests = [action.payload];  
       })
       .addCase(fetchVacationRequestById.rejected, (state, action) => {
         console.error('Failed to fetch vacation request:', action.error.message);

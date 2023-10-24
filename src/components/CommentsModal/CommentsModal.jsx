@@ -23,7 +23,6 @@ function CommentsModal({ isOpen, onClose, comments, requestId }) {
     }
 };
 
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="modal-header">Comments</div>

@@ -42,12 +42,50 @@ export const signupUser = createAsyncThunk(
     }
 );
 
+
+// Adding a user
+export const addUser = createAsyncThunk(
+    "user/addUser",
+    async (userData, { rejectWithValue }) => {
+      try {
+        const response = await fetch(`${API_URL}/add`, { // Change the URL as per your API's endpoint
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(userData),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Failed to add user');
+        return data;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+  
+  // Deleting a user
+  export const deleteUser = createAsyncThunk(
+    "user/deleteUser",
+    async (userId, { rejectWithValue }) => {
+      try {
+        const response = await fetch(`${API_URL}/${userId}`, { // Change the URL as per your API's endpoint
+          method: "DELETE",
+        });
+        if (!response.ok) throw new Error('Failed to delete user');
+        return userId;
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+
+
 export const userSlice = createSlice({
     name: "user",
     initialState: {
         profile: null,
         isAuthenticated: false,
         error: null,
+        users: []
     },
     reducers: {
         logoutUser: (state) => {
@@ -58,6 +96,7 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        
             .addCase(signupUser.fulfilled, (state, action) => {
                 state.profile = action.payload;
                 state.isAuthenticated = true;
@@ -65,7 +104,18 @@ export const userSlice = createSlice({
             })
             .addCase(signupUser.rejected, (state, action) => {
                 state.error = action.payload;
-            });
+            })
+            .addCase(fetchAllUsers.fulfilled, (state, action) => {
+                state.users = action.payload; 
+            }) 
+            .addCase(addUser.fulfilled, (state, action) => {
+                state.users.push(action.payload);
+            })
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                const index = state.users.findIndex(u => u.id === action.payload);
+                if (index !== -1) state.users.splice(index, 1);
+            })
+            ;
     },
 });
 

@@ -12,7 +12,6 @@ function Profile() {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [repeatNewPassword, setRepeatNewPassword] = useState("");
-    const [theme, setTheme] = useState('light'); // default to light mode
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [age, setAge] = useState("");
@@ -102,7 +101,6 @@ function Profile() {
         }
     };
 
-
     // Navigation handler
     const navigate = useNavigate();
 
@@ -115,10 +113,6 @@ function Profile() {
     const [isEditingLastName, setIsEditingLastName] = useState(false);
     const [isEditingAge, setIsEditingAge] = useState(false);
     const [isEditingEmail, setIsEditingEmail] = useState(false);
-
-
-
-
 
     // Render Component
     return (

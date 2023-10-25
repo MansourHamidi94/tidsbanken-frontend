@@ -1,23 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "./VacationPlanner.css";
+import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/VacationRequestSlice';
 import Popup from "../popup/popup";
 import Draggable from 'react-draggable';
 
-// Vacation planner
-/*
-1. Create request
-2. pick start date
-3. Pick end date
-4. Display the vacant period in calendar
-*/
-function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacationPlanner, instruction, startVacationPlanning }) {
+function VacationPlanner({ startDate, endDate,  reduxStartDate, reduxEndDate, dispatch }) {
+   
 
-    const [selectedReason, setSelectedReason] = React.useState(null);
+
+ 
+
+    // Initialize selectedReason with an empty string
+    const [selectedReason, setSelectedReason] = useState("");
     const [popupMessage, setPopupMessage] = useState("");
 
-    return (
     
+    // Updated button click handler:
+    const handleSendRequest = () => {
+        dispatch(createVacationRequest({
+            vacationType: selectedReason || "Vacation",
+            startDate: reduxStartDate,
+            endDate: reduxEndDate,
+            userId: 1,
+            requestDate: new Date().toISOString()
+        }));
+        setPopupMessage(`Vacation request sent with start date: ${reduxStartDate.toLocaleDateString()} and end date: ${reduxEndDate.toLocaleDateString()}`);
+    };
+    
+
+    return (
         <>
             {popupMessage && (
                 <Popup
@@ -26,8 +37,6 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
                     content={popupMessage}
                 />
             )}
-
-
             <Draggable>
                 <div className="draggable-card">
                     <img src="logo4.png" alt="Logo" className="card-logo" />
@@ -52,7 +61,7 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
                                 </select>
                             </div>
                             <button className="vacation-btn"
-                                onClick={() => setPopupMessage(`Vacation SE sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`)}
+                                onClick={() => setPopupMessage(`Vacation sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`)}
                                 id="send-button"> Send request</button>
                         </>
                     )}
@@ -61,5 +70,10 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
             </>
             );
 }
-
             export default VacationPlanner;
+
+
+
+
+
+

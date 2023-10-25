@@ -11,29 +11,25 @@
     outline-style: solid;
     outline-color:#444444;
 }
-
 .vacation-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
-
 .date-display {
     margin-top: 20px;
     font-size: 1.2em;
     color: #333333;
-    background-color: rgba(235, 235, 235, 0.95); 
+    background-color: rgba(235, 235, 235, 0.95);
     padding: 10px 15px;
     border-radius: 10px;
     backdrop-filter: blur(5px); /* Blur content behind */
     background-color: white;
 }
-
 #reason{
     margin-top: 10px;
     margin-bottom: 10px;
     position:relative;
 }
-
 #reason select {
     appearance: none;
     background-color: #444444;
@@ -48,14 +44,11 @@
     backdrop-filter: blur(10px);
     outline-style: solid;
     outline-color:#444444;
-
 }
-
 #reason select:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
-
 #reason::after {
     content: "▼";
     position: absolute;
@@ -66,13 +59,11 @@
     font-size: 1rem;
     pointer-events: none;
 }
-
 #send-button{
     background-color: #444444;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline-style: solid;
 }
-
 .draggable-card {
     background-color: #FFF1E3;
     border-radius: 15px;
@@ -81,7 +72,6 @@
     position: relative;
     cursor: grab;
 }
-
 .card-logo {
     z-index: 10;
     position: relative;
@@ -94,15 +84,11 @@
     border-radius: 50%;
     width: 80px;
     height: 80px;
-
-
 }
-
 .date-display, #reason, .vacation-btn {
     color: #444444;
     background-color: white;
 }
-
 .vacation-btn {
     background-color: #444444;
     color: #FFF1E3;
@@ -111,9 +97,6 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
 .vacation-btn:hover {
     background-color: #333333;
 }
-
-

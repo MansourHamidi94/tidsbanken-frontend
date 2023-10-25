@@ -17,7 +17,7 @@
 
 .control-panel-card:hover {
     transform: scale(1.05) !important;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
 .control-panel-card__body {
@@ -36,17 +36,4 @@
 .control-panel-card a:focus {
     color: white !important;
     text-decoration: none !important;  
-}
-.control-panel-container {
-    background-color: #FFF1E3;
-}
-.container-for-site {
-    background-color: #FFF1E3;
-}
-.img-fluid {
-    width: 150px;  
-    height: 150px; 
-    display: block;
-    margin: 0 auto; 
-    
 }

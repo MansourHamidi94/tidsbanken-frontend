@@ -1,21 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-//import userReducer from './slices/userSlice/userSlice';
-import vacationRequestReducer from './slices/VacationRequestSlice';
-import commentsReducer from './slices/commentsSlice';
-import ineligiblePeriodsReducer from './slices/IneligiblePeriodsSlice';
-//import authReducer from './slices/authSlice/authSlice';
-//import useraReducer from './slices/userSlice';
-import keycloakReducer from './slices/keycloakSlice/keycloakSlice';
+import keycloakReducer from './slices/keycloak/keycloakSlice';
+import userReducer from './slices/user/userSlice';
+import vacationRequestReducer from './slices/vacationRequest/VacationRequestSlice';
+import commentsReducer from './slices/comment/commentsSlice';
+import ineligiblePeriodsReducer from './slices/ineligiblePeriod/IneligiblePeriodsSlice';
 
 const store = configureStore({
     reducer: {
-        //user: userReducer,
+        keycloak: keycloakReducer,
+        user: userReducer,
         vacationRequest: vacationRequestReducer,
         comments: commentsReducer,
         ineligiblePeriods: ineligiblePeriodsReducer,
-        //auth: authReducer,
-        //usera: useraReducer,
-        keycloak: keycloakReducer
     },
     devTools: true
 });

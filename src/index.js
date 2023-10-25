@@ -13,7 +13,6 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 const root = createRoot(document.getElementById('root'));
-
 root.render(
   <KeycloakProvider>
     <React.StrictMode>

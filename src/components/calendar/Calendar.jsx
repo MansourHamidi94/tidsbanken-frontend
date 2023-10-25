@@ -5,8 +5,8 @@ import Navbar from "../navbar/Navbar.jsx";
 import "./Calendar.css";
 import VacationPlanner from "../vacation/VacationPlanner.jsx";
 import { useDispatch, useSelector } from 'react-redux';
-import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/VacationRequestSlice';
-import { fetchIneligiblePeriods } from '../../redux/slices/IneligiblePeriodsSlice';
+import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/vacationRequest/VacationRequestSlice.js';
+import { fetchIneligiblePeriods } from '../../redux/slices/ineligiblePeriod/IneligiblePeriodsSlice';
 
 function Calendar() {
     const [date, setDate] = useState(new Date());

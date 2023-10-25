@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import Keycloak from 'keycloak-js';
-import keycloakConfig from '../keycloakConfigJS';
-import { KeycloakContext } from './keycloakContext'; // Path to your KeycloakContext file
+import keycloakConfig from './keycloakConfigJS';
+
+
+export const keycloakContext = createContext(null);
 
 export const KeycloakProvider = ({ children }) => {
   const [keycloak, setKeycloak] = useState(null);
@@ -14,8 +16,8 @@ export const KeycloakProvider = ({ children }) => {
   }, []);
 
   return (
-    <KeycloakContext.Provider value={keycloak}>
+    <keycloakContext.Provider value={keycloak}>
       {children}
-    </KeycloakContext.Provider>
+    </keycloakContext.Provider>
   );
 };

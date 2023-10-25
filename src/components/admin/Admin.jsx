@@ -8,6 +8,14 @@ import { fetchAllVacationRequests } from '../../redux/slices/VacationRequestSlic
 import { fetchAllUsers, addUser, deleteUser } from '../../redux/slices/userSlice';
 import { fetchCommentsByRequestId, selectCommentsByRequestId, addCommentToApi } from "../../redux/slices/commentsSlice";
 
+
+
+/*
+note for me
+- tilføj commentar push commentar til ID
+- accept or decline - ændre status til approved eller Rejected.
+*/
+
 function Admin() {
     // Redux - dispatch actions
     const dispatch = useDispatch();

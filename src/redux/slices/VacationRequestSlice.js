@@ -9,9 +9,8 @@ export const fetchVacationRequestById = createAsyncThunk(
   'vacationRequest/fetchVacationRequestById',
   async (requestId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/1`, {
+      const response = await fetch(`${API_URL}/user?id=7d94f7d7-da61-49a0-b0e3-8790b93168de`, {
         method: 'GET',
-        mode: 'cors',
         credentials: 'include',
       });
 
@@ -31,15 +30,15 @@ export const fetchVacationRequestById = createAsyncThunk(
 
 
 
-
-//POST
 export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',
   async (requestData, { rejectWithValue }) => {
     try {
+      // Setting the UserId for testing purposes
+      requestData.UserId = "7d94f7d7-da61-49a0-b0e3-8790b93168de";
+      
       const response = await fetch(`${API_URL}`, {
         method: 'POST',
-        mode: "cors",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -59,6 +58,8 @@ export const createVacationRequest = createAsyncThunk(
     }
   }
 );
+
+
 
 
 //PUT
@@ -138,7 +139,7 @@ const vacationRequestSlice = createSlice({
     
 
       builder.addCase(fetchVacationRequestById.fulfilled, (state, action) => {
-        state.vacationRequests = [action.payload];  
+        state.vacationRequests = action.payload;  
       })
       .addCase(fetchVacationRequestById.rejected, (state, action) => {
         console.error('Failed to fetch vacation request:', action.error.message);

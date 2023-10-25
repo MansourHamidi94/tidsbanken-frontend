@@ -4,36 +4,43 @@ import { fetchVacationRequestById } from '../../redux/slices/VacationRequestSlic
 import { fetchCommentsByRequestId, addCommentToApi, selectCommentsByRequestId } from '../../redux/slices/commentsSlice';
 import Navbar from '../navbar/Navbar';
 import CommentsModal from "../CommentsModal/CommentsModal";
+import { fetchAllCommentsForUser } from '../../redux/slices/commentsSlice';
+
 import './VacationRequest.css';
-
-
-
-
 
 // Format date
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    
     return new Date(dateString).toLocaleDateString(undefined, options);
 }
+
 function VacationRequest({ requestId }) {
+    const [currentRequestId, setCurrentRequestId] = useState(null);
     const dispatch = useDispatch();
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
-    const comments = useSelector(state => selectCommentsByRequestId(state, requestId));
+    const comments = useSelector(state => selectCommentsByRequestId(state, currentRequestId));
     const [isModalOpen, setIsModalOpen] = useState(false);
+    
     useEffect(() => {
       dispatch(fetchVacationRequestById(requestId));
       dispatch(fetchCommentsByRequestId(requestId));
+      dispatch(fetchAllCommentsForUser(requestId));
     }, [dispatch, requestId]);
-    // Handle the addition of a comment.
+
     const handleAddComment = (commentText) => {
-      dispatch(addCommentToApi({ requestId, text: commentText, author: 'CurrentUserName' }));
+      dispatch(addCommentToApi({ requestId: currentRequestId, text: commentText, author: 'CurrentUserName' }));
     };
-    const openModalWithComments = () => {
-      setIsModalOpen(true);
+
+    const openModalWithComments = (id) => {
+        setCurrentRequestId(id); 
+        setIsModalOpen(true);
     };
+
     const closeModal = () => {
       setIsModalOpen(false);
     };
+
     return (
       <div className="container vacation-request" style={{ backgroundColor: '#FFF1E3', padding: '20px' }}>
           <Navbar />
@@ -50,7 +57,7 @@ function VacationRequest({ requestId }) {
                                   <p>Start date: {formatDate(request.startDate)}</p>
                                   <p>End date: {formatDate(request.endDate)}</p>
                                   <p>Status: <span className="status-label" style={{ color: '#444444' }}>{request.status}</span></p>
-                                  <button onClick={openModalWithComments} style={{ backgroundColor: '#444444', color: 'white', borderRadius: '10px', border: 'none', padding: '5px 10px' }}>View/Edit Comments</button>
+                                  <button onClick={() => openModalWithComments(request.id)} style={{ backgroundColor: '#444444', color: 'white', borderRadius: '10px', border: 'none', padding: '5px 10px' }}>View/Edit Comments</button>
                               </div>
                           ))}
                       </div>
@@ -58,7 +65,6 @@ function VacationRequest({ requestId }) {
               </div>
               <div className="col-md-6">
                  
-                     
               </div>
           </div>
           <CommentsModal
@@ -66,9 +72,10 @@ function VacationRequest({ requestId }) {
               onClose={closeModal}
               comments={comments}
               onAddComment={handleAddComment}
-              requestId={requestId}
+              requestId={currentRequestId}  
           />
       </div>
     );
 }
+
 export default VacationRequest;

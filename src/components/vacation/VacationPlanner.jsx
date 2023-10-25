@@ -8,7 +8,6 @@ function VacationPlanner({ startDate, endDate,  reduxStartDate, reduxEndDate, di
    
 
 
- 
 
     // Initialize selectedReason with an empty string
     const [selectedReason, setSelectedReason] = useState("");
@@ -21,9 +20,8 @@ function VacationPlanner({ startDate, endDate,  reduxStartDate, reduxEndDate, di
             vacationType: selectedReason || "Vacation",
             startDate: reduxStartDate,
             endDate: reduxEndDate,
-            userId: 1,
             requestDate: new Date().toISOString()
-        }));
+          }));
         setPopupMessage(`Vacation request sent with start date: ${reduxStartDate.toLocaleDateString()} and end date: ${reduxEndDate.toLocaleDateString()}`);
     };
     
@@ -61,8 +59,11 @@ function VacationPlanner({ startDate, endDate,  reduxStartDate, reduxEndDate, di
                                 </select>
                             </div>
                             <button className="vacation-btn"
-                                onClick={() => setPopupMessage(`Vacation sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`)}
-                                id="send-button"> Send request</button>
+        onClick={() => { handleSendRequest(); setPopupMessage(`Vacation sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`);
+        }}
+        id="send-button"> Send request</button>
+
+
                         </>
                     )}
                 </div>

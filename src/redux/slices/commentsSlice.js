@@ -7,9 +7,8 @@ export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
   async (requestId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}`, {
+      const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/${requestId}/Comments`, {
         method: 'GET',
-        mode: 'cors',
         credentials: 'include',
       });
 
@@ -46,6 +45,34 @@ export const addCommentToApi = createAsyncThunk(
       }
   }
 );
+
+export const fetchAllCommentsForUser = createAsyncThunk(
+  'comments/fetchAllCommentsForUser',
+  async (userId, { dispatch, rejectWithValue }) => {
+    try {
+      // This assumes you have an endpoint to fetch all vacation requests for a user.
+      const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/user?id=7d94f7d7-da61-49a0-b0e3-8790b93168de`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const vacationRequests = await response.json();
+
+      // Now, for each vacation request, fetch its comments
+      for (let request of vacationRequests) {
+        dispatch(fetchCommentsByRequestId(request.id));
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 
 
 export const commentsSlice = createSlice({

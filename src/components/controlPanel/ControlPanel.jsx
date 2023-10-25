@@ -54,7 +54,7 @@ function ControlPanel() {
                             <h5 className="control-panel-card__title">Profile</h5>
                         </div>
                     </Link>
-
+ 
                     <Link to="/Admin" className="card control-panel-card bg-light shadow-lg mb-3 text-decoration-none">
                         <div className="control-panel-card__body text-center">
                             <h5 className="control-panel-card__title">Admin</h5>

@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 let API_URL = 'https://localhost:7172/api/v1/VacationRequests/1/Comments';
+let BASE_API_URL = 'https://localhost:7172/api/v1/VacationRequests';
 
 
 export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
   async (requestId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}`, {
+      const response = await fetch(`${BASE_API_URL}/${requestId}/Comments`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',
@@ -26,23 +27,30 @@ export const fetchCommentsByRequestId = createAsyncThunk(
   }
 );
 
+
 export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
   async ({ requestId, comment }, thunkAPI) => {
-      const response = await fetch(`${API_URL}`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(comment)
-      });
+      try {
+          const response = await fetch(`${API_URL}/comments`, {  // Jeg tilføjede "/comments" til din URL, antagende at dette er endepunktet for at tilføje kommentarer.
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ requestId, comment })  // Det ser ud til, at du glemte at inkludere requestId i din anmodnings payload.
+          });
 
-      if (response.ok) {
+          if (!response.ok) {
+              const error = await response.json();
+              return thunkAPI.rejectWithValue(error);
+          }
+
           const data = await response.json();
           return data;
-      } else {
-          const error = await response.json();
-          return thunkAPI.rejectWithValue(error);
+
+      } catch (error) {
+          // Håndter netværksfejl (hvis serveren ikke svarer)
+          return thunkAPI.rejectWithValue('Network error');
       }
   }
 );

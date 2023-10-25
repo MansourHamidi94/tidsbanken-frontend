@@ -41,11 +41,9 @@ function VacationPlanner({ startDate, endDate, showVacationPlanner, setShowVacat
                     </div>
                     <button className="vacation-btn" 
                     onClick={() => setPopupMessage(`Vacation SE sent with start date: ${startDate.toLocaleDateString()} and end date: ${endDate.toLocaleDateString()}`)}
-
                     id="send-button">🚀 Send request</button>
                 </>
             )}
-           
 
         </div>
     );

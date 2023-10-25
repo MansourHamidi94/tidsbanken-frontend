@@ -8,7 +8,7 @@
     margin-bottom: 2rem;
 }
 
-h3 {
+h2 {
     margin-top: 2rem;
     border-bottom: 1px solid #ffffff;
     padding-bottom: 0.5rem;
@@ -182,4 +182,23 @@ input[type="text"] {
 
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.status-approved {
+  color: rgb(0, 255, 0);
+}
+.status-pending {
+  color: rgb(255, 166, 0);
+}
+.status-declined {
+  color: red;
 }

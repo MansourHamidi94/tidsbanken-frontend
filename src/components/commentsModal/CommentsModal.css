@@ -7,15 +7,12 @@
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
-
 .button:hover {
     background-color: #333333;
 }
-
 .comment {
     margin-bottom: 10px;
 }
-
 .older-comments {
     margin-top: 10px;
 }

@@ -6,10 +6,6 @@ import Draggable from 'react-draggable';
 
 function VacationPlanner({ startDate, endDate,  reduxStartDate, reduxEndDate, dispatch }) {
    
-
-
- 
-
     // Initialize selectedReason with an empty string
     const [selectedReason, setSelectedReason] = useState("");
     const [popupMessage, setPopupMessage] = useState("");

@@ -1,0 +1,7 @@
+{
+  "realm": "noroff",
+  "auth-server-url": "https://keycloak-middleware.azurewebsites.net",
+  "ssl-required": "external",
+  "clientId": "Tidsbanken-FrontEnd",
+  "public-client": true
+}

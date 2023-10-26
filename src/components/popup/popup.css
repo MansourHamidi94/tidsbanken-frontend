@@ -9,6 +9,7 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
     transition: background-color 0.5s ease-in-out;
+    z-index: 1000;
 }
 
 .popup-content {

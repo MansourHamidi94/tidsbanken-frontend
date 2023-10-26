@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Admin.css";
 import Navbar from "../navbar/Navbar";
+import Popup from "../popup/popup";
 
 // Redux imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,12 +18,18 @@ note for me
 */
 
 function Admin() {
+
     // Redux - dispatch actions
     const dispatch = useDispatch();
+
+    const [showPopup, setShowPopup] = useState(false);
+
 
     // Use useSelector to fetch data from Redux store
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
     const users = useSelector((state) => state.user.users);
+    
+    const [localVacationRequests, setLocalVacationRequests] = useState(vacationRequests);
 
     // Get the last 5 pending vacation requests
     const lastFivePendingRequests = vacationRequests
@@ -42,26 +49,11 @@ function Admin() {
         dispatch(fetchAllUsers()); // Fetch users
     }, [dispatch]);
 
-    const handleAccept = async (id) => {
-        try {
-            setLoading(true);
-            
-            // Update the status to "Approved" via the API
-            const updatedData = {
-                status: "Approved"
-            };
-            
-            await dispatch(updateVacationRequest({ requestId: id, updatedData }));
-    
-            setMessage("Request accepted successfully");
-        } catch (error) {
-            console.error("Error accepting request", error);
-            setMessage("Error accepting request");
-        } finally {
-            setLoading(false);
-        }
+    const handleAccept = (id) => {
+        console.log("ID: " + id + " Approved!")
+        setShowPopup(true);
+
     };
-    
 
     const handleDecline = async (id) => {
         try {
@@ -103,7 +95,7 @@ function Admin() {
     };
     
 
-
+    //css in styling to change color of status
     const statusColor = (status) => {
         switch (status) {
             case "Approved":
@@ -149,11 +141,20 @@ function Admin() {
                                         value={declineComment[request.id] || ""}
                                         onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
                                     />
+                                    
                                 </div>
                                 <div className="card-footer">
-                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accepter</button>
-                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Afvist</button>
-                                </div>
+  <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
+  <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
+
+  {showPopup && (
+    <Popup 
+      onClose={() => setShowPopup(false)}
+      title="Confirmation"
+      content="Your request has been accepted!"
+    />
+  )}
+</div>
                             </div>
                         ))}
                     </div>
@@ -162,7 +163,7 @@ function Admin() {
                 <div className="col-md-6">
                     <h2>Vacation Requests History</h2>
                     <div className="card-container">
-                        {vacationRequests.slice().map(request => (
+                        {vacationRequests.slice(0,5).map(request => (
                             <div key={request.id} className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{request.name}</h5>
@@ -208,12 +209,14 @@ const CommentsList = ({ requestId }) => {
 
     return (
         <div className="card-text">
+            <h5>
             <strong>Comments:</strong>
+            </h5>
             <ul>
                 {commentsForThisRequest.length > 0 ? (
                     commentsForThisRequest.map((comment) => (
                         <li key={comment.id}>
-                            <p><strong>{comment.userName}:</strong> {comment.message}</p>
+                            <p>{comment.message}</p>
                         </li>
                     ))
                 ) : (

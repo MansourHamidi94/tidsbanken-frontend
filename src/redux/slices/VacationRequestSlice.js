@@ -55,9 +55,6 @@ export const fetchAllVacationRequests = createAsyncThunk(
 );
 
 
-
-
-
 //POST
 export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',

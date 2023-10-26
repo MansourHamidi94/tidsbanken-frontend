@@ -24,7 +24,8 @@ function Admin() {
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
     const users = useSelector((state) => state.user.users);
 
-    const [declineComment, setDeclineComment] = useState("");
+    const [declineComment, setDeclineComment] = useState({});
+
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -48,8 +49,16 @@ function Admin() {
     const handleDecline = async (id) => {
         try {
             setLoading(true);
-            setMessage("Request declined successfully");
-            setDeclineComment("");
+
+            setDeclineComment(prevState => {
+                return { ...prevState, [id]: '' };
+            });
+
+            const declineMessage = "Request declined successfully";
+
+            setMessage(declineMessage);
+            console.log(declineComment);
+
         } catch (error) {
             console.error("Error declining request", error);
             setMessage("Error declining request");
@@ -57,6 +66,7 @@ function Admin() {
             setLoading(false);
         }
     };
+
 
     const statusColor = (status) => {
         switch (status) {
@@ -89,17 +99,17 @@ function Admin() {
                                     <p> Request ID: {request.id}</p>
                                     <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
                                     <p style={{ color: "blue" }}>
-                                        {new Date(request.startDate).toLocaleDateString()} til 
-                                        {new Date(request.endDate).toLocaleDateString()} 
+                                        {new Date(request.startDate).toLocaleDateString()}
+                                        {new Date(request.endDate).toLocaleDateString()}
                                     </p>
 
                                     <CommentsList requestId={request.id} />
-                                    
+
                                     <textarea
                                         className="form-control mb-2"
                                         placeholder="Skriv din kommentar her..."
-                                        value={declineComment}
-                                        onChange={(e) => setDeclineComment(e.target.value)}
+                                        value={declineComment[request.id] || ""}
+                                        onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
                                     />
                                 </div>
                                 <div className="card-footer">
@@ -118,14 +128,14 @@ function Admin() {
 const CommentsList = ({ requestId }) => {
     const dispatch = useDispatch();
     const commentsForThisRequest = useSelector(state => selectCommentsByRequestId(state, requestId)) || [];
-    
+
     useEffect(() => {
         dispatch(fetchCommentsByRequestId(requestId));
     }, [dispatch, requestId]);
 
     return (
         <div className="card-text">
-            <strong>Kommentarer:</strong>
+            <strong>Comments:</strong>
             <ul>
                 {commentsForThisRequest.length > 0 ? (
                     commentsForThisRequest.map((comment) => (
@@ -134,7 +144,7 @@ const CommentsList = ({ requestId }) => {
                         </li>
                     ))
                 ) : (
-                    <li>Ingen kommentarer</li>
+                    <li>No comments..</li>
                 )}
             </ul>
         </div>

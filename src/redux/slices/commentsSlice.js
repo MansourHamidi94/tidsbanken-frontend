@@ -32,12 +32,12 @@ export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
   async ({ requestId, comment }, thunkAPI) => {
       try {
-          const response = await fetch(`${API_URL}/comments`, {  // Jeg tilføjede "/comments" til din URL, antagende at dette er endepunktet for at tilføje kommentarer.
+          const response = await fetch(`${API_URL}/comments`, { 
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ requestId, comment })  // Det ser ud til, at du glemte at inkludere requestId i din anmodnings payload.
+              body: JSON.stringify({ requestId, comment })  
           });
 
           if (!response.ok) {

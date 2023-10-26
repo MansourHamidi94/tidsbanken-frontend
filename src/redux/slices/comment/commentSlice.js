@@ -1,62 +1,72 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import * as commentAPI from './commentAPI'; // Importing API functions
+import { selectToken } from './userSlice'; // Importing the token selector from userSlice
 
-let API_URL = 'https://localhost:7172/api/v1/VacationRequests/1/Comments';
-
-
+// Async thunk to fetch comments by request id
 export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
-  async (requestId, { rejectWithValue }) => {
+  async (requestId, { getState, rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}`, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        return rejectWithValue(data);
-      }
-
-      const data = await response.json();
-      return { requestId, comments: data };
+      const token = selectToken(getState()); // Selecting the token from the state
+      const comments = await commentAPI.getComment(token); // API call to get comments
+      return { requestId, comments };
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message || 'Failed to fetch comments');
     }
   }
 );
 
+// Async thunk to add a comment
 export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
-  async ({ requestId, comment }, thunkAPI) => {
-      const response = await fetch(`${API_URL}`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(comment)
-      });
-
-      if (response.ok) {
-          const data = await response.json();
-          return data;
-      } else {
-          const error = await response.json();
-          return thunkAPI.rejectWithValue(error);
-      }
+  async ({ requestId, comment }, { getState, rejectWithValue }) => {
+    try {
+      const token = selectToken(getState()); // Selecting the token from the state
+      const data = await commentAPI.postComment(comment, token); // API call to post a comment
+      return { requestId, comment: data };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add comment');
+    }
   }
 );
 
+// Async thunk to update a comment
+export const updateCommentInApi = createAsyncThunk(
+  'comments/updateComment',
+  async ({ requestId, commentId, updatedComment }, { getState, rejectWithValue }) => {
+    try {
+      const token = selectToken(getState()); // Selecting the token from the state
+      await commentAPI.putComment(commentId, updatedComment, token); // API call to update a comment
+      return { requestId, commentId, updatedComment };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update comment');
+    }
+  }
+);
 
-export const commentsSlice = createSlice({
+// Async thunk to delete a comment
+export const deleteCommentFromApi = createAsyncThunk(
+  'comments/deleteComment',
+  async ({ requestId, commentId }, { getState, rejectWithValue }) => {
+    try {
+      const token = selectToken(getState()); // Selecting the token from the state
+      await commentAPI.deleteComment(commentId, token); // API call to delete a comment
+      return { requestId, commentId };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to delete comment');
+    }
+  }
+);
+
+// Comments slice
+const commentsSlice = createSlice({
   name: 'comments',
   initialState: {
-    commentsByRequestId: {},  
-    error: null              
+    commentsByRequestId: {},
+    status: 'idle',
+    error: null
   },
-  reducers: {
-    
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCommentsByRequestId.pending, (state) => {
@@ -75,11 +85,26 @@ export const commentsSlice = createSlice({
           state.commentsByRequestId[action.payload.requestId] = [];
         }
         state.commentsByRequestId[action.payload.requestId].push(action.payload.comment);
+      })
+      .addCase(updateCommentInApi.fulfilled, (state, action) => {
+        const { requestId, commentId, updatedComment } = action.payload;
+        if (!state.commentsByRequestId[requestId]) {
+          state.commentsByRequestId[requestId] = [];
+        }
+        const commentIndex = state.commentsByRequestId[requestId].findIndex(c => c.id === commentId);
+        if (commentIndex !== -1) {
+          state.commentsByRequestId[requestId][commentIndex] = updatedComment;
+        }
+      })
+      .addCase(deleteCommentFromApi.fulfilled, (state, action) => {
+        const { requestId, commentId } = action.payload;
+        if (!state.commentsByRequestId[requestId]) {
+          state.commentsByRequestId[requestId] = [];
+        }
+        state.commentsByRequestId[requestId] = state.commentsByRequestId[requestId].filter(c => c.id !== commentId);
       });
   },
 });
 
-
 export const selectCommentsByRequestId = (state, requestId) => state.comments.commentsByRequestId[requestId] || [];
-
 export default commentsSlice.reducer;

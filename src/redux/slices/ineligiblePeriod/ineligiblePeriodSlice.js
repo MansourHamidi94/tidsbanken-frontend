@@ -64,7 +64,7 @@ export const deleteIneligiblePeriod = createAsyncThunk(
 );
 
 // Ineligible period slice
-const ineligiblePeriodsSlice = createSlice({
+const ineligiblePeriodSlice = createSlice({
   name: 'ineligiblePeriods',
   initialState: {
     periods: [],
@@ -101,4 +101,4 @@ const ineligiblePeriodsSlice = createSlice({
   },
 });
 
-export default ineligiblePeriodsSlice.reducer;
+export default ineligiblePeriodSlice.reducer;

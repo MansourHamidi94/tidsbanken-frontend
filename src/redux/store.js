@@ -3,7 +3,7 @@ import keycloakReducer from './slices/keycloak/keycloakSlice';
 import userReducer from './slices/user/userSlice';
 import vacationRequestReducer from './slices/vacationRequest/vacationRequestSlice';
 import commentsReducer from './slices/comment/commentSlice';
-import ineligiblePeriodsReducer from './slices/ineligiblePeriod/IneligiblePeriodsSlice';
+import ineligiblePeriodsReducer from './slices/ineligiblePeriod/ineligiblePeriodSlice';
 
 const store = configureStore({
     reducer: {

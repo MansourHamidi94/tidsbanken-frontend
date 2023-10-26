@@ -1,10 +1,10 @@
-/*import { useContext, useCallback } from 'react';
+import { useContext, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { keycloakContext } from '../keycloak/keycloakProvider';
-import { setAuthenticated, setToken, refreshToken, logout, loginUser, logoutUser } from '../redux/slices/keycloak/keycloakSlice';
+import { setAuthenticated, setToken, refreshToken, loginUser, logoutUser } from '../redux/slices/keycloak/keycloakSlice';
 import { postUser, userExists } from '../redux/slices/user/userSlice';
 
-export function KeycloakUse() {
+const useKeycloak = () => {
   const keycloak = useContext(keycloakContext);
   const dispatch = useDispatch();
 
@@ -18,7 +18,9 @@ export function KeycloakUse() {
     dispatch(logoutUser());
   }, [keycloak, dispatch]);
 
-  const checkAuthentication = async () => {
+  useEffect(() => {
+    if (keycloak) {
+      const checkAuthentication = async () => {
     if (keycloak.authenticated) {
       dispatch(setToken(keycloak.token));
       try {
@@ -45,7 +47,7 @@ export function KeycloakUse() {
             dispatch(refreshToken(keycloak.token));
           }
         }).catch(() => {
-          dispatch(logout());
+          dispatch(logoutUser());
         });
       }, 60000);
 
@@ -54,6 +56,11 @@ export function KeycloakUse() {
       dispatch(setAuthenticated(false));
     }
   };
+  checkAuthentication();
+}
+  }, [dispatch, keycloak]);
 
-  return { handleLogin, handleLogout, checkAuthentication };
-}*/
+  return { keycloak, handleLogin, handleLogout };
+};
+
+export default useKeycloak;

@@ -6,7 +6,7 @@ import "./Calendar.css";
 import VacationPlanner from "../vacation/VacationPlanner.jsx";
 import { useDispatch, useSelector } from 'react-redux';
 import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/vacationRequest/vacationRequestSlice.js';
-import { fetchIneligiblePeriods } from '../../redux/slices/ineligiblePeriod/IneligiblePeriodsSlice';
+import { fetchIneligiblePeriods } from '../../redux/slices/ineligiblePeriod/ineligiblePeriodSlice';
 
 function Calendar() {
     const [date, setDate] = useState(new Date());

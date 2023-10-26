@@ -22,6 +22,7 @@ export const initializeKeycloak = async () => {
   }
 };
 
+// Keycloak login, logout and token function
 export const login = async () => {
   try {
     await keycloak.login();

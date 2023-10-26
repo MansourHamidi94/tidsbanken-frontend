@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { checkUserExists, createUser } from './userAPI';
+import { getUser, PostUser } from './userAPI';
 
-// Async thunks
+// AsyncThunks
 export const userExists = createAsyncThunk(
     'user/userExists',
     async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       try {
-        const response = await checkUserExists(token);
+        const response = await getUser(token);
         return response;
       } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -22,7 +22,7 @@ export const postUser = createAsyncThunk(
     const state = thunkAPI.getState();
     const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       try {
-        const response = await createUser(token);
+        const response = await PostUser(token);
         return response;
       } catch (error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -39,7 +39,7 @@ const initialState = {
   email: ''
 };
 
-// Slice
+// User redux slice
 const userSlice = createSlice({
   name: 'user',
   initialState,

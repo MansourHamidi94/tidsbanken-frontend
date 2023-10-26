@@ -1,10 +1,10 @@
-import { useContext, useCallback } from 'react';
+/*import { useContext, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { keycloakContext } from '../keycloak/keycloakProvider';
 import { setAuthenticated, setToken, refreshToken, logout, loginUser, logoutUser } from '../redux/slices/keycloak/keycloakSlice';
 import { postUser, userExists } from '../redux/slices/user/userSlice';
 
-export function useKeycloak() {
+export function KeycloakUse() {
   const keycloak = useContext(keycloakContext);
   const dispatch = useDispatch();
 
@@ -21,7 +21,6 @@ export function useKeycloak() {
   const checkAuthentication = async () => {
     if (keycloak.authenticated) {
       dispatch(setToken(keycloak.token));
-
       try {
         const resultAction = await dispatch(userExists());
         if (userExists.fulfilled.match(resultAction)) {
@@ -57,4 +56,4 @@ export function useKeycloak() {
   };
 
   return { handleLogin, handleLogout, checkAuthentication };
-}
+}*/

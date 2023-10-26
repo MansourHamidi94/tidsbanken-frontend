@@ -60,11 +60,6 @@ function ControlPanel() {
                             <h5 className="control-panel-card__title">Admin</h5>
                         </div>
                     </Link>
-                    <Link to="/Login" id="logout-card" className="card control-panel-card bg-light shadow-lg text-decoration-none">
-                        <div className="control-panel-card__body text-center">
-                            <h5 className="control-panel-card__title text-danger">Logout</h5>
-                        </div>
-                    </Link>
                 </div>
             </div>
         </div>

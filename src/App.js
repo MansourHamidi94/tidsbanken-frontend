@@ -7,7 +7,7 @@ import VacationRequest from './components/vacationRequest/VacationRequest';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useContext, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAuthenticated, setToken, refreshToken, logout, logoutUser, loginUser } from './redux/slices/keycloak/keycloakSlice';
+import { setAuthenticated, setToken, refreshToken, logoutUser, loginUser } from './redux/slices/keycloak/keycloakSlice';
 import { keycloakContext } from './keycloak/keycloakProvider';
 import { postUser, userExists } from './redux/slices/user/userSlice';
 
@@ -32,19 +32,21 @@ function App() {
       if (keycloak.authenticated) {
         // Dispatch action to set the token in the Redux store
         dispatch(setToken(keycloak.token));
-
         // Check if the user exists in the database
         try {
           const resultAction = await dispatch(userExists());
-          if (userExists.fulfilled.match(resultAction)) {
+          if (userExists.fulfilled.match(resultAction)) 
+          {
             console.log('User exists in the database.', resultAction.payload);
             // Dispatch action to set the authentication state in the Redux store
             dispatch(setAuthenticated(true));
-          } else if (userExists.rejected.match(resultAction)) {
+          } 
+          else if (userExists.rejected.match(resultAction)) 
+          {
             console.log('User does not exist in the database. Attempting to create user...');
             const createUserAction = await dispatch(postUser());
-            console.log('Create user action:', createUserAction);
-            if (postUser.fulfilled.match(createUserAction)) {
+            if (postUser.fulfilled.match(createUserAction)) 
+            {
               console.log('User created successfully:', createUserAction.payload);
               // Dispatch action to set the authentication state in the Redux store
               dispatch(setAuthenticated(true));
@@ -69,7 +71,7 @@ function App() {
               dispatch(refreshToken(keycloak.token));
             }
           }).catch(() => {
-            dispatch(logout());
+            dispatch(logoutUser());
           });
         }, 60000); // Check every minute
 
@@ -100,7 +102,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ControlPanel />} />
-          <Route path="/ControlPanel" element={<ControlPanel />} />
           <Route path="/Calendar" element={<Calendar />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path='/vacation-request' element={<VacationRequest/>}/>

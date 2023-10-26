@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Modal from '../Modal/Modal';
-import { addCommentToApi } from '../../redux/slices/comment/commentsSlice';
+import { addCommentToApi } from '../../redux/slices/comment/commentSlice';
 
 function CommentsModal({ isOpen, onClose, comments, requestId }) {
   const dispatch = useDispatch();

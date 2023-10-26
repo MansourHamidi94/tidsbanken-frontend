@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVacationRequestById } from '../../redux/slices/vacationRequest/VacationRequestSlice';
-import { fetchCommentsByRequestId, addCommentToApi, selectCommentsByRequestId } from '../../redux/slices/comment/commentsSlice';
+import { fetchVacationRequestById } from '../../redux/slices/vacationRequest/vacationRequestSlice';
+import { fetchCommentsByRequestId, addCommentToApi, selectCommentsByRequestId } from '../../redux/slices/comment/commentSlice';
 import Navbar from '../navbar/Navbar';
 import CommentsModal from "../CommentsModal/CommentsModal";
 

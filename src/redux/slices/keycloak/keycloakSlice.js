@@ -58,6 +58,6 @@ const keycloakSlice = createSlice({
   },
 });
 
-export const { setAuthenticated, setToken, refreshToken, logout, setUserDetails } = keycloakSlice.actions;
+export const { setAuthenticated, setToken, refreshToken } = keycloakSlice.actions;
 
 export default keycloakSlice.reducer;

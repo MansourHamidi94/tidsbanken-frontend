@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as ineligiblePeriodAPI from './ineligiblePeriodAPI'; // Importing API functions
 import { selectToken } from './userSlice'; // Importing the token selector from userSlice
 
+// Async thunk to fetch ineligible period by request id
 export const fetchIneligiblePeriods = createAsyncThunk(
   'ineligiblePeriods/fetchIneligiblePeriods',
   async (_, { getState, rejectWithValue }) => {
@@ -15,6 +16,7 @@ export const fetchIneligiblePeriods = createAsyncThunk(
   }
 );
 
+// Async thunk to add an ineligible period
 export const createIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/createIneligiblePeriod',
   async (newPeriod, { getState, rejectWithValue }) => {
@@ -28,6 +30,7 @@ export const createIneligiblePeriod = createAsyncThunk(
   }
 );
 
+// Async thunk to update an ineligible period
 export const updateIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/updateIneligiblePeriod',
   async ({ id, updatedPeriod }, { getState, rejectWithValue }) => {
@@ -41,6 +44,7 @@ export const updateIneligiblePeriod = createAsyncThunk(
   }
 );
 
+// Async thunk to delete an ineligible period
 export const deleteIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/deleteIneligiblePeriod',
   async (id, { getState, rejectWithValue }) => {
@@ -54,6 +58,7 @@ export const deleteIneligiblePeriod = createAsyncThunk(
   }
 );
 
+// Ineligible period slice
 const ineligiblePeriodsSlice = createSlice({
   name: 'ineligiblePeriods',
   initialState: {

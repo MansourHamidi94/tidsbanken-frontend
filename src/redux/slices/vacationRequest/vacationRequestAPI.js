@@ -17,7 +17,7 @@ const handleResponse = async (response) => {
 };
 
 
-// Function to fetch a vacation request by ID.
+// Function to retrieve a vacation request by ID.
 export const getVacationRequestById = async (requestId, token) => {
   try {
     // Making a GET request to the API with the provided ID and token.

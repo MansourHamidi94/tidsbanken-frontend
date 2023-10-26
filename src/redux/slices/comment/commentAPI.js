@@ -1,6 +1,6 @@
 const API_URL = 'https://localhost:7172/api/v1/VacationRequests/1/Comments';
 
-// Response handler 
+// A helper function to handle responses from the API.
 const handleResponse = async (response) => {
   const data = await response.json();
   if (response.ok) {
@@ -11,7 +11,7 @@ const handleResponse = async (response) => {
   throw error;
 };
 
-// GET comment
+// Function to retrieve a comment by ID.
 export const getComment = async (token) => {
   try {
     const response = await fetch(API_URL, {
@@ -27,7 +27,7 @@ export const getComment = async (token) => {
   }
 };
 
-// POST(create) comment
+// Function to create a new comment.
 export const postComment = async (requestData, token) => {
   try {
     const response = await fetch(`${API_URL}`, {
@@ -44,7 +44,7 @@ export const postComment = async (requestData, token) => {
   }
 };
 
-// PUT(update) comment
+// Function to update an existing comment.
 export const putComment = async (requestId, updatedData, token) => {
   try {
     const response = await fetch(`${API_URL}/${requestId}`, {
@@ -61,7 +61,7 @@ export const putComment = async (requestId, updatedData, token) => {
   }
 };
 
-// DELETE comment
+// Function to delete a comment.
 export const deleteComment = async (requestId, token) => {
   try {
     const response = await fetch(`${API_URL}/${requestId}`, {

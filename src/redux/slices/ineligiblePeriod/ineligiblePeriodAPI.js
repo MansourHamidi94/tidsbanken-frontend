@@ -1,6 +1,6 @@
 const API_URL = 'https://localhost:7172/api/v1/IneligiblePeriods';
 
-// Response handler 
+// A helper function to handle responses from the API.
 const handleResponse = async (response) => {
   const data = await response.json();
   if (response.ok) {
@@ -11,7 +11,7 @@ const handleResponse = async (response) => {
   throw error;
 };
 
-// GET ineligible period
+// Function to retrieve an ineligible period by ID.
 export const getIneligiblePeriods = async (token) => {
   try {
     const response = await fetch(API_URL, {
@@ -27,7 +27,7 @@ export const getIneligiblePeriods = async (token) => {
   }
 };
 
-// POST(create) ineligible period
+// Function to create a new ineligible Period.
 export const postIneligiblePeriod = async (requestData, token) => {
   try {
     const response = await fetch(`${API_URL}`, {
@@ -44,7 +44,7 @@ export const postIneligiblePeriod = async (requestData, token) => {
   }
 };
 
-// PUT(update) ineligible period
+// Function to update an existing ineligible period.
 export const putIneligiblePeriod = async (requestId, updatedData, token) => {
   try {
     const response = await fetch(`${API_URL}/${requestId}`, {
@@ -61,7 +61,7 @@ export const putIneligiblePeriod = async (requestId, updatedData, token) => {
   }
 };
 
-// DELETE ineligible period
+// Function to delete an ineligible period.
 export const deleteIneligiblePeriod = async (requestId, token) => {
   try {
     const response = await fetch(`${API_URL}/${requestId}`, {

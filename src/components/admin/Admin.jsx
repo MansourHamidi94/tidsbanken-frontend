@@ -24,6 +24,14 @@ function Admin() {
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
     const users = useSelector((state) => state.user.users);
 
+    // Get the last 5 pending vacation requests
+    const lastFivePendingRequests = vacationRequests
+        .filter(request => request.status === "Pending")
+        .slice(-5);
+
+    // Get the last 5 vacation requests regardless of their status
+    const lastFiveVacationRequests = vacationRequests.slice(-5);
+
     const [declineComment, setDeclineComment] = useState({});
 
     const [loading, setLoading] = useState(false);
@@ -117,18 +125,20 @@ function Admin() {
             {loading && <div className="loading">Loading...</div>}
             {message && <p>{message}</p>}
             <div className="row justify-content-center mb-5">
+
+
                 <div className="col-md-6">
                     <h2>Vacation Requests</h2>
                     <div className="card-container">
-                        {vacationRequests.filter(request => request.status === "Pending").map(request => (
+                        {lastFivePendingRequests.map(request =>  (
                             <div key={request.id} className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{request.name}</h5>
                                     <p> Request ID: {request.id}</p>
                                     <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
                                     <p style={{ color: "blue" }}>
-                                        {new Date(request.startDate).toLocaleDateString()}
-                                        {new Date(request.endDate).toLocaleDateString()}
+                                    From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                       To {new Date(request.endDate).toLocaleDateString()}
                                     </p>
 
                                     <CommentsList requestId={request.id} />
@@ -148,11 +158,46 @@ function Admin() {
                         ))}
                     </div>
                 </div>
+
+                <div className="col-md-6">
+                    <h2>Vacation Requests History</h2>
+                    <div className="card-container">
+                        {vacationRequests.slice().map(request => (
+                            <div key={request.id} className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{request.name}</h5>
+                                    <p> Request ID: {request.id}</p>
+                                    <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
+                                    <p style={{ color: "blue" }}>
+                                       From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                       To {new Date(request.endDate).toLocaleDateString()}
+                                    </p>
+
+                                    <CommentsList requestId={request.id} />
+
+                                    <textarea
+                                        className="form-control mb-2"
+                                        placeholder="Skriv din kommentar her..."
+                                        value={declineComment[request.id] || ""}
+                                        onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
+                                    />
+                                </div>
+                                <div className="card-footer">
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accepter</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Afvist</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
+
         </div>
     );
 }
 
+//Comment functions
 const CommentsList = ({ requestId }) => {
     const dispatch = useDispatch();
     const commentsForThisRequest = useSelector(state => selectCommentsByRequestId(state, requestId)) || [];

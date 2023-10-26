@@ -32,12 +32,12 @@ export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
   async ({ requestId, comment }, thunkAPI) => {
       try {
-          const response = await fetch(`${API_URL}/comments`, { 
+          const response = await fetch(`${BASE_API_URL}/${requestId}/Comments`, { // Adjusted the URL
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
               },
-              body: JSON.stringify({ requestId, comment })  
+              body: JSON.stringify(comment) // Passing the comment object directly as it matches the expected API body
           });
 
           if (!response.ok) {
@@ -49,11 +49,12 @@ export const addCommentToApi = createAsyncThunk(
           return data;
 
       } catch (error) {
-          // Håndter netværksfejl (hvis serveren ikke svarer)
+          // Handle network error (if the server does not respond)
           return thunkAPI.rejectWithValue('Network error');
       }
   }
 );
+
 
 
 export const commentsSlice = createSlice({

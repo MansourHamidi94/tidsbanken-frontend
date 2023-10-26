@@ -4,7 +4,7 @@ import Navbar from "../navbar/Navbar";
 
 // Redux imports
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllVacationRequests } from '../../redux/slices/VacationRequestSlice';
+import { fetchAllVacationRequests, updateVacationRequest } from '../../redux/slices/VacationRequestSlice';
 import { fetchAllUsers, addUser, deleteUser } from '../../redux/slices/userSlice';
 import { fetchCommentsByRequestId, selectCommentsByRequestId, addCommentToApi } from "../../redux/slices/commentsSlice";
 
@@ -37,6 +37,14 @@ function Admin() {
     const handleAccept = async (id) => {
         try {
             setLoading(true);
+            
+            // Update the status to "Approved" via the API
+            const updatedData = {
+                status: "Approved"
+            };
+            
+            await dispatch(updateVacationRequest({ requestId: id, updatedData }));
+    
             setMessage("Request accepted successfully");
         } catch (error) {
             console.error("Error accepting request", error);
@@ -45,20 +53,39 @@ function Admin() {
             setLoading(false);
         }
     };
+    
 
     const handleDecline = async (id) => {
         try {
             setLoading(true);
-
-            setDeclineComment(prevState => {
-                return { ...prevState, [id]: '' };
-            });
-
-            const declineMessage = "Request declined successfully";
-
+    
+            const userComment = declineComment[id]; // Fetching the comment for the specific request id
+    
+            if (!userComment) { // Checking if the comment is not empty
+                setMessage("Please provide a comment before declining.");
+                return; // Exit the function if no comment is provided
+            }
+    
+            // Setting the message for the decline, you can adjust this if needed
+            const declineMessage = userComment;
+    
             setMessage(declineMessage);
-            console.log(declineComment);
-
+            console.log(declineMessage);
+    
+            // Posting the decline comment to the API
+            const comment = {
+                message: declineMessage,
+                dateCommented: new Date().toISOString() // Setting the current date-time in ISO format
+            };
+            dispatch(addCommentToApi({ requestId: id, comment: comment }));
+    
+            // Clearing the textarea after successfully sending the comment
+            setDeclineComment(prevState => {
+                const newState = { ...prevState };
+                delete newState[id];
+                return newState;
+            });
+    
         } catch (error) {
             console.error("Error declining request", error);
             setMessage("Error declining request");
@@ -66,6 +93,7 @@ function Admin() {
             setLoading(false);
         }
     };
+    
 
 
     const statusColor = (status) => {

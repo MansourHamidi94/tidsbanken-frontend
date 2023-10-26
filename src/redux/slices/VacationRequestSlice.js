@@ -141,9 +141,6 @@ export const deleteVacationRequest = createAsyncThunk(
 
 
 
-
-
-
 const vacationRequestSlice = createSlice({
     name: 'vacationRequest',
     initialState: {

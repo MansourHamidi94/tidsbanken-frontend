@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./ControlPanel.css";
-import Navbar from "../navbar/Navbar.jsx";  
+import Navbar from "../navbar/Navbar.jsx";
 import { useEffect } from "react";
 
 
 function ControlPanel() {
-    
+    //Get user type from local storage - is user or admin logged in?
+    const userType = localStorage.getItem("userType");
+
     //Date - useState()
     const [date, setDate] = useState(new Date());
     const year = date.getFullYear(); // Get year
@@ -21,6 +23,8 @@ function ControlPanel() {
     const currentMonthName = date.toLocaleString("default", { month: "long" });
     const monthShorted = currentMonthName.charAt(0).toUpperCase() + currentMonthName.substring(1, 3);
 
+
+
     //Array to collect days in month | For loop to push amount of days in a month in this array
     const daysInMonth = [];
     for (let i = firstDay.getDate(); i <= lastDay.getDate(); i++) {
@@ -31,7 +35,7 @@ function ControlPanel() {
         <div className="container-for-site">
             <div className="text-center mb-4">
                 {/*<h1 className="display-4">Tidsbanken</h1>*/}
-                <img src="logo4.png" alt="" className='img-fluid'/>
+                <img src="logo4.png" alt="" className='img-fluid' />
             </div>
 
             <div className="row justify-content-center mb-5 control-panel-container">
@@ -55,11 +59,15 @@ function ControlPanel() {
                         </div>
                     </Link>
 
-                    <Link to="/Admin" className="card control-panel-card bg-light shadow-lg mb-3 text-decoration-none">
-                        <div className="control-panel-card__body text-center">
-                            <h5 className="control-panel-card__title">Admin</h5>
-                        </div>
-                    </Link>
+                        {userType == "Admin" && (
+
+                            <Link to="/Admin" className="card control-panel-card bg-light shadow-lg mb-3 text-decoration-none">
+                            <div className="control-panel-card__body text-center">
+                                <h5 className="control-panel-card__title">Admin</h5>
+                            </div>
+                        </Link>
+                            )}
+
                     <Link to="/Login" id="logout-card" className="card control-panel-card bg-light shadow-lg text-decoration-none">
                         <div className="control-panel-card__body text-center">
                             <h5 className="control-panel-card__title text-danger">Logout</h5>

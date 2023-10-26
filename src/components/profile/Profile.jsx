@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; // Necessary imports for Redux
 import { getUserById} from '../../redux/slices/userSlice'; // Assuming you have a userSlice.js in the same directory
-
+import Navbar from "../navbar/Navbar.jsx";
 import './Profile.css';
 
 // Component Function
@@ -78,47 +78,36 @@ function Profile() {
 
     // Render Component
     return (
-
+        <div>
+                <Navbar/>
 
         <div className="profile-container">
         <div className="card profile-card">
             <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
-                    <img src="logo4.png" alt="" className='img-fluid' />
+                    
                 </div>
 
-                  {/* User Details */}
-                  <div className="mt-4">
-                        <div className="form-control mb-2 label-display">
-                            First Name: {userProfile?.firstName}
-                        </div>
-                        <div className="form-control mb-2 label-display">
-                            Last Name: {userProfile?.lastName}
-                        </div>
-                        <div className="form-control mb-2 label-display">
-                            E-Mail: {userProfile?.email}
-                        </div>
+                <div className="mt-4">
+    <div className="form-control mb-2">
+        <span className="label-display">First Name:</span> {userProfile?.firstName}
+    </div>
+    <div className="form-control mb-2">
+        <span className="label-display">Last Name:</span> {userProfile?.lastName}
+    </div>
+    <div className="form-control mb-2">
+        <span className="label-display">E-Mail:</span> {userProfile?.email}
+    </div>
                    
 
-                    <button className="btn btn-primary" onClick={handleOpenModal}>Change Password</button>
                 </div>
     
-                    {/* Password Change Modal */}
-                    <div className={showModal ? 'modal' : 'modal display-none'}>
-                        <div className="modal-content">
-                            <span className="close" onClick={handleCloseModal}>&times;</span>
-                            <h3>Change Password</h3>
-                            <input type="password" className="form-control mb-2" placeholder="Current Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-                            <input type="password" className="form-control mb-2" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                            <input type="password" className="form-control mb-2" placeholder="Repeat New Password" value={repeatNewPassword} onChange={(e) => setRepeatNewPassword(e.target.value)} />
-                            <button className="btn btn-success mt-2" onClick={() => {}}>Submit</button>
-                        </div>
-                    </div>
+                   
                     <div className="d-flex justify-content-between mt-3">
-                        <button className="btn btn-secondary" onClick={handleHome}>Home</button>
 
                     </div>
                 </div>
+            </div>
             </div>
 
         </div>

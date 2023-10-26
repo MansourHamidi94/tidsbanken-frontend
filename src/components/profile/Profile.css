@@ -1,3 +1,7 @@
+.mt-4 {
+    font-weight: bold;
+  }
+
 .profile-card {
     max-width: 500px;
     margin: 0 auto;
@@ -100,4 +104,6 @@
     border: none;
     background-color: #FFF1E3;
     color: #444444;
+    font-weight: bold;  /* Add this line */
+
 }

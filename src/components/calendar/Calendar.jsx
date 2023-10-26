@@ -79,6 +79,7 @@ const reduxEndDate = vacationRequest?.endDate ? new Date(vacationRequest.endDate
                         ranges={state}
                         onChange={handleDateChange}
                         disabledDates={getIneligibleDates()}
+                        minDate={new Date()}
 
                     />
                     <VacationPlanner

@@ -24,7 +24,7 @@
         "user/getUserById",
         async (userId, { rejectWithValue }) => {
             try {
-                const response = await fetch(`${API_URL}/1`, {
+                const response = await fetch(`${API_URL}/7d94f7d7-da61-49a0-b0e3-8790b93168de`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" }
                 });

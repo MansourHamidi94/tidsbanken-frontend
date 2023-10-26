@@ -34,3 +34,10 @@ body {
 .history-item:last-child {
     border-bottom: none;
 }
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* This will take the full width of its parent element */
+}

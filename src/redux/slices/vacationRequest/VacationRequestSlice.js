@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as vacationRequestAPI from './vacationRequestAPI';
-import { selectToken } from './userSlice';
 
 // AsyncThunk for fetching vacation request by id
 export const fetchVacationRequestById = createAsyncThunk(
   'vacationRequest/fetchVacationRequestById',
   async (requestId, { getState, rejectWithValue }) => {
     try {
-      // Retrieving token from the Redux state
-      const token = selectToken(getState());
-      // Making API call with the token and the request id
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       const response = await vacationRequestAPI.getVacationRequestById(requestId, token);
-      return response;
+      return response.data;
     } catch (error) {
-      // In case of an error, rejecting the promise and returning the error message
       return rejectWithValue(error.message || 'Failed to fetch vacation request');
     }
   }
@@ -24,13 +21,11 @@ export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',
   async (requestData, { getState, rejectWithValue }) => {
     try {
-      // Retrieving token from the Redux state
-      const token = selectToken(getState());
-      // Making API call with the token and the request data
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       const response = await vacationRequestAPI.postVacationRequest(requestData, token);
-      return response;
+      return response.data;
     } catch (error) {
-      // In case of an error, rejecting the promise and returning the error message
       return rejectWithValue(error.message || 'Failed to create vacation request');
     }
   }
@@ -41,13 +36,11 @@ export const updateVacationRequest = createAsyncThunk(
   'vacationRequest/updateVacationRequest',
   async ({ id, updatedData }, { getState, rejectWithValue }) => {
     try {
-      // Retrieving token from the Redux state
-      const token = selectToken(getState());
-      // Making API call with the token, request id and the updated data
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       await vacationRequestAPI.putVacationRequest(id, updatedData, token);
       return { id, updatedData };
     } catch (error) {
-      // In case of an error, rejecting the promise and returning the error message
       return rejectWithValue(error.message || 'Failed to update vacation request');
     }
   }
@@ -58,13 +51,11 @@ export const deleteVacationRequest = createAsyncThunk(
   'vacationRequest/deleteVacationRequest',
   async (id, { getState, rejectWithValue }) => {
     try {
-      // Retrieving token from the Redux state
-      const token = selectToken(getState());
-      // Making API call with the token and the request id
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       await vacationRequestAPI.deleteVacationRequest(id, token);
       return id;
     } catch (error) {
-      // In case of an error, rejecting the promise and returning the error message
       return rejectWithValue(error.message || 'Failed to delete vacation request');
     }
   }
@@ -94,7 +85,6 @@ const vacationRequestSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Handling different states of the async actions
     builder
       // Handling the fulfilled state of fetchVacationRequestById
       .addCase(fetchVacationRequestById.fulfilled, (state, action) => {
@@ -106,7 +96,8 @@ const vacationRequestSlice = createSlice({
         state.error = action.payload;
       })
       // Handling the fulfilled state of createVacationRequest
-      .addCase(createVacationRequest.fulfilled, (state) => {
+      .addCase(createVacationRequest.fulfilled, (state, action) => {
+        state.vacationRequests.push(action.payload);
         state.requestStatus = "Success";
         state.error = null;
       })
@@ -120,12 +111,20 @@ const vacationRequestSlice = createSlice({
         const { id, updatedData } = action.payload;
         const index = state.vacationRequests.findIndex(request => request.id === id);
         if (index !== -1) {
-          state.vacationRequests[index] = updatedData;
+          state.vacationRequests[index] = { ...state.vacationRequests[index], ...updatedData };
         }
+      })
+      // Handling the rejected state of updateVacationRequest
+      .addCase(updateVacationRequest.rejected, (state, action) => {
+        state.error = action.payload;
       })
       // Handling the fulfilled state of deleteVacationRequest
       .addCase(deleteVacationRequest.fulfilled, (state, action) => {
         state.vacationRequests = state.vacationRequests.filter(request => request.id !== action.payload);
+      })
+      // Handling the rejected state of deleteVacationRequest
+      .addCase(deleteVacationRequest.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

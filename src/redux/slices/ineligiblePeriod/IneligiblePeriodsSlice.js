@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as ineligiblePeriodAPI from './ineligiblePeriodAPI'; // Importing API functions
-import { selectToken } from './userSlice'; // Importing the token selector from userSlice
 
 // Async thunk to fetch ineligible period by request id
 export const fetchIneligiblePeriods = createAsyncThunk(
   'ineligiblePeriods/fetchIneligiblePeriods',
   async (_, { getState, rejectWithValue }) => {
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       const periods = await ineligiblePeriodAPI.getIneligiblePeriods(token); // API call to get ineligible periods
       return periods;
     } catch (error) {
@@ -21,7 +21,8 @@ export const createIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/createIneligiblePeriod',
   async (newPeriod, { getState, rejectWithValue }) => {
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       const period = await ineligiblePeriodAPI.postIneligiblePeriod(newPeriod, token); // API call to create ineligible period
       return period;
     } catch (error) {
@@ -30,12 +31,14 @@ export const createIneligiblePeriod = createAsyncThunk(
   }
 );
 
+
 // Async thunk to update an ineligible period
 export const updateIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/updateIneligiblePeriod',
   async ({ id, updatedPeriod }, { getState, rejectWithValue }) => {
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       await ineligiblePeriodAPI.putIneligiblePeriod(id, updatedPeriod, token); // API call to update ineligible period
       return { id, updatedPeriod };
     } catch (error) {
@@ -44,12 +47,14 @@ export const updateIneligiblePeriod = createAsyncThunk(
   }
 );
 
+
 // Async thunk to delete an ineligible period
 export const deleteIneligiblePeriod = createAsyncThunk(
   'ineligiblePeriods/deleteIneligiblePeriod',
   async (id, { getState, rejectWithValue }) => {
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
+      const state = getState();
+      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
       await ineligiblePeriodAPI.deleteIneligiblePeriod(id, token); // API call to delete ineligible period
       return id;
     } catch (error) {

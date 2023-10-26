@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as commentAPI from './commentAPI'; // Importing API functions
-import { selectToken } from './userSlice'; // Importing the token selector from userSlice
 
 // Async thunk to fetch comments by request id
 export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
-  async (requestId, { getState, rejectWithValue }) => {
+  async (requestId, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.keycloak.token;
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
-      const comments = await commentAPI.getComment(token); // API call to get comments
+      const comments = await commentAPI.getComment(requestId, token); // API call to get comments
       return { requestId, comments };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch comments');
+      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch comments');
     }
   }
 );
@@ -19,13 +19,14 @@ export const fetchCommentsByRequestId = createAsyncThunk(
 // Async thunk to add a comment
 export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
-  async ({ requestId, comment }, { getState, rejectWithValue }) => {
+  async ({ requestId, comment }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.keycloak.token;
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
-      const data = await commentAPI.postComment(comment, token); // API call to post a comment
+      const data = await commentAPI.postComment(requestId, comment, token); // API call to post a comment
       return { requestId, comment: data };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to add comment');
+      return thunkAPI.rejectWithValue(error.message || 'Failed to add comment');
     }
   }
 );
@@ -33,13 +34,14 @@ export const addCommentToApi = createAsyncThunk(
 // Async thunk to update a comment
 export const updateCommentInApi = createAsyncThunk(
   'comments/updateComment',
-  async ({ requestId, commentId, updatedComment }, { getState, rejectWithValue }) => {
+  async ({ requestId, commentId, updatedComment }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.keycloak.token;
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
-      await commentAPI.putComment(commentId, updatedComment, token); // API call to update a comment
-      return { requestId, commentId, updatedComment };
+      const data = await commentAPI.putComment(commentId, updatedComment, token); // API call to update a comment
+      return { requestId, commentId, updatedComment: data };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update comment');
+      return thunkAPI.rejectWithValue(error.message || 'Failed to update comment');
     }
   }
 );
@@ -47,13 +49,14 @@ export const updateCommentInApi = createAsyncThunk(
 // Async thunk to delete a comment
 export const deleteCommentFromApi = createAsyncThunk(
   'comments/deleteComment',
-  async ({ requestId, commentId }, { getState, rejectWithValue }) => {
+  async ({ requestId, commentId }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.keycloak.token;
     try {
-      const token = selectToken(getState()); // Selecting the token from the state
       await commentAPI.deleteComment(commentId, token); // API call to delete a comment
       return { requestId, commentId };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete comment');
+      return thunkAPI.rejectWithValue(error.message || 'Failed to delete comment');
     }
   }
 );

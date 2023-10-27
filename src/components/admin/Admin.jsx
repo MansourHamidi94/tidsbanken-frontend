@@ -28,7 +28,7 @@ function Admin() {
     // Use useSelector to fetch data from Redux store
     const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
     const users = useSelector((state) => state.user.users);
-    
+
     const [localVacationRequests, setLocalVacationRequests] = useState(vacationRequests);
 
     // Get the last 5 pending vacation requests
@@ -58,34 +58,34 @@ function Admin() {
     const handleDecline = async (id) => {
         try {
             setLoading(true);
-    
+
             const userComment = declineComment[id]; // Fetching the comment for the specific request id
-    
+
             if (!userComment) { // Checking if the comment is not empty
                 setMessage("Please provide a comment before declining.");
                 return; // Exit the function if no comment is provided
             }
-    
+
             // Setting the message for the decline, you can adjust this if needed
             const declineMessage = userComment;
-    
+
             setMessage(declineMessage);
             console.log(declineMessage);
-    
+
             // Posting the decline comment to the API
             const comment = {
                 message: declineMessage,
                 dateCommented: new Date().toISOString() // Setting the current date-time in ISO format
             };
             dispatch(addCommentToApi({ requestId: id, comment: comment }));
-    
+
             // Clearing the textarea after successfully sending the comment
             setDeclineComment(prevState => {
                 const newState = { ...prevState };
                 delete newState[id];
                 return newState;
             });
-    
+
         } catch (error) {
             console.error("Error declining request", error);
             setMessage("Error declining request");
@@ -93,7 +93,7 @@ function Admin() {
             setLoading(false);
         }
     };
-    
+
 
     //css in styling to change color of status
     const statusColor = (status) => {
@@ -122,15 +122,15 @@ function Admin() {
                 <div className="col-md-6">
                     <h2>Vacation Requests</h2>
                     <div className="card-container">
-                        {lastFivePendingRequests.map(request =>  (
+                        {lastFivePendingRequests.map(request => (
                             <div key={request.id} className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{request.name}</h5>
                                     <p> Request ID: {request.id}</p>
                                     <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
                                     <p style={{ color: "blue" }}>
-                                    From {new Date(request.startDate).toLocaleDateString()} - <br></br>
-                                       To {new Date(request.endDate).toLocaleDateString()}
+                                        From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                        To {new Date(request.endDate).toLocaleDateString()}
                                     </p>
 
                                     <CommentsList requestId={request.id} />
@@ -141,20 +141,20 @@ function Admin() {
                                         value={declineComment[request.id] || ""}
                                         onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
                                     />
-                                    
+
                                 </div>
                                 <div className="card-footer">
-  <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
-  <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
 
-  {showPopup && (
-    <Popup 
-      onClose={() => setShowPopup(false)}
-      title="Confirmation"
-      content="Your request has been accepted!"
-    />
-  )}
-</div>
+                                    {showPopup && (
+                                        <Popup
+                                            onClose={() => setShowPopup(false)}
+                                            title="Approved!"
+                                            content={` Your request has been accepted!`}
+                                        />
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -163,15 +163,15 @@ function Admin() {
                 <div className="col-md-6">
                     <h2>Vacation Requests History</h2>
                     <div className="card-container">
-                        {vacationRequests.slice(0,5).map(request => (
+                        {vacationRequests.slice(0, 5).map(request => (
                             <div key={request.id} className="card">
                                 <div className="card-body">
                                     <h5 className="card-title">{request.name}</h5>
                                     <p> Request ID: {request.id}</p>
                                     <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
                                     <p style={{ color: "blue" }}>
-                                       From {new Date(request.startDate).toLocaleDateString()} - <br></br>
-                                       To {new Date(request.endDate).toLocaleDateString()}
+                                        From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                        To {new Date(request.endDate).toLocaleDateString()}
                                     </p>
 
                                     <CommentsList requestId={request.id} />
@@ -210,7 +210,7 @@ const CommentsList = ({ requestId }) => {
     return (
         <div className="card-text">
             <h5>
-            <strong>Comments:</strong>
+                <strong>Comments:</strong>
             </h5>
             <ul>
                 {commentsForThisRequest.length > 0 ? (

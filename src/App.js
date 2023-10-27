@@ -1,32 +1,21 @@
-// import './App.css';
-import Login from './components/login/Login.jsx';
-import Calendar from "./components/calendar/Calendar.jsx";
-import ControlPanel from "./components/controlPanel/ControlPanel.jsx";
-import SignUp from './components/SignUp/SignUp';
-import Profile from './components/Profile/Profile.jsx';
-import Admin from "./components/admin/Admin";
-import VacationRequest from './components/vacationRequest/VacationRequest.jsx';
-
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
+import './App.css';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import useKeycloak from './keycloak/keycloakUse';
+import AppRoutes from './routes/appRoutes';
 
 function App() {
+  const { handleLogin, handleLogout } = useKeycloak();
+  const isAuthenticated = useSelector((state) => state.keycloak.authenticated);
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-        <Route path="/" element={<ControlPanel />} />
-          <Route path="/ControlPanel" element={<ControlPanel />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Calendar" element={<Calendar />} />
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/vacation-request' element={<VacationRequest/>}/>
-          <Route path="/Admin" element={<Admin/>} />
-
-
-
-        </Routes>
-      </BrowserRouter>
+      {!isAuthenticated ? (
+        <button onClick={handleLogin}>Login</button>
+      ) : (
+        <button onClick={handleLogout}>Logout</button>
+      )}
+      <AppRoutes/>
     </div>
   );
 }

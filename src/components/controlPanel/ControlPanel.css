@@ -50,3 +50,17 @@
     margin: 0 auto; /* Center the image horizontally */
     /* For vertical alignment, consider using flexbox or grid on the parent container */
 }
+
+.control-panel-container {
+    background-color: #FFF1E3;
+}
+.container-for-site {
+    background-color: #FFF1E3;
+}
+.img-fluid {
+    width: 150px;  /* Adjust width as per your requirement */
+    height: 150px; /* Adjust height as per your requirement */
+    display: block;
+    margin: 0 auto; /* Center the image horizontally */
+    /* For vertical alignment, consider using flexbox or grid on the parent container */
+}

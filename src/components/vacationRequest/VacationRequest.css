@@ -1,8 +1,43 @@
 .vacation-request {
     margin-top: 20px;
 }
-
 .status-label {
     color: green;
     font-weight: bold;
+}
+body {
+    background-color: #FFF1E3;
+}
+/* Vacation/Absent History Component */
+.history-container {
+    background-color: #F5F5F5; /* Light gray background */
+    width: 100%; /* Full width of its parent container */
+    min-height: 300px; /* Minimum height, but it will expand based on content */
+    border: 1px solid #E0E0E0; /* Slightly darker border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Inner spacing for content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+    margin-top: 20px; /* Spacing from the top */
+}
+/* If you have titles or headers inside the history component */
+.history-container h2,
+.history-container h3 {
+    color: #444444; /* Dark gray for text */
+    margin-bottom: 15px; /* Spacing after titles */
+}
+/* If you have lists or individual items inside the history component */
+.history-item {
+    padding: 10px;
+    border-bottom: 1px solid #E0E0E0; /* Separator for items */
+}
+/* Last item shouldn't have a border at the bottom */
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* This will take the full width of its parent element */
 }

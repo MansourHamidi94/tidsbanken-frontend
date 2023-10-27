@@ -1,0 +1,114 @@
+.profile-card {
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #FFF1E3;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    height: 500px; /* Adjust the height as per your requirement */
+  }
+
+.card-body {
+    background-color:  #FFF1E3;
+}
+
+
+.username-input {
+    width: 50%; /* Adjust as needed */
+    margin: 150px auto; /* 10px top and bottom margin, and horizontally centered */
+}
+
+.btn-primary {
+    margin-top: 10px; 
+    margin: 20px;
+}  
+
+.modal {
+    position: fixed; /* Fixed positioning */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure modal appears above other content */
+}
+
+.modal-content {
+    background-color:  #FFF1E3;
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%;
+    justify-content:center;
+    align-items: center;
+}
+
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.close {
+    position: absolute; /* Absolute positioning */
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+}
+.username {
+    margin-top: 10px; /* Adjust as needed */
+}
+
+.cancel-button {
+    position: absolute;
+    top: 550px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+}
+
+
+/* Logo Image Styles */
+.img-fluid {
+    max-width: 60%;
+    height: auto;
+}
+
+/* Default light mode styles */
+.body {
+    background-color: #FFF1E3;
+    background-color: #FFF1E3;
+    color: #000000;
+}
+
+/* Profile Container Styles */
+.profile-container {
+    background-color: #FFF1E3;
+    width: 100vw;
+    height: 100vw;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.navbar-container img {
+  width: 100px; /* Adjust the width as per your requirement */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.profile-container {
+    background-color: #FFF1E3;
+    font-family: 'Roboto', sans-serif; /* Roboto is a popular font that is often used for its readability and modern look */
+}
+
+.user-detail{
+    font-size: larger;
+    text-align: center;
+}

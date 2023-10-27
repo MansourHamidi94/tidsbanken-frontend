@@ -54,7 +54,6 @@ export const fetchAllVacationRequests = createAsyncThunk(
   }
 );
 
-
 // Post
 export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',
@@ -83,7 +82,6 @@ export const createVacationRequest = createAsyncThunk(
   }
 );
 
-
 //PUT
 export const updateVacationRequest = createAsyncThunk(
   'vacationRequest/updateVacationRequest',
@@ -110,9 +108,6 @@ export const updateVacationRequest = createAsyncThunk(
     }
   }
 );
-
-
-
 
 //DELETE
 export const deleteVacationRequest = createAsyncThunk(

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setStartDate,
   setEndDate,
-} from "../../redux/slices/vacationRequest/vacationRequestSlice";
+} from "../../redux/slices/vacationRequest/vacationRequestSlice.js";
 import { fetchIneligiblePeriods } from "../../redux/slices/ineligiblePeriod/ineligiblePeriodSlice";
 
 function Calendar() {

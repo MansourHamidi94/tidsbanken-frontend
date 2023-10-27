@@ -1,80 +1,228 @@
-import React, { useState } from "react";
-import "./Admin.css"
+import React, { useState, useEffect } from "react";
+import "./Admin.css";
 import Navbar from "../navbar/Navbar";
+import Popup from "../popup/popup";
+
+// Redux imports
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllVacationRequests, updateVacationRequest } from '../../redux/slices/VacationRequestSlice';
+import { fetchAllUsers, addUser, deleteUser } from '../../redux/slices/userSlice';
+import { fetchCommentsByRequestId, selectCommentsByRequestId, addCommentToApi } from "../../redux/slices/commentsSlice";
+
+
+
+/*
+note for me
+- tilføj commentar push commentar til ID
+- accept or decline - ændre status til approved eller Rejected.
+*/
 
 function Admin() {
-    const [requests, setRequests] = useState([
-        // Eksempel data
-        { id: 1, name: "John", startDate: "2023-10-20", endDate: "2023-10-25", status: "Pending", comment: "" },
-        { id: 2, name: "Jane", startDate: "2023-11-01", endDate: "2023-11-10", status: "Pending", comment: "" }
-    ]);
 
-    const [users, setUsers] = useState([
-        // Eksempel data
-        { id: 1, name: "John" },
-        { id: 2, name: "Jane" }
-    ]);
+    // Redux - dispatch actions
+    const dispatch = useDispatch();
+
+    const [showPopup, setShowPopup] = useState(false);
+
+
+    // Use useSelector to fetch data from Redux store
+    const vacationRequests = useSelector((state) => state.vacationRequest.vacationRequests);
+    const users = useSelector((state) => state.user.users);
+
+    const [localVacationRequests, setLocalVacationRequests] = useState(vacationRequests);
+
+    // Get the last 5 pending vacation requests
+    const lastFivePendingRequests = vacationRequests
+        .filter(request => request.status === "Pending")
+        .slice(-5);
+
+    // Get the last 5 vacation requests regardless of their status
+    const lastFiveVacationRequests = vacationRequests.slice(-5);
+
+    const [declineComment, setDeclineComment] = useState({});
+
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+        dispatch(fetchAllVacationRequests()); // Fetch all requests
+        dispatch(fetchAllUsers()); // Fetch users
+    }, [dispatch]);
 
     const handleAccept = (id) => {
-        const updatedRequests = requests.map(request => {
-            if (request.id === id) {
-                request.status = "Accepted";
+        console.log("ID: " + id + " Approved!")
+        setShowPopup(true);
+
+    };
+
+    const handleDecline = async (id) => {
+        try {
+            setLoading(true);
+
+            const userComment = declineComment[id]; // Fetching the comment for the specific request id
+
+            if (!userComment) { // Checking if the comment is not empty
+                setMessage("Please provide a comment before declining.");
+                return; // Exit the function if no comment is provided
             }
-            return request;
-        });
-        setRequests(updatedRequests);
+
+            // Setting the message for the decline, you can adjust this if needed
+            const declineMessage = userComment;
+
+            setMessage(declineMessage);
+            console.log(declineMessage);
+
+            // Posting the decline comment to the API
+            const comment = {
+                message: declineMessage,
+                dateCommented: new Date().toISOString() // Setting the current date-time in ISO format
+            };
+            dispatch(addCommentToApi({ requestId: id, comment: comment }));
+
+            // Clearing the textarea after successfully sending the comment
+            setDeclineComment(prevState => {
+                const newState = { ...prevState };
+                delete newState[id];
+                return newState;
+            });
+
+        } catch (error) {
+            console.error("Error declining request", error);
+            setMessage("Error declining request");
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDecline = (id, comment) => {
-        const updatedRequests = requests.map(request => {
-            if (request.id === id) {
-                request.status = "Declined";
-                request.comment = comment;
-            }
-            return request;
-        });
-        setRequests(updatedRequests);
-    };
 
-    const handleAddUser = (name) => {
-        setUsers([...users, { id: Date.now(), name }]);
-    };
-
-    const handleDeleteUser = (id) => {
-        const updatedUsers = users.filter(user => user.id !== id);
-        setUsers(updatedUsers);
-    };
+    //css in styling to change color of status
+    const statusColor = (status) => {
+        switch (status) {
+            case "Approved":
+                return "status-approved";
+            case "Pending":
+                return "status-pending";
+            case "Declined":
+                return "status-declined";
+            default:
+                return "black"; // Default color for unknown status
+        }
+    }
 
     return (
         <div className="container-for-site">
-           <Navbar/>
-            <h2 className="text-center mb-4">Admin Panel</h2>
-            
-            <div className="row justify-content-center mb-5">
-                <div className="col-md-6">
-                    <h3>Ferieanmodninger</h3>
-                    <ul className="list-group mb-4">
-                        {requests.map(request => (
-                            <li key={request.id} className="list-group-item">
-                                {request.name} fra {request.startDate} til {request.endDate}
-                                <button className="custom-button ml-2" id="accept" onClick={() => handleAccept(request.id)}>Accepter</button>
-                                <button className="custom-button ml-2" id="decline" onClick={() => handleDecline(request.id, "Din kommentar her")}>Afvis</button>
-                            </li>
-                        ))}
-                    </ul>
+            <Navbar />
 
-                    <h3>Brugere</h3>
-                    <ul className="list-group">
-                        {users.map(user => (
-                            <li key={user.id} className="list-group-item">
-                                {user.name}
-                                <button className="custom-button ml-2" id="delete" onClick={() => handleDeleteUser(user.id)}>Slet</button>
-                            </li>
+            <h2 className="text-center mb-4">Admin Panel</h2>
+            {loading && <div className="loading">Loading...</div>}
+            {message && <p>{message}</p>}
+            <div className="row justify-content-center mb-5">
+
+
+                <div className="col-md-6">
+                    <h2>Vacation Requests</h2>
+                    <div className="card-container">
+                        {lastFivePendingRequests.map(request => (
+                            <div key={request.id} className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{request.name}</h5>
+                                    <p> Request ID: {request.id}</p>
+                                    <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
+                                    <p style={{ color: "blue" }}>
+                                        From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                        To {new Date(request.endDate).toLocaleDateString()}
+                                    </p>
+
+                                    <CommentsList requestId={request.id} />
+
+                                    <textarea
+                                        className="form-control mb-2"
+                                        placeholder="Skriv din kommentar her..."
+                                        value={declineComment[request.id] || ""}
+                                        onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
+                                    />
+
+                                </div>
+                                <div className="card-footer">
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accept</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Decline</button>
+
+                                    {showPopup && (
+                                        <Popup
+                                            onClose={() => setShowPopup(false)}
+                                            title="Approved!"
+                                            content={` Your request has been accepted!`}
+                                        />
+                                    )}
+                                </div>
+                            </div>
                         ))}
-                    </ul>
-                    <button className="custom-button mt-3" id="add-user" onClick={() => handleAddUser("Ny bruger navn her")}>+ Add User</button>
+                    </div>
                 </div>
+
+                <div className="col-md-6">
+                    <h2>Vacation Requests History</h2>
+                    <div className="card-container">
+                        {vacationRequests.slice(0, 5).map(request => (
+                            <div key={request.id} className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{request.name}</h5>
+                                    <p> Request ID: {request.id}</p>
+                                    <p> Status: <span className={statusColor(request.status)}>{request.status}</span></p>
+                                    <p style={{ color: "blue" }}>
+                                        From {new Date(request.startDate).toLocaleDateString()} - <br></br>
+                                        To {new Date(request.endDate).toLocaleDateString()}
+                                    </p>
+
+                                    <CommentsList requestId={request.id} />
+
+                                    <textarea
+                                        className="form-control mb-2"
+                                        placeholder="Skriv din kommentar her..."
+                                        value={declineComment[request.id] || ""}
+                                        onChange={(e) => setDeclineComment({ ...declineComment, [request.id]: e.target.value })}
+                                    />
+                                </div>
+                                <div className="card-footer">
+                                    <button className="custom-button" id="accept" onClick={() => handleAccept(request.id)}>Accepter</button>
+                                    <button className="custom-button" id="decline" onClick={() => handleDecline(request.id)}>Afvist</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
+
+        </div>
+    );
+}
+
+//Comment functions
+const CommentsList = ({ requestId }) => {
+    const dispatch = useDispatch();
+    const commentsForThisRequest = useSelector(state => selectCommentsByRequestId(state, requestId)) || [];
+
+    useEffect(() => {
+        dispatch(fetchCommentsByRequestId(requestId));
+    }, [dispatch, requestId]);
+
+    return (
+        <div className="card-text">
+            <h5>
+                <strong>Comments:</strong>
+            </h5>
+            <ul>
+                {commentsForThisRequest.length > 0 ? (
+                    commentsForThisRequest.map((comment) => (
+                        <li key={comment.id}>
+                            <p>{comment.message}</p>
+                        </li>
+                    ))
+                ) : (
+                    <li>No comments..</li>
+                )}
+            </ul>
         </div>
     );
 }

@@ -1,14 +1,22 @@
-/* Existing Styles */
 .custom-card {
-    color: rgb(255, 255, 255);
-    width: 120px;
-    height: 120px;
+    background-color: #007bff; /* primary color */
+    color: white;
+    width: 120px;   /* Adjust width */
+    height: 120px;  /* Adjust height to make it square */
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0px;
-    outline-style: solid !important;
-    transition: transform 0.2s ease-in-out;
+    border-radius: 0px;  /* Remove rounded corners to make it square */
+}
+
+.card-title {
+    font-size: 24px;  /* Increase font size */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#logout{
+    background-color: red !important;
 }
 
 .custom-card:hover {
@@ -16,43 +24,37 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
-.card-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#logout {
-    background-color: red !important;
-}
-
-.custom-card .card-body {
+.custom-card.card-body {
     padding: 40px !important;
+      
 }
 
+/* Add the following to ensure text remains white even on hover or other states */
 .custom-card a,
 .custom-card a:hover,
 .custom-card a:focus {
     color: white !important;
-    text-decoration: none !important;
+    text-decoration: none !important;  
 }
 
 .calendar .custom-card .card-title {
-    font-size: 1.2em !important;
+    font-size: 1.2em !important; 
 }
 
+
 .custom-button {
-    background-color: #444444;
+    background-color: #007bff; /* primary color */
     font-weight: bold;
     color: white;
-    width: 5rem;
-    height: 40px;
+    width: 5rem;   /* Adjust width */
+    height: 40px;  /* Adjust height based on button size */
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
-    border: black;
-    transition: transform 0.2s ease-in-out;
+    border-radius: 5px;  /* Remove rounded corners to make it square */
+    border:black; /* remove the border that comes with the btn class */
+
+    transition: transform 0.2s ease-in-out;  /* Transition for hover effect */
 }
 
 .custom-button:hover {
@@ -60,7 +62,7 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-.red-period {
+.red-period{
     background-color: red !important;
     color: white;
 }
@@ -139,153 +141,45 @@
 }
 
 /* Container for the entire date range picker */
-.rdrCalendarWrapper {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
 
+.rdrCalendarWrapper, .rdrCalendarWrapper * {
+    font-size: 1em; /* Adjust as needed */
+    border-radius: 15px;
 
-/* Container for each month */
-.rdrMonth {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
 }
 
 .rdrDefinedRangesWrapper {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-    
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.rdrStaticRangeLabel{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header for each month (e.g., "January 2023") */
-.rdrMonthName {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-    
+
+.ineligible-periods-list {
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #ccc; /* Light border to separate from the calendar */
+  text-align: center;
 }
 
-/* Container for the days of the week (e.g., "Sun", "Mon", etc.) */
-.rdrWeekDays {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-
-}
-.rdrStaticRangeLabel {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-    
+.ineligible-periods-list h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
-/* Individual day of the week */
-.rdrWeekDay {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
+.ineligible-periods-list ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-/* Container for the individual days in a month */
-.rdrDays {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
+.ineligible-periods-list li {
+  margin-bottom: 5px;
 }
 
-/* Individual day */
-.rdrDay {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* Selected start date */
-.rdrSelectedStartDate {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* Selected end date */
-.rdrSelectedEndDate {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* The range between the selected start and end dates */
-.rdrSelected {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* Day that is being hovered */
-.rdrDayHovered {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* Disabled day (e.g., if you set a minDate or maxDate) */
-.rdrDayDisabled {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* Today's date */
-.rdrDayToday {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* The arrows used for navigating between months */
-.rdrNextButton, .rdrPrevButton {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-/* The range preview when hovering before selecting the end date */
-.rdrInRange, .rdrStartEdge, .rdrEndEdge {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-.rdrDateDisplayWrapper {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
-}
-
-.rdrStaticRangeLabel {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 40px;
+.h3 {
+    text-align: center;
 }

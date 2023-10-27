@@ -1,75 +1,90 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as commentAPI from './commentAPI'; // Importing API functions
 
-// Async thunk to fetch comments by request id
+let API_URL = 'https://localhost:7172/api/v1/VacationRequests/1/Comments';
+
+
 export const fetchCommentsByRequestId = createAsyncThunk(
   'comments/fetchByRequestId',
-  async (requestId, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.keycloak.token;
+  async (requestId, { rejectWithValue }) => {
     try {
-      const comments = await commentAPI.getComment(requestId, token); // API call to get comments
-      return { requestId, comments };
+      const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/${requestId}/Comments`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return { requestId, comments: data };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message || 'Failed to fetch comments');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// Async thunk to add a comment
 export const addCommentToApi = createAsyncThunk(
   'comments/addComment',
   async ({ requestId, comment }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.keycloak.token;
+      const response = await fetch(`${API_URL}`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(comment)
+      });
+
+      if (response.ok) {
+          const data = await response.json();
+          return data;
+      } else {
+          const error = await response.json();
+          return thunkAPI.rejectWithValue(error);
+      }
+  }
+);
+
+export const fetchAllCommentsForUser = createAsyncThunk(
+  'comments/fetchAllCommentsForUser',
+  async (userId, { dispatch, rejectWithValue }) => {
     try {
-      const data = await commentAPI.postComment(requestId, comment, token); // API call to post a comment
-      return { requestId, comment: data };
+      // This assumes you have an endpoint to fetch all vacation requests for a user.
+      const response = await fetch(`https://localhost:7172/api/v1/VacationRequests/user?id=7d94f7d7-da61-49a0-b0e3-8790b93168de`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const vacationRequests = await response.json();
+
+      // Now, for each vacation request, fetch its comments
+      for (let request of vacationRequests) {
+        dispatch(fetchCommentsByRequestId(request.id));
+      }
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message || 'Failed to add comment');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// Async thunk to update a comment
-export const updateCommentInApi = createAsyncThunk(
-  'comments/updateComment',
-  async ({ requestId, commentId, updatedComment }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.keycloak.token;
-    try {
-      const data = await commentAPI.putComment(commentId, updatedComment, token); // API call to update a comment
-      return { requestId, commentId, updatedComment: data };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message || 'Failed to update comment');
-    }
-  }
-);
 
-// Async thunk to delete a comment
-export const deleteCommentFromApi = createAsyncThunk(
-  'comments/deleteComment',
-  async ({ requestId, commentId }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.keycloak.token;
-    try {
-      await commentAPI.deleteComment(commentId, token); // API call to delete a comment
-      return { requestId, commentId };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message || 'Failed to delete comment');
-    }
-  }
-);
 
-// Comments slice
-const commentsSlice = createSlice({
+export const commentsSlice = createSlice({
   name: 'comments',
   initialState: {
-    commentsByRequestId: {},
-    status: 'idle',
-    error: null
+    commentsByVacationRequestId: {},
+    message: "", 
+    error: null              
   },
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCommentsByRequestId.pending, (state) => {
@@ -77,37 +92,22 @@ const commentsSlice = createSlice({
       })
       .addCase(fetchCommentsByRequestId.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.commentsByRequestId[action.payload.requestId] = action.payload.comments;
+        state.commentsByVacationRequestId[action.payload.requestId] = action.payload.comments;
       })
       .addCase(fetchCommentsByRequestId.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
       .addCase(addCommentToApi.fulfilled, (state, action) => {
-        if (!state.commentsByRequestId[action.payload.requestId]) {
-          state.commentsByRequestId[action.payload.requestId] = [];
+        if (!state.commentsByVacationRequestId[action.payload.requestId]) {
+          state.commentsByVacationRequestId[action.payload.requestId] = [];
         }
-        state.commentsByRequestId[action.payload.requestId].push(action.payload.comment);
-      })
-      .addCase(updateCommentInApi.fulfilled, (state, action) => {
-        const { requestId, commentId, updatedComment } = action.payload;
-        if (!state.commentsByRequestId[requestId]) {
-          state.commentsByRequestId[requestId] = [];
-        }
-        const commentIndex = state.commentsByRequestId[requestId].findIndex(c => c.id === commentId);
-        if (commentIndex !== -1) {
-          state.commentsByRequestId[requestId][commentIndex] = updatedComment;
-        }
-      })
-      .addCase(deleteCommentFromApi.fulfilled, (state, action) => {
-        const { requestId, commentId } = action.payload;
-        if (!state.commentsByRequestId[requestId]) {
-          state.commentsByRequestId[requestId] = [];
-        }
-        state.commentsByRequestId[requestId] = state.commentsByRequestId[requestId].filter(c => c.id !== commentId);
+        state.commentsByVacationRequestId[action.payload.requestId].push(action.payload.comment);
       });
   },
 });
 
-export const selectCommentsByRequestId = (state, requestId) => state.comments.commentsByRequestId[requestId] || [];
+
+export const selectCommentsByRequestId = (state, requestId) => state.comments.commentsByVacationRequestId[requestId] || [];
+
 export default commentsSlice.reducer;

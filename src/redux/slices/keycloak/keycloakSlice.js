@@ -26,6 +26,7 @@ const keycloakSlice = createSlice({
   initialState: {
     authenticated: false,
     token: null,
+    roles: [],
   },
   reducers: {
     setAuthenticated: (state, action) => {
@@ -37,6 +38,9 @@ const keycloakSlice = createSlice({
     refreshToken: (state, action) => {
       state.token = action.payload;
     },
+    setRoles: (state, action) => {
+    state.roles = action.payload;
+    },
     logout: (state) => {
       state.authenticated = false;
       state.token = null;
@@ -47,6 +51,7 @@ const keycloakSlice = createSlice({
       .addCase(initializeApp.fulfilled, (state, action) => {
         state.authenticated = action.payload.authenticated;
         state.token = action.payload.token;
+        state.roles = action.payload;
       })
       .addCase(loginUser.fulfilled, (state) => {
         state.authenticated = true;
@@ -54,10 +59,11 @@ const keycloakSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.authenticated = false;
         state.token = null;
+        state.roles = [];
       });
   },
 });
 
-export const { setAuthenticated, setToken, refreshToken } = keycloakSlice.actions;
+export const { setRoles, logout, setAuthenticated, setToken, refreshToken } = keycloakSlice.actions;
 
 export default keycloakSlice.reducer;

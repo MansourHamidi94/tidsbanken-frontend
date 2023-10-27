@@ -1,0 +1,18 @@
+.button {
+    background-color: #444444;
+    color: #FFF1E3;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.button:hover {
+    background-color: #333333;
+}
+.comment {
+    margin-bottom: 10px;
+}
+.older-comments {
+    margin-top: 10px;
+}

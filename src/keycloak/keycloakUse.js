@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { keycloakContext } from '../keycloak/keycloakProvider';
 import { setAuthenticated, setToken, refreshToken, loginUser, logoutUser } from '../redux/slices/keycloak/keycloakSlice';
 import { postUser, userExists } from '../redux/slices/user/userSlice';
+import { setRoles } from '../redux/slices/keycloak/keycloakSlice';
+
 
 const useKeycloak = () => {
   const keycloak = useContext(keycloakContext);
@@ -23,7 +25,10 @@ const useKeycloak = () => {
       const checkAuthentication = async () => {
     if (keycloak.authenticated) {
       dispatch(setToken(keycloak.token));
-      try {
+      const roles = keycloak.tokenParsed?.realm_access?.roles || [];
+    console.log('Roles:', roles);
+    dispatch(setRoles(roles));
+          try {
         const resultAction = await dispatch(userExists());
         if (userExists.fulfilled.match(resultAction)) {
           dispatch(setAuthenticated(true));

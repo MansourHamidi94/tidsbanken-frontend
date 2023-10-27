@@ -1,135 +1,181 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as vacationRequestAPI from './vacationRequestAPI';
 
-// AsyncThunk for fetching vacation request by id
+let API_URL = 'https://localhost:7172/api/v1/VacationRequests';
+
+//GET
+//dispatch(fetchVacationRequestById(requestId));
 export const fetchVacationRequestById = createAsyncThunk(
   'vacationRequest/fetchVacationRequestById',
-  async (requestId, { getState, rejectWithValue }) => {
+  async (requestId, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
-      const response = await vacationRequestAPI.getVacationRequestById(requestId, token);
-      return response.data;
+      const response = await fetch(`${API_URL}/1`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch vacation request');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// AsyncThunk for creating a new vacation request
+//GET
+// Get all VacationRequests
+export const fetchAllVacationRequests = createAsyncThunk(
+  'vacationRequest/fetchAllVacationRequests',
+  async (status, { rejectWithValue }) => {
+    try {
+      const url = status ? `${API_URL}?status=${status}` : `${API_URL}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+
+// Post
 export const createVacationRequest = createAsyncThunk(
   'vacationRequest/createVacationRequest',
-  async (requestData, { getState, rejectWithValue }) => {
+  async (requestData, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
-      const response = await vacationRequestAPI.postVacationRequest(requestData, token);
-      return response.data;
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        mode: "cors",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+        credentials: "include"
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return rejectWithValue(data);
+      }
+
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to create vacation request');
+      return rejectWithValue(error.toString());
     }
   }
 );
 
-// AsyncThunk for updating an existing vacation request
+
+//PUT
 export const updateVacationRequest = createAsyncThunk(
   'vacationRequest/updateVacationRequest',
-  async ({ id, updatedData }, { getState, rejectWithValue }) => {
+  async ({ requestId, updatedData }, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
-      await vacationRequestAPI.putVacationRequest(id, updatedData, token);
-      return { id, updatedData };
+      const response = await fetch(`${API_URL}/${requestId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      const data = await response.json();
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update vacation request');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// AsyncThunk for deleting a vacation request
+
+
+
+//DELETE
 export const deleteVacationRequest = createAsyncThunk(
   'vacationRequest/deleteVacationRequest',
-  async (id, { getState, rejectWithValue }) => {
+  async (requestId, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const token = state.keycloak.token; // Assuming the token is stored in the keycloak slice of your Redux store
-      await vacationRequestAPI.deleteVacationRequest(id, token);
-      return id;
+      const response = await fetch(`${API_URL}/${requestId}`, {
+        method: 'DELETE', 
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        return rejectWithValue(data);
+      }
+
+      return { success: true, message: 'Successfully deleted' };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete vacation request');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-// The initial state of the vacationRequest part of the Redux store
-const initialState = {
-  startDate: null,
-  endDate: null,
-  requestStatus: null,
-  vacationRequests: [],
-  error: null,
-};
 
-// The slice of the Redux store concerning vacation requests
+
 const vacationRequestSlice = createSlice({
-  name: 'vacationRequest',
-  initialState,
-  reducers: {
-    // Reducer for setting the start date of a vacation request
-    setStartDate: (state, action) => {
-      state.startDate = action.payload;
+    name: 'vacationRequest',
+    initialState: {
+      startDate: null,
+      endDate: null,
+      requestStatus: null,
+      reason: "",
+      vacationRequests: [],
     },
-    // Reducer for setting the end date of a vacation request
-    setEndDate: (state, action) => {
-      state.endDate = action.payload;
+    reducers: {
+      setStartDate: (state, action) => {
+        state.startDate = action.payload;
+      },
+      setEndDate: (state, action) => {
+        state.endDate = action.payload;
+      },
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      // Handling the fulfilled state of fetchVacationRequestById
-      .addCase(fetchVacationRequestById.fulfilled, (state, action) => {
-        state.vacationRequests = [action.payload];
-        state.error = null;
+    extraReducers: (builder) => {
+        builder.addCase(fetchVacationRequestById.fulfilled, (state, action) => {
+        state.vacationRequests = [action.payload];  // Store the single fetched vacation request in an array
       })
-      // Handling the rejected state of fetchVacationRequestById
       .addCase(fetchVacationRequestById.rejected, (state, action) => {
-        state.error = action.payload;
+        console.error('Failed to fetch vacation request:', action.error.message);
       })
-      // Handling the fulfilled state of createVacationRequest
       .addCase(createVacationRequest.fulfilled, (state, action) => {
-        state.vacationRequests.push(action.payload);
         state.requestStatus = "Success";
-        state.error = null;
       })
-      // Handling the rejected state of createVacationRequest
       .addCase(createVacationRequest.rejected, (state, action) => {
         state.requestStatus = "Failed";
-        state.error = action.payload;
       })
-      // Handling the fulfilled state of updateVacationRequest
-      .addCase(updateVacationRequest.fulfilled, (state, action) => {
-        const { id, updatedData } = action.payload;
-        const index = state.vacationRequests.findIndex(request => request.id === id);
-        if (index !== -1) {
-          state.vacationRequests[index] = { ...state.vacationRequests[index], ...updatedData };
-        }
+      .addCase(fetchAllVacationRequests.fulfilled, (state, action) => {
+        state.vacationRequests = action.payload;
       })
-      // Handling the rejected state of updateVacationRequest
-      .addCase(updateVacationRequest.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      // Handling the fulfilled state of deleteVacationRequest
-      .addCase(deleteVacationRequest.fulfilled, (state, action) => {
-        state.vacationRequests = state.vacationRequests.filter(request => request.id !== action.payload);
-      })
-      // Handling the rejected state of deleteVacationRequest
-      .addCase(deleteVacationRequest.rejected, (state, action) => {
-        state.error = action.payload;
+      .addCase(fetchAllVacationRequests.rejected, (state, action) => {
+        console.error('Failed to fetch all vacation requests:', action.error.message);
       });
-  },
+    },
 });
 
-// Exporting the reducer actions for use in components
 export const { setStartDate, setEndDate } = vacationRequestSlice.actions;
-// Exporting the reducer itself
 export default vacationRequestSlice.reducer;

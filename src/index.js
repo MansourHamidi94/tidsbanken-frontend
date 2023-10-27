@@ -1,12 +1,10 @@
+import './index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
 import App from './App';
-//import { initialize } from './keycloak';
 import { KeycloakProvider } from './keycloak/keycloakProvider';
 import store  from './redux/store';
-import { Provider } from 'react-redux'; // Import Redux Provider
-//import { userExists } from './redux/slices/userSlice/userSlice';
+import { Provider } from 'react-redux'; 
 
 window.addEventListener('unhandledrejection', (event) => {
   console.error('Unhandled promise rejection:', event.reason);

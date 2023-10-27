@@ -1,164 +1,132 @@
 import React, { useState, useEffect } from "react";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
 import Navbar from "../navbar/Navbar.jsx";
 import "./Calendar.css";
-import VacationPlanner from "../vacation/VacationPlanner.jsx";
-import { useDispatch, useSelector } from 'react-redux';
-import { createVacationRequest, setStartDate, setEndDate } from '../../redux/slices/vacationRequest/vacationRequestSlice.js';
-import { fetchIneligiblePeriods } from '../../redux/slices/ineligiblePeriod/ineligiblePeriodSlice';
+import VacationPlanner from "../vacationPlanner/VacationPlanner.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setStartDate,
+  setEndDate,
+} from "../../redux/slices/vacationRequest/vacationRequestSlice";
+import { fetchIneligiblePeriods } from "../../redux/slices/ineligiblePeriod/ineligiblePeriodSlice";
 
 function Calendar() {
-    const [date, setDate] = useState(new Date());
-    const year = date.getFullYear();
-    const month = date.getMonth();
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+      key: "selection",
+    },
+  ]);
 
-    const dispatch = useDispatch();
-    const reduxStartDate = useSelector(state => new Date(state.vacationRequest?.startDate));
-    const reduxEndDate = useSelector(state => new Date(state.vacationRequest?.endDate));
-    const ineligiblePeriods =  useSelector((state) => state.ineligiblePeriods?.periods || []);
-
-
-
-    useEffect(() => {
-        dispatch(fetchIneligiblePeriods());
-    }, [dispatch]);
-
-    const isDateWithinPeriod = (date, start, end) => {
-        return date >= new Date(start) && date <= new Date(end);
-    };
-
-    const isDateIneligible = (date) => {
-        for (const period of ineligiblePeriods) {
-            if (isDateWithinPeriod(date, period.startDate, period.endDate)) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    const [showVacationPlanner, setShowVacationPlanner] = useState(false);
-    const [instruction, setInstruction] = useState("");  
-
-    const handlePreviousYear = () => {
-        setDate(new Date(year - 1, month));
-    };
-
-    const handleNextYear = () => {
-        setDate(new Date(year + 1, month)); 
-    };
-
-    const handlePreviousMonth = () => {
-        setDate(new Date(year, month - 1)); 
-    };
-
-    const handleNextMonth = () => {
-        setDate(new Date(year, month + 1)); 
-    };
-
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const currentMonthName = date.toLocaleString("default", { month: "long" });
-    const monthShorted = currentMonthName.charAt(0).toUpperCase() + currentMonthName.substring(1, 3);
-
-    const daysInMonth = [];
-    for (let i = firstDay.getDate(); i <= lastDay.getDate(); i++) {
-        daysInMonth.push(i);
-    }
-
-    const handleDateClick = (dayOfMonth) => {
-        const selectedDate = new Date(year, month, dayOfMonth);
-        if (isDateIneligible(selectedDate)) {
-            return;
-        }
-        if (instruction === 'start') {
-            dispatch(setStartDate(selectedDate.toISOString()));
-            setInstruction('end');
-        } else if (instruction === 'end') {
-            dispatch(setEndDate(selectedDate.toISOString()));
-            setInstruction('');
-            dispatch(createVacationRequest({
-                vacationType: "vacation",
-                startDate: reduxStartDate,
-                endDate: selectedDate,
-                userId: 1,
-                requestDate: new Date().toISOString()  
-            }));
-            setShowVacationPlanner(false);
-        }
-    };
-
-    const startVacationPlanning = () => {
-        setShowVacationPlanner(true);
-        setInstruction("start");
-    };
-
-    return (
-        <div className="">
-            <Navbar />
-            <div className="calendar mx-auto mt-0 d-flex justify-content-center align-items-center ">
-                <div>
-                    <div className="d-flex justify-content-center mb-3">
-                        <button onClick={handlePreviousYear} className="btn btn-secondary btn-sm"> {(year - 1)}</button>
-                        <h2 className="mx-3">{year}</h2>
-                        <button onClick={handleNextYear} className="btn btn-secondary btn-sm"> {(year + 1)}</button>
-                    </div>
-                    <div className="d-flex justify-content-center mb-3">
-                        <div className="d-flex justify-content-center mb-3">
-                            <button onClick={handlePreviousMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month - 1).toLocaleString("default", { month: "long" })}</button>
-                            <h1 className="mx-3">{currentMonthName}</h1>
-                            <button onClick={handleNextMonth} className="btn custom-button btn-secondary btn-sm">{new Date(year, month + 1).toLocaleString("default", { month: "long" })}</button>
-                        </div>
-                    </div>
-
-                    <VacationPlanner
-                        showVacationPlanner={showVacationPlanner}
-                        setShowVacationPlanner={setShowVacationPlanner}
-                        instruction={instruction}
-                        startVacationPlanning={startVacationPlanning}
-                    />
-
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Man</th>
-                                <th>Tir</th>
-                                <th>Ons</th>
-                                <th>Tor</th>
-                                <th>Fre</th>
-                                <th>Lør</th>
-                                <th>Søn</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(5)].map((_, weekIndex) => (
-                                <tr key={weekIndex}>
-                                    {[...Array(7)].map((_, dayIndex) => {
-                                        const dayOfMonth = weekIndex * 7 + dayIndex + 1 - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1);
-                                        const currentDate = new Date(year, month, dayOfMonth);
-                                        const isRedPeriod = isDateIneligible(currentDate);
-                                        if (dayOfMonth > 0 && dayOfMonth <= daysInMonth.length) {
-                                            return (
-                                                <td key={dayIndex}>
-                                                    <div className={`custom-card p-2 mb-2 d-flex align-items-center justify-content-center ${isRedPeriod ? "red-period" : ""}`}>
-                                                        <a href="#" className="card-title h4 font-weight-bold" onClick={() => handleDateClick(dayOfMonth)}>
-                                                            {dayOfMonth + "."} {monthShorted}
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            );
-                                        } else {
-                                            return <td key={dayIndex}></td>;
-                                        }
-                                    })}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+  const dispatch = useDispatch();
+  const vacationRequest = useSelector((state) => state.vacationRequest);
+  const ineligiblePeriod = useSelector(
+      (state) => state.ineligiblePeriods.periods
     );
+
+  const reduxStartDate = vacationRequest?.startDate
+    ? new Date(vacationRequest.startDate)
+    : null;
+  const reduxEndDate = vacationRequest?.endDate
+    ? new Date(vacationRequest.endDate)
+    : null;
+
+  const ineligiblePeriods = useSelector(
+    (state) => state.ineligiblePeriods?.periods || []
+  );
+
+  useEffect(() => {
+    dispatch(fetchIneligiblePeriods());
+  }, [dispatch]);
+
+  const isDateWithinPeriod = (date, start, end) => {
+    return date >= new Date(start) && date <= new Date(end);
+  };
+
+  const isDateIneligible = (date) => {
+    for (const period of ineligiblePeriods) {
+      if (isDateWithinPeriod(date, period.startDate, period.endDate)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const handleDateChange = (item) => {
+    const startDate = new Date(item.selection.startDate);
+    const endDate = new Date(item.selection.endDate);
+
+    if (!isDateIneligible(startDate) && !isDateIneligible(endDate)) {
+      setState([item.selection]);
+      dispatch(setStartDate(startDate.toISOString()));
+      dispatch(setEndDate(endDate.toISOString()));
+    } else {
+      alert(
+        "One or more of the selected dates is ineligible. Please choose another date range."
+      );
+    }
+  };
+
+  const getIneligibleDates = () => {
+    const dates = [];
+    for (const period of ineligiblePeriods) {
+      let current = new Date(period.startDate);
+      while (current <= new Date(period.endDate)) {
+        dates.push(new Date(current));
+        current.setDate(current.getDate() + 1);
+      }
+    }
+    return dates;
+  };
+
+  return (
+    <div className="body-container">
+      <Navbar />
+      <div className="calendar-container">
+        <div className="calendar-header">
+          <DateRangePicker
+            ranges={state}
+            onChange={handleDateChange}
+            disabledDates={getIneligibleDates()}
+            minDate={new Date()}
+          />
+          <VacationPlanner
+            startDate={state[0].startDate}
+            endDate={state[0].endDate}
+            reduxStartDate={reduxStartDate}
+            reduxEndDate={reduxEndDate}
+            dispatch={dispatch}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className="mt-4">
+          <h3>Ineligible Periods</h3>
+          <ul className="list-group">
+            {ineligiblePeriods.length > 0 ? (
+              ineligiblePeriods.map((period, index) => (
+                <li key={index} className="list-group-item">
+                  {period.startDate} to {period.endDate}
+                </li>
+              ))
+            ) : (
+              <li className="list-group-item">No ineligible periods</li>
+            )}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Calendar;

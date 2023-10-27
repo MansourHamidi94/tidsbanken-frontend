@@ -14,10 +14,10 @@ const AppRoutes = () => {
      <BrowserRouter>
         <Routes>
           <Route path="/" element={<ControlPanel />} />
-          <Route path="/ControlPanel" element={<ControlPanel />} />
+          <Route path="/" element={<ControlPanel />} />
           <Route path="/Calendar" element={<Calendar />} />
           <Route path="/Profile" element={<Profile />} />
-          <Route path='/VacationRequest' element={<VacationRequest/>}/>
+          <Route path='/vacation-request' element={<VacationRequest/>}/>
           <Route path="/Admin" element={<Admin/>} />
         </Routes>
       </BrowserRouter>

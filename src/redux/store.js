@@ -5,6 +5,7 @@ import vacationRequestReducer from './slices/vacationRequest/vacationRequestSlic
 import commentsReducer from './slices/comment/commentSlice';
 import ineligiblePeriodsReducer from './slices/ineligiblePeriod/ineligiblePeriodSlice';
 
+// Redux Store
 const store = configureStore({
     reducer: {
         keycloak: keycloakReducer,
